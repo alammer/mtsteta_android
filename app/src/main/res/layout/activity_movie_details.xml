@@ -8,9 +8,9 @@
     <ImageView
         android:id="@+id/posterView"
         android:layout_width="match_parent"
-        android:layout_height="290dp"
+        android:layout_height="0dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/guideLine1"
         tools:src="@color/purple_200"
         />
 
@@ -19,15 +19,22 @@
         android:layout_height="wrap_content"
         android:id="@+id/guideLine"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="224dp" />
+        app:layout_constraintGuide_percent="0.3" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/guideLine1"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.4" />
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintTop_toBottomOf="@id/guideLine"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="@id/guideLine"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:background="@color/teal_700"
-        app:cardCornerRadius="8dp" />
+        tools:backgroundTint="@color/white"
+        app:cardCornerRadius="20dp" />
 
 
 
