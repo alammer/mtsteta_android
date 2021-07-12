@@ -93,13 +93,58 @@
                 />
 
             <ImageView
+                android:id="@+id/fillStar1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/movieTitle"
 
-                tools:src="@android:d"
+                android:src="@drawable/ic_filled_star"
+                />
+
+            <ImageView
+                android:id="@+id/fillStar2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toEndOf="@id/fillStar1"
+                app:layout_constraintTop_toBottomOf="@id/movieTitle"
+
+                android:src="@drawable/ic_filled_star"
+                />
+
+            <ImageView
+                android:id="@+id/fillStar3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toEndOf="@id/fillStar2"
+                app:layout_constraintTop_toBottomOf="@id/movieTitle"
+
+                android:src="@drawable/ic_filled_star"
+                />
+
+            <ImageView
+                android:id="@+id/fillStar4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toEndOf="@id/fillStar3"
+                app:layout_constraintTop_toBottomOf="@id/movieTitle"
+
+                android:src="@drawable/ic_filled_star"
+                />
+
+            <ImageView
+                android:id="@+id/emptyStar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toEndOf="@id/fillStar4"
+                app:layout_constraintTop_toBottomOf="@id/movieTitle"
+
+                android:src="@drawable/ic_empty_star"
                 />
 
 
