@@ -5,39 +5,99 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/posterView"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/guideLine1"
-        tools:src="@color/purple_200"
-        />
-
     <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideLine"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/guideLine"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.3" />
 
     <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideLine1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/guideLine1"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.4" />
+
+    <ImageView
+        android:id="@+id/posterView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/guideLine1"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@color/purple_200" />
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintTop_toTopOf="@id/guideLine"
+        app:cardCornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:backgroundTint="@color/white"
-        app:cardCornerRadius="20dp" />
+        app:layout_constraintTop_toTopOf="@id/guideLine"
+        tools:backgroundTint="@color/white">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingHorizontal="20dp"
+            android:paddingTop="32dp">
+
+            <TextView
+                android:id="@+id/detailGenre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rectangle_background"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="4dp"
+                android:textAlignment="center"
+                android:textSize="10sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+
+                tools:text="боевики" />
+
+            <TextView
+                android:id="@+id/releaseDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:textSize="12sp"
+                app:layout_constraintBaseline_toBaselineOf="@id/detailGenre"
+                app:layout_constraintStart_toEndOf="@id/detailGenre"
+
+                tools:text="22.04.2021" />
+
+            <TextView
+                android:id="@+id/movieTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/detailGenre"
+
+                tools:text="Гнев человеческий" />
+
+            <TextView
+                android:id="@+id/ageLimit"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginBottom="4dp"
+                android:textAlignment="center"
+                android:gravity="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/movieTitle"
+                android:textSize="14sp"
+                android:background="@drawable/oval_background"
+
+                tools:text="18+"
+                />
 
 
 
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.cardview.widget.CardView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
