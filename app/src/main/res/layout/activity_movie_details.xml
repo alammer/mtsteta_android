@@ -12,12 +12,15 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="224dp" />
 
-    <ImageView
-        android:id="@+id/posterView"
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/imgPoster"
         android:layout_width="match_parent"
         android:layout_height="290dp"
+        android:background="#F1F1F1"
+        android:scaleType="centerCrop"
+        android:src="@drawable/img_poster"
         app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/img_title" />
+        app:shapeAppearanceOverlay="@style/img_poster_rounded_corner" />
 
 
     <androidx.cardview.widget.CardView
@@ -27,8 +30,7 @@
         android:elevation="0dp"
         app:cardCornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="@id/guideLine"
-        >
+        app:layout_constraintTop_toTopOf="@id/guideLine">
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -39,8 +41,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:paddingHorizontal="20dp"
-                android:paddingTop="32dp"
-                >
+                android:paddingTop="32dp">
 
                 <TextView
                     android:id="@+id/detailGenre"
@@ -49,34 +50,34 @@
                     android:background="@drawable/rectangle_background"
                     android:paddingHorizontal="8dp"
                     android:paddingVertical="4dp"
+                    android:text="боевики"
                     android:textAlignment="center"
                     android:textSize="10sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
 
-                    android:text="боевики" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/releaseDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
+                    android:text="22.04.2021"
                     android:textSize="12sp"
                     app:layout_constraintBaseline_toBaselineOf="@id/detailGenre"
-                    app:layout_constraintStart_toEndOf="@id/detailGenre"
 
-                    android:text="22.04.2021" />
+                    app:layout_constraintStart_toEndOf="@id/detailGenre" />
 
                 <TextView
                     android:id="@+id/movieTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
+                    android:text="Гнев человеческий"
                     android:textSize="20sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/detailGenre"
 
-                    android:text="Гнев человеческий" />
+                    app:layout_constraintTop_toBottomOf="@id/detailGenre" />
 
                 <TextView
                     android:id="@+id/ageLimit"
@@ -85,12 +86,12 @@
                     android:layout_marginBottom="4dp"
                     android:background="@drawable/oval_background"
                     android:gravity="center"
+                    android:text="18+"
                     android:textAlignment="center"
                     android:textSize="14sp"
                     app:layout_constraintBottom_toBottomOf="@id/movieTitle"
-                    app:layout_constraintEnd_toEndOf="parent"
 
-                    android:text="18+" />
+                    app:layout_constraintEnd_toEndOf="parent" />
 
                 <ImageView
                     android:id="@+id/fillStar1"
@@ -148,24 +149,24 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
+                    android:text="@string/test_detail_text"
                     android:textAlignment="textStart"
                     android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/fillStar1"
 
-                    android:text="@string/test_detail_text" />
+                    app:layout_constraintTop_toBottomOf="@id/fillStar1" />
 
                 <TextView
                     android:id="@+id/actorsTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="36dp"
+                    android:text="Актёры"
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/detailInfo"
 
-                    android:text="Актёры" />
+                    app:layout_constraintTop_toBottomOf="@id/detailInfo" />
 
                 <HorizontalScrollView
                     android:id="@+id/actorsList"
@@ -182,67 +183,76 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
 
-                        <ImageView
+                        <com.google.android.material.imageview.ShapeableImageView
                             android:id="@+id/actorImage1"
                             android:layout_width="150dp"
                             android:layout_height="196dp"
+                            android:background="#F1F1F1"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/img_statem"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            android:src="@drawable/img_statem" />
+                            app:shapeAppearanceOverlay="@style/img_actor_rounded_corner"/>
 
                         <TextView
                             android:id="@+id/actorName1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="12dp"
+                            android:text="Джейсон Стэйтем"
                             android:textSize="12sp"
                             android:textStyle="bold"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/actorImage1"
 
-                            android:text="Джейсон Стэйтем" />
+                            app:layout_constraintTop_toBottomOf="@id/actorImage1" />
 
-                        <ImageView
+                        <com.google.android.material.imageview.ShapeableImageView
                             android:id="@+id/actorImage2"
                             android:layout_width="150dp"
                             android:layout_height="196dp"
                             android:layout_marginStart="10dp"
+                            android:background="#F1F1F1"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/img_mccallany"
                             app:layout_constraintStart_toEndOf="@id/actorImage1"
                             app:layout_constraintTop_toTopOf="parent"
-                            android:src="@drawable/img_mccallany" />
+                            app:shapeAppearanceOverlay="@style/img_actor_rounded_corner"/>
 
                         <TextView
                             android:id="@+id/actorName2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="12dp"
+                            android:text="Холт Маккэллани"
                             android:textSize="12sp"
                             android:textStyle="bold"
                             app:layout_constraintStart_toStartOf="@id/actorImage2"
-                            app:layout_constraintTop_toBottomOf="@id/actorImage2"
 
-                            android:text="Холт Маккэллани" />
+                            app:layout_constraintTop_toBottomOf="@id/actorImage2" />
 
-                        <ImageView
+                        <com.google.android.material.imageview.ShapeableImageView
                             android:id="@+id/actorImage3"
                             android:layout_width="150dp"
                             android:layout_height="196dp"
                             android:layout_marginStart="10dp"
+                            android:background="#F1F1F1"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/img_hartnett"
                             app:layout_constraintStart_toEndOf="@id/actorImage2"
                             app:layout_constraintTop_toTopOf="parent"
-                            android:src="@drawable/img_hartnett" />
+                            app:shapeAppearanceOverlay="@style/img_actor_rounded_corner"/>
 
                         <TextView
                             android:id="@+id/actorName3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="12dp"
+                            android:text="Джош Харнетт"
                             android:textSize="12sp"
                             android:textStyle="bold"
                             app:layout_constraintStart_toStartOf="@id/actorImage3"
-                            app:layout_constraintTop_toBottomOf="@id/actorImage3"
 
-                            android:text="Джош Харнетт" />
+                            app:layout_constraintTop_toBottomOf="@id/actorImage3" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -256,28 +266,27 @@
     </androidx.cardview.widget.CardView>
 
     <com.google.android.material.tabs.TabLayout
-        android:layout_height="48dp"
         android:layout_width="match_parent"
+        android:layout_height="48dp"
         android:elevation="2dp"
-        app:tabIndicatorColor="@color/black"
-        app:tabIconTint="@color/black"
-        app:tabMode="fixed"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:tabIconTint="@color/black"
+        app:tabIndicatorColor="@color/black"
+        app:tabMode="fixed">
 
         <com.google.android.material.tabs.TabItem
-            android:layout_height="match_parent"
             android:layout_width="match_parent"
-            android:icon ="@drawable/ic_home_icon" />
+            android:layout_height="match_parent"
+            android:icon="@drawable/ic_home_icon" />
 
         <com.google.android.material.tabs.TabItem
-            android:layout_height="match_parent"
             android:layout_width="match_parent"
-            android:icon ="@drawable/ic_person_icon" />
+            android:layout_height="match_parent"
+            android:icon="@drawable/ic_person_icon" />
 
     </com.google.android.material.tabs.TabLayout>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
