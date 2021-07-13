@@ -1,0 +1,8 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/action_search"
+        android:icon="@drawable/ic_filled_star"
+        android:title="" />
+    <item android:id="@+id/action_navigation"
+        android:title=""
+        android:icon="@drawable/ic_empty_star" />
+</menu>
