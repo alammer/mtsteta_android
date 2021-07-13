@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="genre_view_horizontal_padding">8dp</dimen>
+    <dimen name="genre_view_vertical_padding">4dp</dimen>
+    <dimen name="movie_details_common_margin_top">16dp</dimen>
+</resources>
