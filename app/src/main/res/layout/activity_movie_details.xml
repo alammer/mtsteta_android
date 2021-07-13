@@ -19,6 +19,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:src="@color/purple_200" />
 
+
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -26,6 +27,10 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="@id/guideLine"
         tools:backgroundTint="@color/white">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -247,7 +252,7 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
+        </ScrollView>
     </androidx.cardview.widget.CardView>
 
 
