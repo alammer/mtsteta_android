@@ -17,7 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="290dp"
         app:layout_constraintTop_toTopOf="parent"
-        android:src="@color/purple_200" />
+        android:src="@drawable/img_title" />
 
 
     <androidx.cardview.widget.CardView
@@ -188,7 +188,7 @@
                             android:layout_height="196dp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            android:src="@color/teal_700" />
+                            android:src="@drawable/img_statem" />
 
                         <TextView
                             android:id="@+id/actorName1"
@@ -209,7 +209,7 @@
                             android:layout_marginStart="10dp"
                             app:layout_constraintStart_toEndOf="@id/actorImage1"
                             app:layout_constraintTop_toTopOf="parent"
-                            android:src="@color/teal_700" />
+                            android:src="@drawable/img_mccallany" />
 
                         <TextView
                             android:id="@+id/actorName2"
@@ -230,7 +230,7 @@
                             android:layout_marginStart="10dp"
                             app:layout_constraintStart_toEndOf="@id/actorImage2"
                             app:layout_constraintTop_toTopOf="parent"
-                            android:src="@color/teal_700" />
+                            android:src="@drawable/img_hartnett" />
 
                         <TextView
                             android:id="@+id/actorName3"
