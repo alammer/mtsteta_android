@@ -5,37 +5,40 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideLine"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="224dp" />
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="320dp" />
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/imgPoster"
-        android:layout_width="match_parent"
-        android:layout_height="290dp"
-        android:background="@color/moviedetails_bg_color"
+        android:layout_width="360dp"
+        android:layout_height="match_parent"
+        android:background="@color/movie_details_bg_color"
         android:scaleType="centerCrop"
         android:src="@drawable/img_poster"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:shapeAppearanceOverlay="@style/img_poster_rounded_corner" />
 
 
     <androidx.cardview.widget.CardView
         android:id="@+id/detailView"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
         android:elevation="0dp"
         app:cardCornerRadius="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="@id/guideLine">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/guideLine"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/moviedetails_bg_color">
+            android:background="@color/movie_details_bg_color">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -269,15 +272,16 @@
     </androidx.cardview.widget.CardView>
 
     <com.google.android.material.tabs.TabLayout
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="48dp"
         android:elevation="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/guideLine"
         app:tabIconTint="@color/black"
         app:tabIndicatorColor="@color/black"
-        app:tabMode="fixed">
+        app:tabMode="fixed"
+        app:tabGravity="fill">
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="match_parent"
