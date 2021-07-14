@@ -50,6 +50,7 @@
                     android:background="@drawable/rectangle_background"
                     android:paddingHorizontal="@dimen/genre_view_padding_horizontal"
                     android:paddingVertical="@dimen/genre_view_padding_vertical"
+                    android:fontFamily="@font/roboto"
                     android:text="@string/action_genre"
                     android:textAlignment="center"
                     android:textSize="@dimen/genre_text_size"
@@ -62,6 +63,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/movie_details_common_margin_top"
+                    android:fontFamily="@font/roboto"
                     android:text="@string/release_date"
                     android:textSize="@dimen/small_text_size"
                     app:layout_constraintBaseline_toBaselineOf="@id/detailGenre"
@@ -73,6 +75,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/movie_details_common_margin_top"
+                    android:fontFamily="@font/roboto_medium"
                     android:text="@string/movie_name"
                     android:textSize="@dimen/title_text_size"
                     app:layout_constraintStart_toStartOf="parent"
@@ -86,6 +89,7 @@
                     android:layout_marginBottom="4dp"
                     android:background="@drawable/oval_background"
                     android:gravity="center"
+                    android:fontFamily="@font/roboto"
                     android:text="@string/age_limit"
                     android:textAlignment="center"
                     android:textSize="@dimen/medium_text_size"
@@ -149,12 +153,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
+                    android:fontFamily="@font/roboto"
                     android:text="@string/test_detail_text"
                     android:textAlignment="textStart"
                     android:textSize="@dimen/movie_info_text_size"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-
                     app:layout_constraintTop_toBottomOf="@id/fillStar1" />
 
                 <TextView
@@ -162,6 +166,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="36dp"
+                    android:fontFamily="@font/roboto_medium"
                     android:text="@string/actors_list_title"
                     android:textSize="@dimen/actors_list_header_text_size"
                     app:layout_constraintStart_toStartOf="parent"
@@ -198,9 +203,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/actor_name_margin_top"
+                            android:fontFamily="@font/roboto_bold"
                             android:text="@string/actor1_name"
                             android:textSize="@dimen/small_text_size"
-                            android:textStyle="bold"
+
                             app:layout_constraintStart_toStartOf="parent"
 
                             app:layout_constraintTop_toBottomOf="@id/actorImage1" />
@@ -221,9 +227,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/actor_name_margin_top"
+                            android:fontFamily="@font/roboto_bold"
                             android:text="@string/actor2_name"
                             android:textSize="@dimen/small_text_size"
-                            android:textStyle="bold"
                             app:layout_constraintStart_toStartOf="@id/actorImage2"
 
                             app:layout_constraintTop_toBottomOf="@id/actorImage2" />
@@ -244,9 +250,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/actor_name_margin_top"
+                            android:fontFamily="@font/roboto_bold"
                             android:text="@string/actor3_name"
                             android:textSize="@dimen/small_text_size"
-                            android:textStyle="bold"
                             app:layout_constraintStart_toStartOf="@id/actorImage3"
 
                             app:layout_constraintTop_toBottomOf="@id/actorImage3" />
