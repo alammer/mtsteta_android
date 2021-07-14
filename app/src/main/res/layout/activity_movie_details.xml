@@ -16,7 +16,7 @@
         android:id="@+id/imgPoster"
         android:layout_width="match_parent"
         android:layout_height="290dp"
-        android:background="#F1F1F1"
+        android:background="@color/moviedetails_bg_color"
         android:scaleType="centerCrop"
         android:src="@drawable/img_poster"
         app:layout_constraintTop_toTopOf="parent"
@@ -35,24 +35,24 @@
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#F1F1F1">
+            android:background="@color/moviedetails_bg_color">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingHorizontal="20dp"
-                android:paddingTop="32dp">
+                android:paddingHorizontal="@dimen/detail_cardview_padding_horizontal"
+                android:paddingTop="@dimen/detail_cardview_padding_top">
 
                 <TextView
                     android:id="@+id/detailGenre"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/rectangle_background"
-                    android:paddingHorizontal="@dimen/genre_view_horizontal_padding"
-                    android:paddingVertical="@dimen/genre_view_vertical_padding"
-                    android:text="боевики"
+                    android:paddingHorizontal="@dimen/genre_view_padding_horizontal"
+                    android:paddingVertical="@dimen/genre_view_padding_vertical"
+                    android:text="@string/action_genre"
                     android:textAlignment="center"
-                    android:textSize="10sp"
+                    android:textSize="@dimen/genre_text_size"
                     app:layout_constraintStart_toStartOf="parent"
 
                     app:layout_constraintTop_toTopOf="parent" />
@@ -61,9 +61,9 @@
                     android:id="@+id/releaseDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:text="22.04.2021"
-                    android:textSize="12sp"
+                    android:layout_marginStart="@dimen/movie_details_common_margin_top"
+                    android:text="@string/release_date"
+                    android:textSize="@dimen/small_text_size"
                     app:layout_constraintBaseline_toBaselineOf="@id/detailGenre"
 
                     app:layout_constraintStart_toEndOf="@id/detailGenre" />
@@ -73,8 +73,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/movie_details_common_margin_top"
-                    android:text="Гнев человеческий"
-                    android:textSize="20sp"
+                    android:text="@string/movie_name"
+                    android:textSize="@dimen/title_text_size"
                     app:layout_constraintStart_toStartOf="parent"
 
                     app:layout_constraintTop_toBottomOf="@id/detailGenre" />
@@ -86,9 +86,9 @@
                     android:layout_marginBottom="4dp"
                     android:background="@drawable/oval_background"
                     android:gravity="center"
-                    android:text="18+"
+                    android:text="@string/age_limit"
                     android:textAlignment="center"
-                    android:textSize="14sp"
+                    android:textSize="@dimen/medium_text_size"
                     app:layout_constraintBottom_toBottomOf="@id/movieTitle"
 
                     app:layout_constraintEnd_toEndOf="parent" />
@@ -145,28 +145,28 @@
 
 
                 <TextView
-                    android:id="@+id/detailInfo"
+                    android:id="@+id/detailInfoText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:text="@string/test_detail_text"
                     android:textAlignment="textStart"
-                    android:textSize="14sp"
+                    android:textSize="@dimen/movie_info_text_size"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
 
                     app:layout_constraintTop_toBottomOf="@id/fillStar1" />
 
                 <TextView
-                    android:id="@+id/actorsTitle"
+                    android:id="@+id/actorsListTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="36dp"
-                    android:text="Актёры"
-                    android:textSize="16sp"
+                    android:text="@string/actors_list_title"
+                    android:textSize="@dimen/actors_list_header_text_size"
                     app:layout_constraintStart_toStartOf="parent"
 
-                    app:layout_constraintTop_toBottomOf="@id/detailInfo" />
+                    app:layout_constraintTop_toBottomOf="@id/detailInfoText" />
 
                 <HorizontalScrollView
                     android:id="@+id/actorsList"
@@ -177,7 +177,7 @@
                     android:scrollbars="none"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/actorsTitle">
+                    app:layout_constraintTop_toBottomOf="@id/actorsListTitle">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="wrap_content"
@@ -185,9 +185,8 @@
 
                         <com.google.android.material.imageview.ShapeableImageView
                             android:id="@+id/actorImage1"
-                            android:layout_width="150dp"
-                            android:layout_height="196dp"
-                            android:background="#F1F1F1"
+                            android:layout_width="@dimen/actor_img_width"
+                            android:layout_height="@dimen/actor_img_height"
                             android:scaleType="centerCrop"
                             android:src="@drawable/img_statem"
                             app:layout_constraintStart_toStartOf="parent"
@@ -198,9 +197,9 @@
                             android:id="@+id/actorName1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="12dp"
-                            android:text="Джейсон Стэйтем"
-                            android:textSize="12sp"
+                            android:layout_marginTop="@dimen/actor_name_margin_top"
+                            android:text="@string/actor1_name"
+                            android:textSize="@dimen/small_text_size"
                             android:textStyle="bold"
                             app:layout_constraintStart_toStartOf="parent"
 
@@ -208,10 +207,9 @@
 
                         <com.google.android.material.imageview.ShapeableImageView
                             android:id="@+id/actorImage2"
-                            android:layout_width="150dp"
-                            android:layout_height="196dp"
-                            android:layout_marginStart="10dp"
-                            android:background="#F1F1F1"
+                            android:layout_width="@dimen/actor_img_width"
+                            android:layout_height="@dimen/actor_img_height"
+                            android:layout_marginStart="@dimen/actor_img_margin_start"
                             android:scaleType="centerCrop"
                             android:src="@drawable/img_mccallany"
                             app:layout_constraintStart_toEndOf="@id/actorImage1"
@@ -222,9 +220,9 @@
                             android:id="@+id/actorName2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="12dp"
-                            android:text="Холт Маккэллани"
-                            android:textSize="12sp"
+                            android:layout_marginTop="@dimen/actor_name_margin_top"
+                            android:text="@string/actor2_name"
+                            android:textSize="@dimen/small_text_size"
                             android:textStyle="bold"
                             app:layout_constraintStart_toStartOf="@id/actorImage2"
 
@@ -232,10 +230,9 @@
 
                         <com.google.android.material.imageview.ShapeableImageView
                             android:id="@+id/actorImage3"
-                            android:layout_width="150dp"
-                            android:layout_height="196dp"
-                            android:layout_marginStart="10dp"
-                            android:background="#F1F1F1"
+                            android:layout_width="@dimen/actor_img_width"
+                            android:layout_height="@dimen/actor_img_height"
+                            android:layout_marginStart="@dimen/actor_img_margin_start"
                             android:scaleType="centerCrop"
                             android:src="@drawable/img_hartnett"
                             app:layout_constraintStart_toEndOf="@id/actorImage2"
@@ -246,9 +243,9 @@
                             android:id="@+id/actorName3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="12dp"
-                            android:text="Джош Харнетт"
-                            android:textSize="12sp"
+                            android:layout_marginTop="@dimen/actor_name_margin_top"
+                            android:text="@string/actor3_name"
+                            android:textSize="@dimen/small_text_size"
                             android:textStyle="bold"
                             app:layout_constraintStart_toStartOf="@id/actorImage3"
 
