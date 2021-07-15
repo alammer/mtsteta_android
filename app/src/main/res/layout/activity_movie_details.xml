@@ -48,14 +48,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/rectangle_background"
+                    android:fontFamily="@font/roboto"
                     android:paddingHorizontal="@dimen/genre_view_padding_horizontal"
                     android:paddingVertical="@dimen/genre_view_padding_vertical"
-                    android:fontFamily="@font/roboto"
                     android:text="@string/action_genre"
                     android:textAlignment="center"
                     android:textSize="@dimen/genre_text_size"
                     app:layout_constraintStart_toStartOf="parent"
-
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
@@ -67,7 +66,6 @@
                     android:text="@string/release_date"
                     android:textSize="@dimen/small_text_size"
                     app:layout_constraintBaseline_toBaselineOf="@id/detailGenre"
-
                     app:layout_constraintStart_toEndOf="@id/detailGenre" />
 
                 <TextView
@@ -79,7 +77,6 @@
                     android:text="@string/movie_name"
                     android:textSize="@dimen/title_text_size"
                     app:layout_constraintStart_toStartOf="parent"
-
                     app:layout_constraintTop_toBottomOf="@id/detailGenre" />
 
                 <TextView
@@ -88,13 +85,12 @@
                     android:layout_height="40dp"
                     android:layout_marginBottom="4dp"
                     android:background="@drawable/oval_background"
-                    android:gravity="center"
                     android:fontFamily="@font/roboto"
+                    android:gravity="center"
                     android:text="@string/age_limit"
                     android:textAlignment="center"
                     android:textSize="@dimen/medium_text_size"
                     app:layout_constraintBottom_toBottomOf="@id/movieTitle"
-
                     app:layout_constraintEnd_toEndOf="parent" />
 
                 <ImageView
@@ -104,7 +100,6 @@
                     android:layout_marginTop="@dimen/movie_details_common_margin_top"
                     android:src="@drawable/ic_filled_star"
                     app:layout_constraintStart_toStartOf="parent"
-
                     app:layout_constraintTop_toBottomOf="@id/movieTitle" />
 
                 <ImageView
@@ -114,7 +109,6 @@
                     android:layout_marginTop="@dimen/movie_details_common_margin_top"
                     android:src="@drawable/ic_filled_star"
                     app:layout_constraintStart_toEndOf="@id/fillStar1"
-
                     app:layout_constraintTop_toBottomOf="@id/movieTitle" />
 
                 <ImageView
@@ -124,7 +118,6 @@
                     android:layout_marginTop="@dimen/movie_details_common_margin_top"
                     android:src="@drawable/ic_filled_star"
                     app:layout_constraintStart_toEndOf="@id/fillStar2"
-
                     app:layout_constraintTop_toBottomOf="@id/movieTitle" />
 
                 <ImageView
@@ -134,7 +127,6 @@
                     android:layout_marginTop="@dimen/movie_details_common_margin_top"
                     android:src="@drawable/ic_filled_star"
                     app:layout_constraintStart_toEndOf="@id/fillStar3"
-
                     app:layout_constraintTop_toBottomOf="@id/movieTitle" />
 
                 <ImageView
@@ -144,7 +136,6 @@
                     android:layout_marginTop="@dimen/movie_details_common_margin_top"
                     android:src="@drawable/ic_empty_star"
                     app:layout_constraintStart_toEndOf="@id/fillStar4"
-
                     app:layout_constraintTop_toBottomOf="@id/movieTitle" />
 
 
@@ -170,7 +161,6 @@
                     android:text="@string/actors_list_title"
                     android:textSize="@dimen/actors_list_header_text_size"
                     app:layout_constraintStart_toStartOf="parent"
-
                     app:layout_constraintTop_toBottomOf="@id/detailInfoText" />
 
                 <HorizontalScrollView
@@ -196,7 +186,7 @@
                             android:src="@drawable/img_statem"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:shapeAppearanceOverlay="@style/img_actor_rounded_corner"/>
+                            app:shapeAppearanceOverlay="@style/img_actor_rounded_corner" />
 
                         <TextView
                             android:id="@+id/actorName1"
@@ -206,9 +196,7 @@
                             android:fontFamily="@font/roboto_bold"
                             android:text="@string/actor1_name"
                             android:textSize="@dimen/small_text_size"
-
                             app:layout_constraintStart_toStartOf="parent"
-
                             app:layout_constraintTop_toBottomOf="@id/actorImage1" />
 
                         <com.google.android.material.imageview.ShapeableImageView
@@ -220,7 +208,7 @@
                             android:src="@drawable/img_mccallany"
                             app:layout_constraintStart_toEndOf="@id/actorImage1"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:shapeAppearanceOverlay="@style/img_actor_rounded_corner"/>
+                            app:shapeAppearanceOverlay="@style/img_actor_rounded_corner" />
 
                         <TextView
                             android:id="@+id/actorName2"
@@ -231,7 +219,6 @@
                             android:text="@string/actor2_name"
                             android:textSize="@dimen/small_text_size"
                             app:layout_constraintStart_toStartOf="@id/actorImage2"
-
                             app:layout_constraintTop_toBottomOf="@id/actorImage2" />
 
                         <com.google.android.material.imageview.ShapeableImageView
@@ -243,7 +230,7 @@
                             android:src="@drawable/img_hartnett"
                             app:layout_constraintStart_toEndOf="@id/actorImage2"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:shapeAppearanceOverlay="@style/img_actor_rounded_corner"/>
+                            app:shapeAppearanceOverlay="@style/img_actor_rounded_corner" />
 
                         <TextView
                             android:id="@+id/actorName3"
@@ -254,13 +241,11 @@
                             android:text="@string/actor3_name"
                             android:textSize="@dimen/small_text_size"
                             app:layout_constraintStart_toStartOf="@id/actorImage3"
-
                             app:layout_constraintTop_toBottomOf="@id/actorImage3" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </HorizontalScrollView>
-
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -290,6 +275,5 @@
             android:icon="@drawable/ic_person_icon" />
 
     </com.google.android.material.tabs.TabLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
