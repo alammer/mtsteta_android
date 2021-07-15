@@ -18,7 +18,7 @@
         android:layout_height="match_parent"
         android:background="@color/movie_details_bg_color"
         android:scaleType="centerCrop"
-        android:src="@drawable/img_poster"
+        android:src="@drawable/ic_poster"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:shapeAppearanceOverlay="@style/img_poster_rounded_corner" />
@@ -184,7 +184,7 @@
                             android:layout_width="@dimen/actor_img_width"
                             android:layout_height="@dimen/actor_img_height"
                             android:scaleType="centerCrop"
-                            android:src="@drawable/img_statem"
+                            android:src="@drawable/ic_statem"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             app:shapeAppearanceOverlay="@style/img_actor_rounded_corner"/>
@@ -206,7 +206,7 @@
                             android:layout_height="@dimen/actor_img_height"
                             android:layout_marginStart="@dimen/actor_img_margin_start"
                             android:scaleType="centerCrop"
-                            android:src="@drawable/img_mccallany"
+                            android:src="@drawable/ic_mccallany"
                             app:layout_constraintStart_toEndOf="@id/actorImage1"
                             app:layout_constraintTop_toTopOf="parent"
                             app:shapeAppearanceOverlay="@style/img_actor_rounded_corner"/>
@@ -228,7 +228,7 @@
                             android:layout_height="@dimen/actor_img_height"
                             android:layout_marginStart="@dimen/actor_img_margin_start"
                             android:scaleType="centerCrop"
-                            android:src="@drawable/img_hartnett"
+                            android:src="@drawable/ic_hartnett"
                             app:layout_constraintStart_toEndOf="@id/actorImage2"
                             app:layout_constraintTop_toTopOf="parent"
                             app:shapeAppearanceOverlay="@style/img_actor_rounded_corner"/>
