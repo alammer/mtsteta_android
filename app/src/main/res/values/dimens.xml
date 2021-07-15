@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="genre_view_padding_horizontal">8dp</dimen>
-    <dimen name="genre_view_padding_vertical">4dp</dimen>
-    <dimen name="movie_details_common_margin_top">16dp</dimen>
+    <dimen name="genre_view_horizontal_padding">8dp</dimen>
+    <dimen name="genre_view_vertical_padding">4dp</dimen>
+    <dimen name="movie_details_common_top_margin">16dp</dimen>
+    <dimen name="actor_name_top_margin">12dp</dimen>
+    <dimen name="actor_img_start_margin">10dp</dimen>
+    <dimen name="detail_cardview_horizontal_padding">20dp</dimen>
+    <dimen name="detail_cardview_top_padding">32dp</dimen>
     <dimen name="genre_text_size">10sp</dimen>
     <dimen name="small_text_size">12sp</dimen>
     <dimen name="title_text_size">20sp</dimen>
@@ -11,8 +15,4 @@
     <dimen name="actors_list_header_text_size">16sp</dimen>
     <dimen name="actor_img_width">150dp</dimen>
     <dimen name="actor_img_height">196dp</dimen>
-    <dimen name="actor_name_margin_top">12dp</dimen>
-    <dimen name="actor_img_margin_start">10dp</dimen>
-    <dimen name="detail_cardview_padding_horizontal">20dp</dimen>
-    <dimen name="detail_cardview_padding_top">32dp</dimen>
 </resources>
