@@ -49,13 +49,8 @@
                     android:id="@+id/tvDetailGenre"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/rectangle_background"
-                    android:paddingHorizontal="@dimen/genre_view_horizontal_padding"
-                    android:paddingVertical="@dimen/genre_view_vertical_padding"
-                    android:fontFamily="@font/roboto"
+                    style="@style/Genre_tv_Style"
                     android:text="@string/action_genre"
-                    android:textAlignment="center"
-                    android:textSize="@dimen/genre_text_size"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -86,11 +81,9 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_marginBottom="4dp"
-                    android:background="@drawable/oval_background"
                     android:gravity="center"
-                    android:fontFamily="@font/roboto"
+                    style="@style/AgeLimit_tv_Style"
                     android:text="@string/age_limit"
-                    android:textAlignment="center"
                     android:textSize="@dimen/medium_text_size"
                     app:layout_constraintBottom_toBottomOf="@id/tvMovieTitle"
                     app:layout_constraintEnd_toEndOf="parent" />
