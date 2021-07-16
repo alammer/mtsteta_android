@@ -15,4 +15,5 @@
     <dimen name="actors_list_header_text_size">16sp</dimen>
     <dimen name="actor_img_width">150dp</dimen>
     <dimen name="actor_img_height">196dp</dimen>
+    <dimen name="main_screen_title_size">16sp</dimen>
 </resources>

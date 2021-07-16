@@ -12,5 +12,6 @@
     <string name="actor1_name">Джейсон Стэйтем</string>
     <string name="actor2_name">Холт Маккэллани</string>
     <string name="actor3_name">Джош Харнетт</string>
+    <string name="main_screen_title">Популярное сейчас</string>
 
 </resources>
