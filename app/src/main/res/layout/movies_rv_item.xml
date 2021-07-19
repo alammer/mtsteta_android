@@ -4,17 +4,73 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="150dp"
-    android:layout_height="365dp">
+    android:layout_height="wrap_content">
 
     <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/imgPoster"
+        android:id="@+id/rvItemMoviePoster"
         android:layout_width="match_parent"
         android:layout_height="216dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/ic_poster"
         app:layout_constraintTop_toTopOf="parent"
-        app:shapeAppearanceOverlay="@style/ic_poster_rv_item_style" />
+        app:shapeAppearanceOverlay="@style/ic_poster_rv_item_style"
+        tools:src="@tools:sample/avatars"/>
+
+    <TextView
+        android:id="@+id/rvItemMovieTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:fontFamily="@font/roboto_medium"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rvItemMoviePoster"
+        tools:text = "@tools:sample/full_names"/>
+
+    <TextView
+        android:id="@+id/rvItemMovieInfo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:fontFamily="@font/roboto"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="12dp"
+        android:ellipsize="end"
+        android:maxLines="6"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rvItemMovieTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text = "@tools:sample/lorem/random"/>
+
+    <RatingBar
+        android:id="@+id/rvItemMovieRating"
+        android:layout_width="wrap_content"
+        android:layout_height="13dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="4dp"
+        android:numStars="5"
+        android:stepSize="1.0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rvItemMovieInfo"
+        style="@style/CustomRatingBar"/>
+
+    <TextView
+        android:id="@+id/rvItemAgeLimit"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginBottom="2dp"
+        android:layout_marginEnd="2dp"
+        android:gravity="center"
+        style="@style/ageLimit_tv_style_small"
+        android:textSize="7sp"
+        android:fontFamily="@font/roboto"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="18+"/>
 
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
