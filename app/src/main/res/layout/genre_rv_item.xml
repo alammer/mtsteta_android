@@ -8,6 +8,6 @@
         android:id="@+id/tvGenreItem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/Genre_tv_Style"/>
+        style="@style/genre_tv_style"/>
 
 </LinearLayout>
