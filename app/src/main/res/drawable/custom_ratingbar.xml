@@ -2,13 +2,13 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
-        android:id="@android:id/background"
+        android:name="android:background"
         android:drawable="@drawable/ic_empty_star"/>
     <item
-        android:id="@android:id/secondaryProgress"
+        android:name="android:secondaryProgress"
         android:drawable="@drawable/ic_empty_star"/>
     <item
-        android:id="@android:id/progress"
+        android:name="android:progress"
         android:drawable="@drawable/ic_filled_star"/>
 
 </layer-list>

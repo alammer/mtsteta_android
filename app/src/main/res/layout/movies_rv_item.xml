@@ -49,12 +49,14 @@
         android:layout_marginStart="4dp"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="4dp"
+        style="@style/Widget.AppCompat.RatingBar.Small"
         android:numStars="5"
-        android:stepSize="1.0"
+        android:stepSize="1"
+        android:rating="2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/rvItemMovieInfo"
-        style="@style/CustomRatingBar"/>
+        />
 
     <TextView
         android:id="@+id/rvItemAgeLimit"
