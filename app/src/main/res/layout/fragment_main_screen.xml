@@ -46,7 +46,8 @@
         app:layout_constraintBottom_toTopOf="@id/bottomTab"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/rvGenreList" />
+        app:layout_constraintTop_toBottomOf="@id/rvGenreList"
+        tools:listitem="@layout/movies_rv_item"/>
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/bottomTab"
