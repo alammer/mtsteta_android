@@ -20,7 +20,7 @@
         android:scaleType="centerCrop"
         android:src="@drawable/ic_poster"
         app:layout_constraintTop_toTopOf="parent"
-        app:shapeAppearanceOverlay="@style/ic_poster_detail_screen_style" />
+        app:shapeAppearanceOverlay="@style/PosterDetailScreen" />
 
 
     <androidx.cardview.widget.CardView
@@ -45,9 +45,9 @@
 
                 <TextView
                     android:id="@+id/tvDetailGenre"
+                    style="@style/Genre"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/genre_tv_style"
                     android:text="@string/action_genre"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -76,11 +76,11 @@
 
                 <TextView
                     android:id="@+id/tvAgeLimit"
+                    style="@style/AgeLimit"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_marginBottom="4dp"
                     android:gravity="center"
-                    style="@style/ageLimit_tv_style"
                     android:text="@string/age_limit"
                     android:textSize="@dimen/medium_text_size"
                     app:layout_constraintBottom_toBottomOf="@id/tvMovieTitle"
@@ -179,7 +179,7 @@
                             android:src="@drawable/ic_statem"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:shapeAppearanceOverlay="@style/ic_actor_detail_screen_style" />
+                            app:shapeAppearanceOverlay="@style/ActorDetailScreen" />
 
                         <TextView
                             android:id="@+id/tvActorName1"
@@ -201,7 +201,7 @@
                             android:src="@drawable/ic_mccallany"
                             app:layout_constraintStart_toEndOf="@id/actorImage1"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:shapeAppearanceOverlay="@style/ic_actor_detail_screen_style" />
+                            app:shapeAppearanceOverlay="@style/ActorDetailScreen" />
 
                         <TextView
                             android:id="@+id/tvActorName2"
@@ -223,7 +223,7 @@
                             android:src="@drawable/ic_hartnett"
                             app:layout_constraintStart_toEndOf="@id/actorImage2"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:shapeAppearanceOverlay="@style/ic_actor_detail_screen_style" />
+                            app:shapeAppearanceOverlay="@style/ActorDetailScreen" />
 
                         <TextView
                             android:id="@+id/tvActorName3"
