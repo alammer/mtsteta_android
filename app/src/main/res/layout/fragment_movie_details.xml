@@ -86,51 +86,18 @@
                     app:layout_constraintBottom_toBottomOf="@id/tvMovieTitle"
                     app:layout_constraintEnd_toEndOf="parent" />
 
-                <ImageView
-                    android:id="@+id/fillStar1"
+
+                <RatingBar
+                    android:id="@+id/detailMovieRating"
+                    style="@style/CustomRatingBar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/movie_details_common_top_margin"
-                    android:src="@drawable/ic_filled_star"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvMovieTitle" />
-
-                <ImageView
-                    android:id="@+id/fillStar2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/movie_details_common_top_margin"
-                    android:src="@drawable/ic_filled_star"
-                    app:layout_constraintStart_toEndOf="@id/fillStar1"
-                    app:layout_constraintTop_toBottomOf="@id/tvMovieTitle" />
-
-                <ImageView
-                    android:id="@+id/fillStar3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/movie_details_common_top_margin"
-                    android:src="@drawable/ic_filled_star"
-                    app:layout_constraintStart_toEndOf="@id/fillStar2"
-                    app:layout_constraintTop_toBottomOf="@id/tvMovieTitle" />
-
-                <ImageView
-                    android:id="@+id/fillStar4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/movie_details_common_top_margin"
-                    android:src="@drawable/ic_filled_star"
-                    app:layout_constraintStart_toEndOf="@id/fillStar3"
-                    app:layout_constraintTop_toBottomOf="@id/tvMovieTitle" />
-
-                <ImageView
-                    android:id="@+id/emptyStar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/movie_details_common_top_margin"
-                    android:src="@drawable/ic_empty_star"
-                    app:layout_constraintStart_toEndOf="@id/fillStar4"
-                    app:layout_constraintTop_toBottomOf="@id/tvMovieTitle" />
-
+                    android:numStars="5"
+                    android:rating="2"
+                    android:stepSize="1"
+                    app:layout_constraintTop_toBottomOf="@+id/tvMovieTitle"
+                    app:layout_constraintStart_toStartOf="parent" />
 
                 <TextView
                     android:id="@+id/tvDetailInfoText"
@@ -143,7 +110,7 @@
                     android:textSize="@dimen/movie_info_text_size"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/fillStar1" />
+                    app:layout_constraintTop_toBottomOf="@id/detailMovieRating" />
 
                 <TextView
                     android:id="@+id/tvActorsListTitle"
