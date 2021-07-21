@@ -1,7 +1,6 @@
 package ru.mtsteta.flixnet.movies
 
-import android.content.Context
-import android.graphics.Color
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,9 +13,8 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import ru.mtsteta.flixnet.R
 
-class MovieListAdapter (context: Context, /*private val clickListener: MovieClickListener*/): ListAdapter<MovieDto, MovieListAdapter.MovieListViewHolder>(DiffCallback) {
 
-    private val inflater: LayoutInflater = LayoutInflater.from(context)
+class MovieListAdapter (/*private val clickListener: MovieClickListener*/): ListAdapter<MovieDto, MovieListAdapter.MovieListViewHolder>(DiffCallback) {
 
     class MovieListViewHolder (itemView: View) : RecyclerView.ViewHolder(itemView) {
         //link item(object) elements with xml through databinding
@@ -36,7 +34,7 @@ class MovieListAdapter (context: Context, /*private val clickListener: MovieClic
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieListViewHolder {  //create new view by layout manager
-        val view = inflater.inflate(R.layout.movies_rv_item, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.movies_rv_item, parent, false)
         return MovieListViewHolder(view)
     }
 
