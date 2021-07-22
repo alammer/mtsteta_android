@@ -6,15 +6,17 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ru.mtsteta.flixnet.R
+import ru.mtsteta.flixnet.movies.MovieDto
 
-class GenreListAdapter(private val items: List<String>) :
+class GenreListAdapter(private val items: List<String>, private val clickListener: GenreClickListener) :
     RecyclerView.Adapter<GenreListAdapter.GenreViewHolder>() {
 
     class GenreViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val genreTextView = itemView.findViewById<TextView>(R.id.tvGenreItem)
 
-        fun bind(item: String, position: Int) {
+        fun bind(clickListener: GenreClickListener, item: String, position: Int) {
             genreTextView.text = item
+            itemView.setOnClickListener { clickListener.onClick(item) }
         }
     }
 
@@ -27,6 +29,10 @@ class GenreListAdapter(private val items: List<String>) :
     }
 
     override fun onBindViewHolder(holder: GenreViewHolder, position: Int) {
-        holder.bind(items[position], position)
+        holder.bind(clickListener, items[position], position)
     }
+}
+
+class GenreClickListener (val clickListener: (genre: String) -> Unit){
+    fun onClick(genre: String) = clickListener(genre)
 }
