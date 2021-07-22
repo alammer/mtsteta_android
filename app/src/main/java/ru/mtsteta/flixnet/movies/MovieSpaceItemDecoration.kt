@@ -1,7 +1,6 @@
 package ru.mtsteta.flixnet.movies
 
 import android.graphics.Rect
-import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -14,7 +13,7 @@ class MovieSpaceItemDecoration(private val spacingTop: Int) : RecyclerView.ItemD
         parent: RecyclerView,
         s: RecyclerView.State
     ) {
-        parent.adapter?.let { adapter ->
+        parent.adapter?.let { _ ->
             val itemPos = parent.getChildAdapterPosition(view)
 
             when (parent.layoutManager) {
@@ -34,7 +33,6 @@ class MovieSpaceItemDecoration(private val spacingTop: Int) : RecyclerView.ItemD
                         rect.left = 25
                     }
                 }
-
                 else -> {
                     rect.set(50, 50, 50, 50)
                 }

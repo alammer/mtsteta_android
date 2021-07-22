@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ru.mtsteta.flixnet.R
-import ru.mtsteta.flixnet.movies.MovieDto
 
 class GenreListAdapter(private val items: List<String>, private val clickListener: GenreClickListener) :
     RecyclerView.Adapter<GenreListAdapter.GenreViewHolder>() {

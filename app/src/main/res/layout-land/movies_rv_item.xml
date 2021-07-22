@@ -10,10 +10,10 @@
         android:layout_width="144dp"
         android:layout_height="216dp"
         android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:shapeAppearanceOverlay="@style/PosteItemMainScreen"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         tools:src="@tools:sample/avatars" />
 
     <TextView
@@ -22,10 +22,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
         android:layout_marginTop="8dp"
-        android:fontFamily="@font/roboto_medium"
-        android:textSize="14sp"
         android:ellipsize="end"
+        android:fontFamily="@font/roboto_medium"
         android:maxLines="1"
+        android:textSize="@dimen/medium_text_size"
         app:layout_constraintStart_toEndOf="@+id/rvItemMoviePoster"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="@tools:sample/full_names" />
@@ -38,11 +38,11 @@
         android:layout_marginTop="12dp"
         android:ellipsize="end"
         android:fontFamily="@font/roboto"
-        android:maxLines="10"
         android:lines="10"
-        android:textSize="10sp"
-        app:layout_constraintStart_toEndOf="@id/rvItemMoviePoster"
+        android:maxLines="10"
+        android:textSize="@dimen/mini_text_size"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/rvItemMoviePoster"
         app:layout_constraintTop_toBottomOf="@+id/rvItemMovieTitle"
         tools:text="@tools:sample/lorem/random" />
 
@@ -52,8 +52,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:layout_marginBottom="4dp"
         android:layout_marginTop="8dp"
+        android:layout_marginBottom="4dp"
         android:numStars="5"
         android:rating="2"
         android:stepSize="1"
@@ -69,14 +69,9 @@
         android:layout_marginBottom="2dp"
         android:fontFamily="@font/roboto"
         android:gravity="center"
-        android:textSize="7sp"
+        android:textSize="@dimen/micro_text_size"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         tools:text="18+" />
-
-
-
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

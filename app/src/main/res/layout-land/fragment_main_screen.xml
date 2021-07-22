@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/main_screen_bg_color"
     android:paddingHorizontal="20dp"
-    android:paddingTop="32dp"
-    android:background="@color/main_screen_bg_color">
+    android:paddingTop="32dp">
 
     <TextView
         android:id="@+id/tvSearchIcon"
@@ -30,13 +30,13 @@
         android:id="@+id/rvGenreList"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
+        android:orientation="horizontal"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintEnd_toStartOf="@+id/tvSearchIcon"
         app:layout_constraintStart_toEndOf="@id/tvMainTitle"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/tvSearchIcon"
         tools:listitem="@layout/genre_rv_item" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -51,18 +51,18 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/rvGenreList"
-        app:layout_constraintVertical_bias="0.0"
-        app:spanCount="3"
         tools:listitem="@layout/movies_rv_item" />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/bottomTab"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="48dp"
         android:elevation="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:tabMaxWidth="0dp"
+        app:tabGravity="fill"
         app:tabIconTint="@color/black"
         app:tabIndicatorColor="@color/black"
         app:tabMode="fixed">

@@ -1,12 +1,24 @@
 package ru.mtsteta.flixnet.fakeRepo
 
-import androidx.lifecycle.viewmodel.savedstate.R
 import ru.mtsteta.flixnet.movies.MovieDto
 
 class MoviesDataSourceImpl : MoviesDataSource {
 
-    val genreList = listOf<String>("Боевик", "Комедия", "Приключения", "Мультик", "Криминал",
-        "Документальное", "Драма", "Семейный", "Фантастика", "Исторический", "Ужасы", "Научная фантастика", "Рельное ТВ")
+    val genreList = listOf<String>(
+        "Боевик",
+        "Комедия",
+        "Приключения",
+        "Мультик",
+        "Криминал",
+        "Документальное",
+        "Драма",
+        "Семейный",
+        "Фантастика",
+        "Исторический",
+        "Ужасы",
+        "Научная фантастика",
+        "Рельное ТВ",
+    )
 
     override fun getMovies() = listOf(
         MovieDto(

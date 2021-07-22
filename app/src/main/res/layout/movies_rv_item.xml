@@ -20,10 +20,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
         android:layout_marginTop="8dp"
-        android:fontFamily="@font/roboto_medium"
-        android:textSize="14sp"
         android:ellipsize="end"
+        android:fontFamily="@font/roboto_medium"
         android:maxLines="1"
+        android:textSize="@dimen/medium_text_size"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rvItemMoviePoster"
         tools:text="@tools:sample/full_names" />
@@ -36,9 +36,9 @@
         android:layout_marginTop="12dp"
         android:ellipsize="end"
         android:fontFamily="@font/roboto"
-        android:maxLines="6"
         android:lines="6"
-        android:textSize="12sp"
+        android:maxLines="6"
+        android:textSize="@dimen/small_text_size"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rvItemMovieTitle"
@@ -57,7 +57,7 @@
         android:stepSize="1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/rvItemMovieInfo"/>
+        app:layout_constraintTop_toBottomOf="@id/rvItemMovieInfo" />
 
     <TextView
         android:id="@+id/rvItemAgeLimit"
@@ -68,7 +68,7 @@
         android:layout_marginBottom="2dp"
         android:fontFamily="@font/roboto"
         android:gravity="center"
-        android:textSize="7sp"
+        android:textSize="@dimen/micro_text_size"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         tools:text="18+" />
