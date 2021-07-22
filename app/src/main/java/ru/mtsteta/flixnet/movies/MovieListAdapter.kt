@@ -27,6 +27,7 @@ class MovieListAdapter (private val clickListener: MovieClickListener): ListAdap
         fun bind(clickListener: MovieClickListener, item: MovieDto, position: Int) {
             titleTextView.text = item.title
             infoTextView.text = item.description
+
             ratingBar.rating = item.rateScore.toFloat()
             ageLimitTextView.text = item.ageRestriction.toString() + "+"
             posterImage.load(item.imageUrl)

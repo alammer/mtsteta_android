@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
             showToast(genre)
         })
         genreRecycler.adapter = genreAdapter
-        genreRecycler.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
+        //genreRecycler.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
 
         val movieRecycler = findViewById<RecyclerView>(R.id.rvMovieList)
         val movies = fakeMovieData.getMovies()
@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
             showToast(movieItem.title)
         })
         movieRecycler.adapter = movieAdapter
-        movieRecycler.layoutManager = GridLayoutManager(this, 2)
+        //movieRecycler.layoutManager = GridLayoutManager(this, 2)
         movieRecycler.addItemDecoration(MovieSpaceItemDecoration(resources.getDimensionPixelSize(R.dimen.item_top_spacing)))
         movieAdapter.submitList(movies)
     }

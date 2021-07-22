@@ -20,36 +20,40 @@
         android:id="@+id/tvMainTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
         android:fontFamily="@font/roboto_bold"
         android:text="@string/main_screen_title"
         android:textSize="@dimen/main_screen_title_size"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvSearchIcon" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvGenreList"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:orientation="horizontal"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvMainTitle"
+        app:layout_constraintStart_toEndOf="@id/tvMainTitle"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/tvSearchIcon"
         tools:listitem="@layout/genre_rv_item" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvMovieList"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:spanCount="2"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@id/bottomTab"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/rvGenreList"
-        tools:listitem="@layout/movies_rv_item"/>
+        app:layout_constraintVertical_bias="0.0"
+        app:spanCount="3"
+        tools:listitem="@layout/movies_rv_item" />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/bottomTab"
