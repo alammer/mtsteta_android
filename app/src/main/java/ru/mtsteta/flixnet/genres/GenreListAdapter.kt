@@ -19,7 +19,7 @@ class GenreListAdapter(private val items: List<String>, private val clickListene
         }
     }
 
-    override fun getItemCount() = items.count()
+    override fun getItemCount() = items.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GenreViewHolder {
         val view =
