@@ -14,8 +14,6 @@ import ru.mtsteta.flixnet.movies.MovieSpaceItemDecoration
 
 class MainActivity : AppCompatActivity() {
 
-    //private lateinit var movieRecycler: RecyclerView
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.fragment_main_screen)
@@ -24,7 +22,7 @@ class MainActivity : AppCompatActivity() {
 
         val genreRecycler = findViewById<RecyclerView>(R.id.rvGenreList)
         val genres = fakeMovieData.genreList
-        val genreAdapter = GenreListAdapter(genres, GenreClickListener { genre: String ->
+        val genreAdapter = GenreListAdapter(genres, GenreClickListener { genre ->
             showToast(genre)
         })
         genreAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
@@ -37,7 +35,7 @@ class MainActivity : AppCompatActivity() {
         })
         movieAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
         movieRecycler.adapter = movieAdapter
-        movieRecycler.addItemDecoration(MovieSpaceItemDecoration(resources.getDimensionPixelSize(R.dimen.item_top_spacing)))
+        movieRecycler.addItemDecoration(MovieSpaceItemDecoration(resources.getDimensionPixelSize(R.dimen.mainscreen_movie_rv_item_top_spacing)))
         movieAdapter.submitList(movies)
     }
 

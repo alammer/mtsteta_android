@@ -15,11 +15,11 @@
         android:id="@+id/imgPoster"
         android:layout_width="match_parent"
         android:layout_height="290dp"
-        android:background="@color/movie_details_bg_color"
+        android:background="@color/detailed_bg_color"
         android:scaleType="centerCrop"
         android:src="@drawable/ic_poster"
         app:layout_constraintTop_toTopOf="parent"
-        app:shapeAppearanceOverlay="@style/PosterDetailScreen" />
+        app:shapeAppearanceOverlay="@style/DetailedMoviePoster" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/detailView"
@@ -33,17 +33,17 @@
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/movie_details_bg_color">
+            android:background="@color/detailed_bg_color">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingHorizontal="@dimen/detail_cardview_horizontal_padding"
-                android:paddingTop="@dimen/detail_cardview_top_padding">
+                android:paddingHorizontal="@dimen/detailed_cardview_horizontal_padding"
+                android:paddingTop="@dimen/detailed_cardview_top_padding">
 
                 <TextView
                     android:id="@+id/tvDetailGenre"
-                    style="@style/Genre"
+                    style="@style/GenreItem"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/action_genre"
@@ -54,7 +54,7 @@
                     android:id="@+id/tvReleaseDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/movie_details_common_top_margin"
+                    android:layout_marginStart="@dimen/detailed_common_top_margin"
                     android:fontFamily="@font/roboto"
                     android:text="@string/release_date"
                     android:textSize="@dimen/small_text_size"
@@ -65,18 +65,18 @@
                     android:id="@+id/tvMovieTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/movie_details_common_top_margin"
+                    android:layout_marginTop="@dimen/detailed_common_top_margin"
                     android:fontFamily="@font/roboto_medium"
                     android:text="@string/movie_name"
-                    android:textSize="@dimen/title_text_size"
+                    android:textSize="@dimen/detailed_title_text_size"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tvDetailGenre" />
 
                 <TextView
                     android:id="@+id/tvAgeLimit"
-                    style="@style/AgeLimit"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    style="@style/AgeLimitIcon"
+                    android:layout_width="@dimen/agelimit_tv_width"
+                    android:layout_height="@dimen/agelimit_tv_height"
                     android:layout_marginBottom="4dp"
                     android:gravity="center"
                     android:text="@string/age_limit"
@@ -86,10 +86,10 @@
 
                 <RatingBar
                     android:id="@+id/detailMovieRating"
-                    style="@style/CustomRatingBar"
+                    style="@style/MovieRatingBar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/movie_details_common_top_margin"
+                    android:layout_marginTop="@dimen/detailed_common_top_margin"
                     android:numStars="5"
                     android:rating="2"
                     android:stepSize="1"
@@ -104,7 +104,7 @@
                     android:fontFamily="@font/roboto"
                     android:text="@string/test_detail_text"
                     android:textAlignment="textStart"
-                    android:textSize="@dimen/movie_info_text_size"
+                    android:textSize="@dimen/detailed_movie_info_text_size"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/detailMovieRating" />
@@ -116,7 +116,7 @@
                     android:layout_marginTop="36dp"
                     android:fontFamily="@font/roboto_medium"
                     android:text="@string/actors_list_title"
-                    android:textSize="@dimen/actors_list_header_text_size"
+                    android:textSize="@dimen/detailed_actors_list_header_text_size"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tvDetailInfoText" />
 
@@ -124,7 +124,7 @@
                     android:id="@+id/actorsList"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/movie_details_common_top_margin"
+                    android:layout_marginTop="@dimen/detailed_common_top_margin"
                     android:layout_marginBottom="96dp"
                     android:scrollbars="none"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -137,19 +137,19 @@
 
                         <com.google.android.material.imageview.ShapeableImageView
                             android:id="@+id/actorImage1"
-                            android:layout_width="@dimen/actor_img_width"
-                            android:layout_height="@dimen/actor_img_height"
+                            android:layout_width="@dimen/detailed_actor_img_width"
+                            android:layout_height="@dimen/detailed_actor_img_height"
                             android:scaleType="centerCrop"
                             android:src="@drawable/ic_statem"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:shapeAppearanceOverlay="@style/ActorDetailScreen" />
+                            app:shapeAppearanceOverlay="@style/DetailedActorPoster" />
 
                         <TextView
                             android:id="@+id/tvActorName1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/actor_name_top_margin"
+                            android:layout_marginTop="@dimen/detailed_actor_name_top_margin"
                             android:fontFamily="@font/roboto_bold"
                             android:text="@string/actor1_name"
                             android:textSize="@dimen/small_text_size"
@@ -158,20 +158,20 @@
 
                         <com.google.android.material.imageview.ShapeableImageView
                             android:id="@+id/actorImage2"
-                            android:layout_width="@dimen/actor_img_width"
-                            android:layout_height="@dimen/actor_img_height"
-                            android:layout_marginStart="@dimen/actor_img_start_margin"
+                            android:layout_width="@dimen/detailed_actor_img_width"
+                            android:layout_height="@dimen/detailed_actor_img_height"
+                            android:layout_marginStart="@dimen/detailed_actor_img_start_margin"
                             android:scaleType="centerCrop"
                             android:src="@drawable/ic_mccallany"
                             app:layout_constraintStart_toEndOf="@id/actorImage1"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:shapeAppearanceOverlay="@style/ActorDetailScreen" />
+                            app:shapeAppearanceOverlay="@style/DetailedActorPoster" />
 
                         <TextView
                             android:id="@+id/tvActorName2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/actor_name_top_margin"
+                            android:layout_marginTop="@dimen/detailed_actor_name_top_margin"
                             android:fontFamily="@font/roboto_bold"
                             android:text="@string/actor2_name"
                             android:textSize="@dimen/small_text_size"
@@ -180,20 +180,20 @@
 
                         <com.google.android.material.imageview.ShapeableImageView
                             android:id="@+id/actorImage3"
-                            android:layout_width="@dimen/actor_img_width"
-                            android:layout_height="@dimen/actor_img_height"
-                            android:layout_marginStart="@dimen/actor_img_start_margin"
+                            android:layout_width="@dimen/detailed_actor_img_width"
+                            android:layout_height="@dimen/detailed_actor_img_height"
+                            android:layout_marginStart="@dimen/detailed_actor_img_start_margin"
                             android:scaleType="centerCrop"
                             android:src="@drawable/ic_hartnett"
                             app:layout_constraintStart_toEndOf="@id/actorImage2"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:shapeAppearanceOverlay="@style/ActorDetailScreen" />
+                            app:shapeAppearanceOverlay="@style/DetailedActorPoster" />
 
                         <TextView
                             android:id="@+id/tvActorName3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/actor_name_top_margin"
+                            android:layout_marginTop="@dimen/detailed_actor_name_top_margin"
                             android:fontFamily="@font/roboto_bold"
                             android:text="@string/actor3_name"
                             android:textSize="@dimen/small_text_size"

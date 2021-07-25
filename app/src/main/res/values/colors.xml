@@ -8,6 +8,6 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="transparent">#000000</color>
-    <color name="movie_details_bg_color">#F1F1F1</color>
-    <color name="main_screen_bg_color">#e5e5e5</color>
+    <color name="detailed_bg_color">#F1F1F1</color>
+    <color name="mainscreen_bg_color">#e5e5e5</color>
 </resources>
