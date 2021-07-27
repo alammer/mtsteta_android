@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -8,48 +9,51 @@
         android:id="@+id/guideLine"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="320dp" />
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="224dp" />
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/imgPoster"
-        android:layout_width="360dp"
-        android:layout_height="match_parent"
-        android:background="@color/bg_color_detailed"
+        android:layout_width="match_parent"
+        android:layout_height="290dp"
+        android:background="@color/movie_details_bg_color"
         android:scaleType="centerCrop"
         android:src="@drawable/ic_poster"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:shapeAppearanceOverlay="@style/DetailedMoviePoster" />
+        app:shapeAppearanceOverlay="@style/img_poster_rounded_corner" />
+
 
     <androidx.cardview.widget.CardView
         android:id="@+id/detailView"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:elevation="0dp"
         app:cardCornerRadius="20dp"
-
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/guideLine"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="@id/guideLine">
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/bg_color_detailed">
+            android:background="@color/movie_details_bg_color">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingHorizontal="@dimen/detailed_cardview_horizontal_padding"
-                android:paddingTop="@dimen/detailed_cardview_top_padding">
+                android:paddingHorizontal="@dimen/detail_cardview_horizontal_padding"
+                android:paddingTop="@dimen/detail_cardview_top_padding">
 
                 <TextView
                     android:id="@+id/tvDetailGenre"
-                    style="@style/Genre"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/rectangle_background"
+                    android:fontFamily="@font/roboto"
+                    android:paddingHorizontal="@dimen/genre_view_horizontal_padding"
+                    android:paddingVertical="@dimen/genre_view_vertical_padding"
                     android:text="@string/action_genre"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/genre_text_size"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -57,7 +61,7 @@
                     android:id="@+id/tvReleaseDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/detailed_common_top_margin"
+                    android:layout_marginStart="@dimen/movie_details_common_top_margin"
                     android:fontFamily="@font/roboto"
                     android:text="@string/release_date"
                     android:textSize="@dimen/small_text_size"
@@ -68,37 +72,72 @@
                     android:id="@+id/tvMovieTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
-                    android:layout_marginTop="@dimen/detailed_common_top_margin"
+                    android:layout_marginTop="@dimen/movie_details_common_top_margin"
                     android:fontFamily="@font/roboto_medium"
                     android:text="@string/movie_name"
-                    android:textSize="@dimen/detailed_title_text_size"
+                    android:textSize="@dimen/title_text_size"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tvDetailGenre" />
 
                 <TextView
                     android:id="@+id/tvAgeLimit"
-                    style="@style/AgeLimit"
-                    android:layout_width="@dimen/agelimit_width"
-                    android:layout_height="@dimen/agelimit_height"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_marginBottom="4dp"
+                    android:background="@drawable/oval_background"
+                    android:fontFamily="@font/roboto"
                     android:gravity="center"
                     android:text="@string/age_limit"
+                    android:textAlignment="center"
                     android:textSize="@dimen/medium_text_size"
                     app:layout_constraintBottom_toBottomOf="@id/tvMovieTitle"
                     app:layout_constraintEnd_toEndOf="parent" />
 
-                <RatingBar
-                    android:id="@+id/detailMovieRating"
-                    style="@style/MovieRatingBar"
+                <ImageView
+                    android:id="@+id/fillStar1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/detailed_common_top_margin"
-                    android:numStars="5"
-                    android:rating="2"
-                    android:stepSize="1"
+                    android:layout_marginTop="@dimen/movie_details_common_top_margin"
+                    android:src="@drawable/ic_filled_star"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tvMovieTitle" />
+                    app:layout_constraintTop_toBottomOf="@id/tvMovieTitle" />
+
+                <ImageView
+                    android:id="@+id/fillStar2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/movie_details_common_top_margin"
+                    android:src="@drawable/ic_filled_star"
+                    app:layout_constraintStart_toEndOf="@id/fillStar1"
+                    app:layout_constraintTop_toBottomOf="@id/tvMovieTitle" />
+
+                <ImageView
+                    android:id="@+id/fillStar3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/movie_details_common_top_margin"
+                    android:src="@drawable/ic_filled_star"
+                    app:layout_constraintStart_toEndOf="@id/fillStar2"
+                    app:layout_constraintTop_toBottomOf="@id/tvMovieTitle" />
+
+                <ImageView
+                    android:id="@+id/fillStar4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/movie_details_common_top_margin"
+                    android:src="@drawable/ic_filled_star"
+                    app:layout_constraintStart_toEndOf="@id/fillStar3"
+                    app:layout_constraintTop_toBottomOf="@id/tvMovieTitle" />
+
+                <ImageView
+                    android:id="@+id/emptyStar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/movie_details_common_top_margin"
+                    android:src="@drawable/ic_empty_star"
+                    app:layout_constraintStart_toEndOf="@id/fillStar4"
+                    app:layout_constraintTop_toBottomOf="@id/tvMovieTitle" />
+
 
                 <TextView
                     android:id="@+id/tvDetailInfoText"
@@ -108,10 +147,10 @@
                     android:fontFamily="@font/roboto"
                     android:text="@string/test_detail_text"
                     android:textAlignment="textStart"
-                    android:textSize="@dimen/detailed_movie_info_text_size"
+                    android:textSize="@dimen/movie_info_text_size"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/detailMovieRating" />
+                    app:layout_constraintTop_toBottomOf="@id/fillStar1" />
 
                 <TextView
                     android:id="@+id/tvActorsListTitle"
@@ -120,7 +159,7 @@
                     android:layout_marginTop="36dp"
                     android:fontFamily="@font/roboto_medium"
                     android:text="@string/actors_list_title"
-                    android:textSize="@dimen/detailed_actors_list_header_text_size"
+                    android:textSize="@dimen/actors_list_header_text_size"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tvDetailInfoText" />
 
@@ -128,7 +167,7 @@
                     android:id="@+id/actorsList"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/detailed_common_top_margin"
+                    android:layout_marginTop="@dimen/movie_details_common_top_margin"
                     android:layout_marginBottom="96dp"
                     android:scrollbars="none"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -141,19 +180,19 @@
 
                         <com.google.android.material.imageview.ShapeableImageView
                             android:id="@+id/actorImage1"
-                            android:layout_width="@dimen/detailed_actor_img_width"
-                            android:layout_height="@dimen/detailed_actor_img_height"
+                            android:layout_width="@dimen/actor_img_width"
+                            android:layout_height="@dimen/actor_img_height"
                             android:scaleType="centerCrop"
                             android:src="@drawable/ic_statem"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:shapeAppearanceOverlay="@style/DetailedActorPoster" />
+                            app:shapeAppearanceOverlay="@style/img_actor_rounded_corner" />
 
                         <TextView
                             android:id="@+id/tvActorName1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/detailed_actor_name_top_margin"
+                            android:layout_marginTop="@dimen/actor_name_top_margin"
                             android:fontFamily="@font/roboto_bold"
                             android:text="@string/actor1_name"
                             android:textSize="@dimen/small_text_size"
@@ -162,20 +201,20 @@
 
                         <com.google.android.material.imageview.ShapeableImageView
                             android:id="@+id/actorImage2"
-                            android:layout_width="@dimen/detailed_actor_img_width"
-                            android:layout_height="@dimen/detailed_actor_img_height"
-                            android:layout_marginStart="@dimen/detailed_actor_img_start_margin"
+                            android:layout_width="@dimen/actor_img_width"
+                            android:layout_height="@dimen/actor_img_height"
+                            android:layout_marginStart="@dimen/actor_img_start_margin"
                             android:scaleType="centerCrop"
                             android:src="@drawable/ic_mccallany"
                             app:layout_constraintStart_toEndOf="@id/actorImage1"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:shapeAppearanceOverlay="@style/DetailedActorPoster" />
+                            app:shapeAppearanceOverlay="@style/img_actor_rounded_corner" />
 
                         <TextView
                             android:id="@+id/tvActorName2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/detailed_actor_name_top_margin"
+                            android:layout_marginTop="@dimen/actor_name_top_margin"
                             android:fontFamily="@font/roboto_bold"
                             android:text="@string/actor2_name"
                             android:textSize="@dimen/small_text_size"
@@ -184,20 +223,20 @@
 
                         <com.google.android.material.imageview.ShapeableImageView
                             android:id="@+id/actorImage3"
-                            android:layout_width="@dimen/detailed_actor_img_width"
-                            android:layout_height="@dimen/detailed_actor_img_height"
-                            android:layout_marginStart="@dimen/detailed_actor_img_start_margin"
+                            android:layout_width="@dimen/actor_img_width"
+                            android:layout_height="@dimen/actor_img_height"
+                            android:layout_marginStart="@dimen/actor_img_start_margin"
                             android:scaleType="centerCrop"
                             android:src="@drawable/ic_hartnett"
                             app:layout_constraintStart_toEndOf="@id/actorImage2"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:shapeAppearanceOverlay="@style/DetailedActorPoster" />
+                            app:shapeAppearanceOverlay="@style/img_actor_rounded_corner" />
 
                         <TextView
                             android:id="@+id/tvActorName3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/detailed_actor_name_top_margin"
+                            android:layout_marginTop="@dimen/actor_name_top_margin"
                             android:fontFamily="@font/roboto_bold"
                             android:text="@string/actor3_name"
                             android:textSize="@dimen/small_text_size"
@@ -215,16 +254,14 @@
     </androidx.cardview.widget.CardView>
 
     <com.google.android.material.tabs.TabLayout
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="48dp"
         android:elevation="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/guideLine"
-        app:tabGravity="fill"
+        app:layout_constraintStart_toStartOf="parent"
         app:tabIconTint="@color/black"
         app:tabIndicatorColor="@color/black"
-        app:tabMaxWidth="0dp"
         app:tabMode="fixed">
 
         <com.google.android.material.tabs.TabItem
