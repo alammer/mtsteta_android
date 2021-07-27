@@ -8,6 +8,6 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="transparent">#000000</color>
-    <color name="detailed_bg_color">#F1F1F1</color>
-    <color name="mainscreen_bg_color">#e5e5e5</color>
+    <color name="bg_color_detailed">#F1F1F1</color>
+    <color name="bg_color_mainscreen">#e5e5e5</color>
 </resources>

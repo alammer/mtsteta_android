@@ -14,12 +14,12 @@
     <dimen name="detailed_actors_list_header_text_size">16sp</dimen>
     <dimen name="detailed_actor_img_width">150dp</dimen>
     <dimen name="detailed_actor_img_height">196dp</dimen>
-    <dimen name="mainscreen_title_size">16sp</dimen>
-    <dimen name="mainscreen_movie_rv_item_top_spacing">48dp</dimen>
-    <dimen name="mainscreen_rv_item_poster_height">216dp</dimen>
-    <dimen name="mainscreen_land_rv_item_poster_width">144dp</dimen>
-    <dimen name="agelimit_tv_small_width">20dp</dimen>
-    <dimen name="agelimit_tv_small_height">20dp</dimen>
-    <dimen name="agelimit_tv_width">40dp</dimen>
-    <dimen name="agelimit_tv_height">40dp</dimen>
+    <dimen name="mainscreen_title_text_size">16sp</dimen>
+    <dimen name="mainscreen_movie_top_spacing">48dp</dimen>
+    <dimen name="mainscreen_poster_height">216dp</dimen>
+    <dimen name="mainscreen_land_poster_width">144dp</dimen>
+    <dimen name="agelimit_small_width">20dp</dimen>
+    <dimen name="agelimit_small_height">20dp</dimen>
+    <dimen name="agelimit_width">40dp</dimen>
+    <dimen name="agelimit_height">40dp</dimen>
 </resources>

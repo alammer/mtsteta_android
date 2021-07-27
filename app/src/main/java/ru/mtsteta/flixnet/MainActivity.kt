@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
         })
         movieAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
         movieRecycler.adapter = movieAdapter
-        movieRecycler.addItemDecoration(MovieSpaceItemDecoration(resources.getDimensionPixelSize(R.dimen.mainscreen_movie_rv_item_top_spacing)))
+        movieRecycler.addItemDecoration(MovieSpaceItemDecoration(resources.getDimensionPixelSize(R.dimen.mainscreen_movie_top_spacing)))
         movieAdapter.submitList(movies)
     }
 

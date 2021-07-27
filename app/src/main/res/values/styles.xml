@@ -13,12 +13,12 @@
         <item name="cornerFamily">rounded</item>
     </style>
 
-    <style name="MainscreenRvMovieItemPoster">
+    <style name="MainscreenMoviePoster">
         <item name="cornerSize">10dp</item>
         <item name="cornerFamily">rounded</item>
     </style>
 
-    <style name="GenreItem" parent="android:Widget.TextView">
+    <style name="Genre" parent="android:Widget.TextView">
         <item name="android:paddingStart">12dp</item>
         <item name="android:paddingEnd">12dp</item>
         <item name="android:paddingTop">4dp</item>
@@ -30,14 +30,14 @@
         <item name="android:fontFamily">@font/roboto</item>
     </style>
 
-    <style name="AgeLimitIcon" parent="android:Widget.TextView">
+    <style name="AgeLimit" parent="android:Widget.TextView">
         <item name="android:background">@drawable/oval_background</item>
         <item name="android:textColor">@color/transparent</item>
         <item name="android:textAlignment">center</item>
         <item name="android:fontFamily">@font/roboto</item>
     </style>
 
-    <style name="AgeLimitIconSmall" parent="android:Widget.TextView">
+    <style name="AgeLimitSmall" parent="android:Widget.TextView">
         <item name="android:background">@drawable/oval_background_small</item>
         <item name="android:textColor">@color/transparent</item>
         <item name="android:textAlignment">center</item>

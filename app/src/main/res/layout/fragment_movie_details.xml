@@ -15,7 +15,7 @@
         android:id="@+id/imgPoster"
         android:layout_width="match_parent"
         android:layout_height="290dp"
-        android:background="@color/detailed_bg_color"
+        android:background="@color/bg_color_detailed"
         android:scaleType="centerCrop"
         android:src="@drawable/ic_poster"
         app:layout_constraintTop_toTopOf="parent"
@@ -33,7 +33,7 @@
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/detailed_bg_color">
+            android:background="@color/bg_color_detailed">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -43,7 +43,7 @@
 
                 <TextView
                     android:id="@+id/tvDetailGenre"
-                    style="@style/GenreItem"
+                    style="@style/Genre"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/action_genre"
@@ -74,9 +74,9 @@
 
                 <TextView
                     android:id="@+id/tvAgeLimit"
-                    style="@style/AgeLimitIcon"
-                    android:layout_width="@dimen/agelimit_tv_width"
-                    android:layout_height="@dimen/agelimit_tv_height"
+                    style="@style/AgeLimit"
+                    android:layout_width="@dimen/agelimit_width"
+                    android:layout_height="@dimen/agelimit_height"
                     android:layout_marginBottom="4dp"
                     android:gravity="center"
                     android:text="@string/age_limit"
