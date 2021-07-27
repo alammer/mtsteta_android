@@ -1,14 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="img_poster_rounded_corner">
+
+    <style name="DetailedMoviePoster">
         <item name="cornerSizeTopLeft">15dp</item>
         <item name="cornerSizeTopRight">15dp</item>
         <item name="cornerFamilyTopLeft">rounded</item>
         <item name="cornerFamilyTopRight">rounded</item>
     </style>
 
-    <style name="img_actor_rounded_corner">
+    <style name="DetailedActorPoster">
         <item name="cornerSize">10dp</item>
         <item name="cornerFamily">rounded</item>
     </style>
+
+    <style name="MainscreenMoviePoster">
+        <item name="cornerSize">10dp</item>
+        <item name="cornerFamily">rounded</item>
+    </style>
+
+    <style name="Genre" parent="android:Widget.TextView">
+        <item name="android:paddingStart">12dp</item>
+        <item name="android:paddingEnd">12dp</item>
+        <item name="android:paddingTop">4dp</item>
+        <item name="android:paddingBottom">4dp</item>
+        <item name="android:background">@drawable/rectangle_background</item>
+        <item name="android:textColor">@color/transparent</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textSize">@dimen/mini_text_size</item>
+        <item name="android:fontFamily">@font/roboto</item>
+    </style>
+
+    <style name="AgeLimit" parent="android:Widget.TextView">
+        <item name="android:background">@drawable/oval_background</item>
+        <item name="android:textColor">@color/transparent</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:fontFamily">@font/roboto</item>
+    </style>
+
+    <style name="AgeLimitSmall" parent="android:Widget.TextView">
+        <item name="android:background">@drawable/oval_background_small</item>
+        <item name="android:textColor">@color/transparent</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:fontFamily">@font/roboto</item>
+    </style>
+
+    <style name="MovieRatingBar" parent="Widget.AppCompat.RatingBar">
+        <item name="android:progressDrawable">@drawable/custom_rating</item>
+        <item name="android:minHeight">14dp</item>
+        <item name="android:maxHeight">14dp</item>
+    </style>
+
 </resources>

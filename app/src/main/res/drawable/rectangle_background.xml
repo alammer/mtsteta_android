@@ -3,7 +3,7 @@
     android:shape="rectangle">
 
     <!-- View background color -->
-    <solid android:color="#F1F1F1"/>
+    <solid android:color="@android:color/transparent"/>
 
     <!-- View border color and width -->
     <stroke
