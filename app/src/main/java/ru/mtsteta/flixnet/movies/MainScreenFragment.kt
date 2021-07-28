@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import ru.mtsteta.flixnet.R
+import ru.mtsteta.flixnet.detail.DetailFragment
 import ru.mtsteta.flixnet.fakeRepo.MoviesDataSourceImpl
 import ru.mtsteta.flixnet.genres.GenreClickListener
 import ru.mtsteta.flixnet.genres.GenreListAdapter
@@ -34,7 +35,9 @@ class MainScreenFragment : Fragment() {
         val movieRecycler = view?.findViewById<RecyclerView>(R.id.rvMovieList)
         val movies = fakeMovieData.getMovies()
         val movieAdapter = MovieListAdapter(MovieClickListener { movieItem: MovieDto ->
-            showToast(movieItem.title)
+            this.activity?.supportFragmentManager?.beginTransaction()
+                ?.add(R.id.main_container, DetailFragment())
+                ?.commit()
         })
         movieAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
         movieRecycler?.adapter = movieAdapter

@@ -7,15 +7,18 @@ import androidx.recyclerview.widget.RecyclerView
 import ru.mtsteta.flixnet.fakeRepo.MoviesDataSourceImpl
 import ru.mtsteta.flixnet.genres.GenreClickListener
 import ru.mtsteta.flixnet.genres.GenreListAdapter
-import ru.mtsteta.flixnet.movies.MovieClickListener
-import ru.mtsteta.flixnet.movies.MovieDto
-import ru.mtsteta.flixnet.movies.MovieListAdapter
-import ru.mtsteta.flixnet.movies.MovieSpaceItemDecoration
+import ru.mtsteta.flixnet.movies.*
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        supportFragmentManager.beginTransaction()
+            .add(R.id.main_container, MainScreenFragment())
+            .commit()
     }
+
+
 }
