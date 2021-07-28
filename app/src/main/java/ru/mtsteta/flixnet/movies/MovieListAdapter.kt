@@ -35,7 +35,7 @@ class MovieListAdapter(private val clickListener: MovieClickListener) :
             titleTextView.text = item.title
             infoTextView.text = item.description
             ratingBar.rating = item.rateScore.toFloat()
-            ageLimitTextView.text = "${item.ageRestriction}+"
+            ageLimitTextView.text = "${item.ageLimit}+"
             posterImage.load(item.imageUrl)
             itemView.setOnClickListener { clickListener.onClick(item) }
         }

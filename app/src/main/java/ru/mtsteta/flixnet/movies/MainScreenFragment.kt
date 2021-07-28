@@ -27,7 +27,7 @@ class MainScreenFragment : Fragment() {
         val genreRecycler = view?.findViewById<RecyclerView>(R.id.rvGenreList)
         val genres = fakeMovieData.genreList
         val genreAdapter = GenreListAdapter(genres, GenreClickListener { genre ->
-            showToast(genre)
+            TODO()
         })
         genreAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
         genreRecycler?.adapter = genreAdapter
@@ -36,7 +36,8 @@ class MainScreenFragment : Fragment() {
         val movies = fakeMovieData.getMovies()
         val movieAdapter = MovieListAdapter(MovieClickListener { movieItem: MovieDto ->
             this.activity?.supportFragmentManager?.beginTransaction()
-                ?.add(R.id.main_container, DetailFragment())
+                ?.replace(R.id.main_container, DetailFragment.newInstance(movieItem))
+                ?.addToBackStack(null)
                 ?.commit()
         })
         movieAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
@@ -45,14 +46,5 @@ class MainScreenFragment : Fragment() {
         movieAdapter.submitList(movies)
 
         return  view
-    }
-
-    private fun showToast(message: String?) {
-        when {
-            message.isNullOrEmpty() -> {
-                showToast(getString(R.string.movie_item_empty_message))
-            }
-            else -> Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-        }
     }
 }
