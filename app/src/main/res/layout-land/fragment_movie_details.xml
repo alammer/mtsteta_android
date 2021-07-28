@@ -40,7 +40,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingHorizontal="@dimen/detailed_cardview_horizontal_padding"
+                android:paddingHorizontal="@dimen/detailed_horizontal_margin"
                 android:paddingTop="@dimen/detailed_cardview_top_padding">
 
                 <TextView
