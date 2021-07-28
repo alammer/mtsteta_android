@@ -3,7 +3,7 @@
     <dimen name="detailed_common_top_margin">16dp</dimen>
     <dimen name="detailed_actor_name_top_margin">12dp</dimen>
     <dimen name="detailed_actor_img_start_margin">10dp</dimen>
-    <dimen name="detailed_cardview_horizontal_padding">20dp</dimen>
+    <dimen name="detailed_horizontal_margin">20dp</dimen>
     <dimen name="detailed_cardview_top_padding">32dp</dimen>
     <dimen name="micro_text_size">7sp</dimen>
     <dimen name="mini_text_size">10sp</dimen>
@@ -22,4 +22,5 @@
     <dimen name="agelimit_small_height">20dp</dimen>
     <dimen name="agelimit_width">40dp</dimen>
     <dimen name="agelimit_height">40dp</dimen>
+    <dimen name="mainscreen_horizontal_margin">20dp</dimen>
 </resources>
