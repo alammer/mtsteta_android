@@ -16,7 +16,7 @@ import ru.mtsteta.flixnet.movies.MovieDto
 
 class DetailFragment : Fragment() {
 
-    var  movieDetail : MovieDto? = null
+    private var  movieDetail : MovieDto? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -24,33 +24,34 @@ class DetailFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_movie_details, container, false)
 
-        arguments.let { movieDetail = it?.getParcelable("Movie") }
+        arguments?.run { movieDetail = getParcelable("Movie") }
 
+        movieDetail?.run {
 
+            val tvTitle = view.findViewById<TextView>(R.id.tvMovieTitle)?.apply {
+                text = title
+            }
 
-        val tvTitle = view.findViewById<TextView>(R.id.tvMovieTitle)?.apply {
-            text = movieDetail?.title
-        }
+            val tvInfo = view.findViewById<TextView>(R.id.tvDetailInfoText)?.apply {
+                text = description
+            }
 
-        val tvInfo = view.findViewById<TextView>(R.id.tvDetailInfoText)?.apply {
-            text = movieDetail?.description
-        }
+            val tvAgeLimit = view.findViewById<TextView>(R.id.tvAgeLimit)?.apply {
+                text = "$ageLimit+"
+            }
 
-        val tvAgeLimit = view.findViewById<TextView>(R.id.tvAgeLimit)?.apply {
-            text = "${movieDetail?.ageLimit.toString()}+"
-        }
+            val tvGenre = view.findViewById<TextView>(R.id.tvDetailGenre)?.apply {
+                text = genre
+            }
 
-        val tvGenre = view.findViewById<TextView>(R.id.tvDetailGenre)?.apply {
-            text = movieDetail?.genre
-        }
+            val rbMovie = view.findViewById<RatingBar>(R.id.detailMovieRating)?.apply {
+                rating = rateScore.toFloat()
+            }
 
-        val rbMovie = view.findViewById<RatingBar>(R.id.detailMovieRating)?.apply {
-            rating = movieDetail?.rateScore?.toFloat() ?: 0f
-        }
-
-        val imgPoster = view.findViewById<ShapeableImageView>(R.id.imgPoster)?.apply {
-            load(movieDetail?.imageUrl?.toUri())
-            scaleType = ImageView.ScaleType.CENTER_CROP
+            val imgPoster = view.findViewById<ShapeableImageView>(R.id.imgPoster)?.apply {
+                load(imageUrl.toUri())
+                scaleType = ImageView.ScaleType.CENTER_CROP
+            }
         }
 
         return view

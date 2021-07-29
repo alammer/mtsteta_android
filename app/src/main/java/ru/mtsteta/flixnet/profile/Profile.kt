@@ -14,7 +14,6 @@ class ProfileFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_profile_screen, container, false)
-        return view
+        return inflater.inflate(R.layout.fragment_profile_screen, container, false)
     }
 }

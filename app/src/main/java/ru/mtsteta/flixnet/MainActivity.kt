@@ -1,8 +1,10 @@
 package ru.mtsteta.flixnet
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -32,14 +34,25 @@ class MainActivity : AppCompatActivity() {
         bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavView)
 
         bottomNavigationView.setOnItemSelectedListener{
+            val fromDetailFragment = supportFragmentManager.findFragmentById(R.id.main_container) is DetailFragment
             when(it.itemId){
                 R.id.home-> {
-                    if (!it.isChecked) loadFragment(MainScreenFragment())
+                    if (fromDetailFragment)
+                    {
+                        supportFragmentManager.popBackStack()
+                        loadFragment(MainScreenFragment())
+                    }
+                    if (!it.isChecked )
+                    {
+                        loadFragment(MainScreenFragment())
+                    }
                     return@setOnItemSelectedListener true
                 }
 
                 R.id.profile-> {
-                    if (!it.isChecked) loadFragment(ProfileFragment())
+                    if (!it.isChecked) {
+                        loadFragment(ProfileFragment(), fromDetailFragment)
+                    }
                      return@setOnItemSelectedListener true
                 }
             }
@@ -48,13 +61,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-
+        if (supportFragmentManager.backStackEntryCount > 0) {
+            bottomNavigationView.menu.getItem(0).isChecked = true
+            Log.i("MainActivity", "Function called: onBackPressed()")
+        }
+        if (supportFragmentManager.findFragmentById(R.id.main_container) is DetailFragment) bottomNavigationView.menu.getItem(0).isChecked = true
+        super.onBackPressed()
     }
 
-    private fun loadFragment(fragment: Fragment) {
+
+    private fun loadFragment(fragment: Fragment, addToBackStack: Boolean = false) {
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.main_container, fragment)
-        transaction.addToBackStack(null)
+        if (addToBackStack) transaction.addToBackStack(null)
         transaction.commit()
     }
 }

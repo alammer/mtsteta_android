@@ -36,7 +36,7 @@ class MainScreenFragment : Fragment() {
         val movies = fakeMovieData.getMovies()
         val movieAdapter = MovieListAdapter(MovieClickListener { movieItem: MovieDto ->
             this.activity?.supportFragmentManager?.beginTransaction()
-                ?.replace(R.id.main_container, DetailFragment.newInstance(movieItem))
+                ?.add(R.id.main_container, DetailFragment.newInstance(movieItem))
                 ?.addToBackStack(null)
                 ?.commit()
         })
