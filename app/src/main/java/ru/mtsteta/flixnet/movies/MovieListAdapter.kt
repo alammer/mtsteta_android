@@ -13,23 +13,22 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import ru.mtsteta.flixnet.R
 
-
 class MovieListAdapter(private val clickListener: MovieClickListener) :
     ListAdapter<MovieDto, MovieListAdapter.MovieListViewHolder>(DiffCallback) {
 
     class MovieListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         private val posterImage: ImageView =
-            itemView.findViewById<ImageView>(R.id.rvItemMoviePoster)
+            itemView.findViewById(R.id.rvItemMoviePoster)
 
-        private val titleTextView: TextView = itemView.findViewById<TextView>(R.id.rvItemMovieTitle)
+        private val titleTextView: TextView = itemView.findViewById(R.id.rvItemMovieTitle)
 
-        private val infoTextView: TextView = itemView.findViewById<TextView>(R.id.rvItemMovieInfo)
+        private val infoTextView: TextView = itemView.findViewById(R.id.rvItemMovieInfo)
 
         private val ageLimitTextView: TextView =
-            itemView.findViewById<TextView>(R.id.rvItemAgeLimit)
+            itemView.findViewById(R.id.rvItemAgeLimit)
 
-        private val ratingBar: RatingBar = itemView.findViewById<RatingBar>(R.id.rvItemMovieRating)
+        private val ratingBar: RatingBar = itemView.findViewById(R.id.rvItemMovieRating)
 
         fun bind(clickListener: MovieClickListener, item: MovieDto, position: Int) {
             titleTextView.text = item.title
@@ -56,7 +55,6 @@ class MovieListAdapter(private val clickListener: MovieClickListener) :
     ) {
         holder.bind(clickListener, getItem(position), position)
     }
-
 
     companion object DiffCallback : DiffUtil.ItemCallback<MovieDto>() {
         override fun areItemsTheSame(oldItem: MovieDto, newItem: MovieDto): Boolean {

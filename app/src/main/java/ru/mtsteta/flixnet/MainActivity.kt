@@ -2,22 +2,16 @@ package ru.mtsteta.flixnet
 
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.get
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import ru.mtsteta.flixnet.detail.DetailFragment
-import ru.mtsteta.flixnet.fakeRepo.MoviesDataSourceImpl
-import ru.mtsteta.flixnet.genres.GenreClickListener
-import ru.mtsteta.flixnet.genres.GenreListAdapter
 import ru.mtsteta.flixnet.movies.*
 import ru.mtsteta.flixnet.profile.ProfileFragment
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var bottomNavigationView: BottomNavigationView
+    private lateinit var bottomNavigationView: BottomNavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +25,7 @@ class MainActivity : AppCompatActivity() {
 
         supportFragmentManager.addOnBackStackChangedListener {  }
 
-        bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavView)
+        bottomNavigationView = findViewById(R.id.bottomNavView)
 
         bottomNavigationView.setOnItemSelectedListener{
             val fromDetailFragment = supportFragmentManager.findFragmentById(R.id.main_container) is DetailFragment
