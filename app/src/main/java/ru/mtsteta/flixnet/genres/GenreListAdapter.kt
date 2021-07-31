@@ -7,7 +7,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ru.mtsteta.flixnet.R
 
-class GenreListAdapter(private val items: List<String>, private val clickListener: GenreClickListener) :
+class GenreListAdapter(
+    private val items: List<String>,
+    private val clickListener: GenreClickListener
+) :
     RecyclerView.Adapter<GenreListAdapter.GenreViewHolder>() {
 
     class GenreViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -32,6 +35,6 @@ class GenreListAdapter(private val items: List<String>, private val clickListene
     }
 }
 
-class GenreClickListener (val clickListener: (genre: String) -> Unit){
+class GenreClickListener(val clickListener: (genre: String) -> Unit) {
     fun onClick(genre: String) = clickListener(genre)
 }

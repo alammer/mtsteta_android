@@ -23,46 +23,48 @@ class MainActivity : AppCompatActivity() {
                 .commit()
         }
 
-        supportFragmentManager.addOnBackStackChangedListener {  }
-
         bottomNavigationView = findViewById(R.id.bottomNavView)
 
-        bottomNavigationView.setOnItemSelectedListener{
-            val fromDetailFragment = supportFragmentManager.findFragmentById(R.id.main_container) is DetailFragment
-            when(it.itemId){
-                R.id.home-> {
-                    if (fromDetailFragment)
-                    {
+        supportFragmentManager.addOnBackStackChangedListener {
+            when (supportFragmentManager.findFragmentById(R.id.main_container)) {
+                is DetailFragment -> bottomNavigationView.menu.setGroupCheckable(0, false, true)
+                is MainScreenFragment -> {
+                    bottomNavigationView.menu.setGroupCheckable(0, true, true)
+                    bottomNavigationView.menu.findItem(R.id.home)?.run { isChecked = true }
+                }
+                is ProfileFragment -> {
+                    bottomNavigationView.menu.setGroupCheckable(0, true, true)
+                    bottomNavigationView.menu.findItem(R.id.profile)?.run { isChecked = true }
+                }
+            }
+        }
+
+        bottomNavigationView.setOnItemSelectedListener {
+            val fromDetailFragment =
+                supportFragmentManager.findFragmentById(R.id.main_container) is DetailFragment
+            when (it.itemId) {
+                R.id.home -> {
+                    if (fromDetailFragment) {
                         supportFragmentManager.popBackStack()
                         loadFragment(MainScreenFragment())
                     }
-                    if (!it.isChecked )
-                    {
+                    if (!it.isChecked) {
                         loadFragment(MainScreenFragment())
                     }
+
                     return@setOnItemSelectedListener true
                 }
 
-                R.id.profile-> {
+                R.id.profile -> {
                     if (!it.isChecked) {
                         loadFragment(ProfileFragment(), fromDetailFragment)
                     }
-                     return@setOnItemSelectedListener true
+                    return@setOnItemSelectedListener true
                 }
             }
             return@setOnItemSelectedListener false
         }
     }
-
-    override fun onBackPressed() {
-        if (supportFragmentManager.backStackEntryCount > 0) {
-            bottomNavigationView.menu.getItem(0).isChecked = true
-            Log.i("MainActivity", "Function called: onBackPressed()")
-        }
-        if (supportFragmentManager.findFragmentById(R.id.main_container) is DetailFragment) bottomNavigationView.menu.getItem(0).isChecked = true
-        super.onBackPressed()
-    }
-
 
     private fun loadFragment(fragment: Fragment, addToBackStack: Boolean = false) {
         val transaction = supportFragmentManager.beginTransaction()

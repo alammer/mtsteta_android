@@ -14,53 +14,60 @@ import com.google.android.material.imageview.ShapeableImageView
 import ru.mtsteta.flixnet.R
 import ru.mtsteta.flixnet.movies.MovieDto
 
+private const val MOVIE_DTO_KEY = "Movie"
+
 class DetailFragment : Fragment() {
 
-    private var  movieDetail : MovieDto? = null
+    private var movieDetail: MovieDto? = null
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_movie_details, container, false)
+        return inflater.inflate(R.layout.fragment_movie_details, container, false)
+    }
 
-        arguments?.run { movieDetail = getParcelable("Movie") }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+        arguments?.run { movieDetail = getParcelable(MOVIE_DTO_KEY) }
 
         movieDetail?.run {
 
-            val tvTitle = view.findViewById<TextView>(R.id.tvMovieTitle)?.apply {
+            val tvTitle = view.findViewById<TextView>(R.id.tvMovieTitle).apply {
                 text = title
             }
 
-            val tvInfo = view.findViewById<TextView>(R.id.tvDetailInfoText)?.apply {
+            val tvInfo = view.findViewById<TextView>(R.id.tvDetailInfoText).apply {
                 text = description
             }
 
-            val tvAgeLimit = view.findViewById<TextView>(R.id.tvAgeLimit)?.apply {
+            val tvAgeLimit = view.findViewById<TextView>(R.id.tvAgeLimit).apply {
                 text = "$ageLimit+"
             }
 
-            val tvGenre = view.findViewById<TextView>(R.id.tvDetailGenre)?.apply {
+            val tvGenre = view.findViewById<TextView>(R.id.tvDetailGenre).apply {
                 text = genre
             }
 
-            val rbMovie = view.findViewById<RatingBar>(R.id.detailMovieRating)?.apply {
+            val rbMovie = view.findViewById<RatingBar>(R.id.detailMovieRating).apply {
                 rating = rateScore.toFloat()
             }
 
-            val imgPoster = view.findViewById<ShapeableImageView>(R.id.imgPoster)?.apply {
+            val imgPoster = view.findViewById<ShapeableImageView>(R.id.imgPoster).apply {
                 load(imageUrl.toUri())
                 scaleType = ImageView.ScaleType.CENTER_CROP
             }
         }
 
-        return view
+        super.onViewCreated(view, savedInstanceState)
     }
 
     companion object {
+        @JvmStatic
         fun newInstance(movie: MovieDto): DetailFragment {
             val args = Bundle()
-            args.putParcelable("Movie", movie)
+            args.putParcelable(MOVIE_DTO_KEY, movie)
             val fragment = DetailFragment()
             fragment.arguments = args
             return fragment

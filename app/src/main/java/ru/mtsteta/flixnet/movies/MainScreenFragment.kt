@@ -26,9 +26,10 @@ class MainScreenFragment : Fragment() {
         val genreRecycler = view?.findViewById<RecyclerView>(R.id.rvGenreList)
         val genres = fakeMovieData.genreList
         val genreAdapter = GenreListAdapter(genres, GenreClickListener {
-            TODO()
+            TODO("We should implement logic for GenreClickListener later")
         })
-        genreAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
+        genreAdapter.stateRestorationPolicy =
+            RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
         genreRecycler?.adapter = genreAdapter
 
         val movieRecycler = view?.findViewById<RecyclerView>(R.id.rvMovieList)
@@ -39,11 +40,12 @@ class MainScreenFragment : Fragment() {
                 ?.addToBackStack(null)
                 ?.commit()
         })
-        movieAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
+        movieAdapter.stateRestorationPolicy =
+            RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
         movieRecycler?.adapter = movieAdapter
         movieRecycler?.addItemDecoration(MovieSpaceItemDecoration(resources.getDimensionPixelSize(R.dimen.mainscreen_movie_top_spacing)))
         movieAdapter.submitList(movies)
 
-        return  view
+        return view
     }
 }
