@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_color_mainscreen"
@@ -17,7 +16,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="64dp"
             android:fontFamily="@font/roboto"
-            android:text="Nickname"
+            android:text="@string/mock_user_nickname"
             android:textSize="@dimen/large_text_size"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -39,7 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
             android:fontFamily="@font/roboto"
-            android:text="user_account@testmail.com"
+            android:text="@string/mock_user_email"
             android:textSize="@dimen/medium_text_size"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvUserNick" />
@@ -48,7 +47,7 @@
             android:id="@+id/tvInterestsTitle"
             style="@style/ProfileSectionTitile"
             android:layout_marginTop="56dp"
-            android:text="Интересы"
+            android:text="@string/profile_interests_title"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvUserMail" />
 
@@ -56,32 +55,32 @@
             android:id="@+id/tvUserPreferGenre0"
             style="@style/Genre"
             android:layout_marginTop="16dp"
-            android:text="боевик"
+            android:text="@string/mock_user_fav_genre0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvInterestsTitle" />
 
         <TextView
             android:id="@+id/tvUserPreferGenre1"
             style="@style/Genre"
-            android:layout_marginLeft="6dp"
+            android:layout_marginStart="6dp"
             android:layout_marginTop="16dp"
-            android:text="драмы"
+            android:text="@string/mock_user_fav_genre1"
             app:layout_constraintStart_toEndOf="@id/tvUserPreferGenre0"
             app:layout_constraintTop_toBottomOf="@id/tvInterestsTitle" />
 
         <TextView
             android:id="@+id/tvUserPreferGenre2"
             style="@style/Genre"
-            android:layout_marginLeft="6dp"
+            android:layout_marginStart="6dp"
             android:layout_marginTop="16dp"
-            android:text="комедии"
+            android:text="@string/mock_user_fav_genre2"
             app:layout_constraintStart_toEndOf="@id/tvUserPreferGenre1"
             app:layout_constraintTop_toBottomOf="@id/tvInterestsTitle" />
 
         <TextView
             android:id="@+id/tvUserInfoTitle"
             style="@style/ProfileSectionTitile"
-            android:text="Личные данные"
+            android:text="@string/profile_user_info_title"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvUserPreferGenre0" />
 
@@ -97,9 +96,9 @@
             <EditText
                 android:id="@+id/etUserName"
                 style="@style/ProfileUserInfoItem"
-                android:hint="Имя"
+                android:hint="@string/profile_user_name_hint"
                 android:paddingBottom="4dp"
-                android:text="Иннокентий" />
+                android:text="@string/mock_profile_user_name" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -118,9 +117,9 @@
             <EditText
                 android:id="@+id/etUserPassword"
                 style="@style/ProfileUserInfoItem"
-                android:hint="Введите пароль"
+                android:hint="@string/profile_password_input_hint"
                 android:inputType="textPassword"
-                android:text="vjq_gfhjkm" />
+                android:text="@string/mock_password" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -137,9 +136,9 @@
             <EditText
                 android:id="@+id/etUserEmail"
                 style="@style/ProfileUserInfoItem"
-                android:hint="your_email@mail.com"
+                android:hint="@string/profile_email_input_hint"
                 android:inputType="textEmailAddress"
-                android:text="user_account@testmail.com" />
+                android:text="@string/mock_user_email" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -156,7 +155,7 @@
             <EditText
                 android:id="@+id/etUserPhone"
                 style="@style/ProfileUserInfoItem"
-                android:hint="Телефон"
+                android:hint="@string/profile_phone_input_hint"
                 android:inputType="phone" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -164,7 +163,7 @@
         <TextView
             android:id="@+id/tvSettingsTitle"
             style="@style/ProfileSectionTitile"
-            android:text="Настройки"
+            android:text="@string/profile_settings_title"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tiPhone" />
 
@@ -172,42 +171,77 @@
             android:id="@+id/tvNotifyingAndSound"
             style="@style/ProfileSettingItem"
             android:layout_marginTop="12dp"
-            android:text="Уведомления и звуки"
+            android:text="@string/setting_notify_and_sound_item"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvSettingsTitle" />
 
         <TextView
+            android:id="@+id/tvNotifyItem"
+            style="@style/ProfileSettingItemSelector"
+            app:layout_constraintBottom_toBottomOf="@id/tvNotifyingAndSound"
+            app:layout_constraintTop_toTopOf="@id/tvNotifyingAndSound"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
             android:id="@+id/tvPrivacy"
             style="@style/ProfileSettingItem"
-            android:text="Конфедициальность"
+            android:text="@string/settings_privacy_item"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvNotifyingAndSound" />
 
         <TextView
+            android:id="@+id/tvPrivacyItem"
+            style="@style/ProfileSettingItemSelector"
+            app:layout_constraintBottom_toBottomOf="@id/tvPrivacy"
+            app:layout_constraintTop_toTopOf="@id/tvPrivacy"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
             android:id="@+id/tvTheme"
             style="@style/ProfileSettingItem"
-            android:text="Тема"
+            android:text="@string/settings_theme_item"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvPrivacy" />
 
         <TextView
+            android:id="@+id/tvThemeItem"
+            style="@style/ProfileSettingItemSelector"
+            app:layout_constraintBottom_toBottomOf="@id/tvTheme"
+            app:layout_constraintTop_toTopOf="@id/tvTheme"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
             android:id="@+id/tvLanguage"
             style="@style/ProfileSettingItem"
-            android:text="Язык"
+            android:text="@string/settings_language_item"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvTheme" />
 
         <TextView
+            android:id="@+id/tvLanguageItem"
+            style="@style/ProfileSettingItemSelector"
+            app:layout_constraintBottom_toBottomOf="@id/tvLanguage"
+            app:layout_constraintTop_toTopOf="@id/tvLanguage"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
             android:id="@+id/tvDataMemory"
             style="@style/ProfileSettingItem"
-            android:text="Данные и память"
+            android:text="@string/settings_data_memory_item"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvLanguage" />
 
         <TextView
+            android:id="@+id/tvDataMemoryItem"
+            style="@style/ProfileSettingItemSelector"
+            app:layout_constraintBottom_toBottomOf="@id/tvDataMemory"
+            app:layout_constraintTop_toTopOf="@id/tvDataMemory"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
             android:id="@+id/tvAppSupportTitle"
             style="@style/ProfileSectionTitile"
-            android:text="Приложение"
+            android:text="@string/profile_app_support_title"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvDataMemory" />
 
@@ -215,35 +249,48 @@
             android:id="@+id/tvQuestion"
             style="@style/ProfileSettingItem"
             android:layout_marginTop="12dp"
-            android:text="Задать вопрос"
+            android:text="@string/app_support_question_item"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvAppSupportTitle" />
 
         <TextView
+            android:id="@+id/tvQuestionItem"
+            style="@style/ProfileSettingItemSelector"
+            app:layout_constraintBottom_toBottomOf="@id/tvQuestion"
+            app:layout_constraintTop_toTopOf="@id/tvQuestion"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
             android:id="@+id/tvReportProblem"
             style="@style/ProfileSettingItem"
-            android:text="Сообщить о проблеме"
+            android:text="@string/app_support_report_item"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvQuestion" />
 
-        <!-- app:backgroundTint must be specified before android:background -->
+        <TextView
+            android:id="@+id/tvReportItem"
+            style="@style/ProfileSettingItemSelector"
+            app:layout_constraintBottom_toBottomOf="@id/tvReportProblem"
+            app:layout_constraintTop_toTopOf="@id/tvReportProblem"
+            app:layout_constraintEnd_toEndOf="parent" />
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnExit"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_marginTop="40dp"
             android:layout_marginBottom="96dp"
-            android:fontFamily="@font/roboto"
-            android:textSize="@dimen/big_text_size"
-            android:textAllCaps="false"
-            android:text="Выйти"
-            android:textColor="@color/black"
-            app:backgroundTint="@null"
             android:background="@drawable/button_background"
+            android:fontFamily="@font/roboto"
+            android:text="@string/profile_exit_button"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:textSize="@dimen/big_text_size"
+            app:backgroundTint="@null"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvReportProblem"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintTop_toBottomOf="@id/tvReportProblem" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -16,7 +16,7 @@
 
     <style name="ProfileButtonOverlay" parent="">
         <item name="cornerSize">10dp</item>
-        <item name="android:background">@color/button_color</item>
+        <item name="android:background">@color/color_profile_button</item>
     </style>
 
     <style name="DetailedActorPoster">
@@ -84,10 +84,14 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:paddingStart">0dp</item>
         <item name="android:textSize">@dimen/medium_text_size</item>
-        <item name="android:textColorHint">@color/setting_hint_color</item>
+        <item name="android:textColorHint">@color/color_setting_hint</item>
         <item name="android:fontFamily">@font/roboto</item>
     </style>
 
-
+    <style name="ProfileSettingItemSelector" parent="android:Widget.TextView">
+        <item name="android:layout_width">6dp</item>
+        <item name="android:layout_height">9dp</item>
+        <item name="android:background">@drawable/ic_vector</item>
+    </style>
 
 </resources>
