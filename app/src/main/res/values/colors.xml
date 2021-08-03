@@ -8,6 +8,9 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="transparent">#000000</color>
+    <color name="bg_color_avatar">#4DC4C4C4</color>
     <color name="bg_color_detailed">#F1F1F1</color>
     <color name="bg_color_mainscreen">#e5e5e5</color>
+    <color name="setting_hint_color">#4D000000</color>
+    <color name="button_color">#C4C4C4</color>
 </resources>

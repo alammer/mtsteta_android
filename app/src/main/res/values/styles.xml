@@ -8,6 +8,17 @@
         <item name="cornerFamilyTopRight">rounded</item>
     </style>
 
+    <style name="UserAvatarCircleOverlay" parent="">
+        <item name="cornerSize">50%</item>
+        <item name="android:scaleType">center</item>
+        <item name="android:background">@color/bg_color_avatar</item>
+    </style>
+
+    <style name="ProfileButtonOverlay" parent="">
+        <item name="cornerSize">10dp</item>
+        <item name="android:background">@color/button_color</item>
+    </style>
+
     <style name="DetailedActorPoster">
         <item name="cornerSize">10dp</item>
         <item name="cornerFamily">rounded</item>
@@ -19,6 +30,8 @@
     </style>
 
     <style name="Genre" parent="android:Widget.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:paddingStart">12dp</item>
         <item name="android:paddingEnd">12dp</item>
         <item name="android:paddingTop">4dp</item>
@@ -49,5 +62,32 @@
         <item name="android:minHeight">14dp</item>
         <item name="android:maxHeight">14dp</item>
     </style>
+
+    <style name="ProfileSettingItem" parent="android:Widget.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">20dp</item>
+        <item name="android:textSize">@dimen/medium_text_size</item>
+        <item name="android:fontFamily">@font/roboto</item>
+    </style>
+
+    <style name="ProfileSectionTitile" parent="android:Widget.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">40dp</item>
+        <item name="android:textSize">@dimen/big_text_size</item>
+        <item name="android:fontFamily">@font/roboto</item>
+    </style>
+
+    <style name="ProfileUserInfoItem" parent="android:Widget.EditText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingStart">0dp</item>
+        <item name="android:textSize">@dimen/medium_text_size</item>
+        <item name="android:textColorHint">@color/setting_hint_color</item>
+        <item name="android:fontFamily">@font/roboto</item>
+    </style>
+
+
 
 </resources>

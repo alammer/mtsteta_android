@@ -8,10 +8,9 @@
     <dimen name="micro_text_size">7sp</dimen>
     <dimen name="mini_text_size">10sp</dimen>
     <dimen name="small_text_size">12sp</dimen>
-    <dimen name="detailed_title_text_size">20sp</dimen>
     <dimen name="medium_text_size">14sp</dimen>
-    <dimen name="detailed_movie_info_text_size">14sp</dimen>
-    <dimen name="detailed_actors_list_header_text_size">16sp</dimen>
+    <dimen name="big_text_size">16sp</dimen>
+    <dimen name="large_text_size">20sp</dimen>
     <dimen name="detailed_actor_img_width">150dp</dimen>
     <dimen name="detailed_actor_img_height">196dp</dimen>
     <dimen name="mainscreen_title_text_size">16sp</dimen>
