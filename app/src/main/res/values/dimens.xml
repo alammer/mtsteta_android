@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="movie_title_end_margin">72dp</dimen>
     <dimen name="detailed_common_top_margin">16dp</dimen>
     <dimen name="detailed_actor_name_top_margin">12dp</dimen>
     <dimen name="detailed_actor_img_start_margin">10dp</dimen>
