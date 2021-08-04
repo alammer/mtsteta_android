@@ -1,6 +1,8 @@
 package ru.mtsteta.flixnet.fakeRepo
 
+import android.util.Log
 import ru.mtsteta.flixnet.movies.MovieDto
+import kotlin.random.Random
 
 class MoviesDataSourceImpl : MoviesDataSource {
 
@@ -20,7 +22,14 @@ class MoviesDataSourceImpl : MoviesDataSource {
         "Рельное ТВ",
     )
 
-    override fun getMovies() = listOf(
+    override fun getMovies(): List<MovieDto>? {
+        return when (Random.nextInt(0, 22) % 7){
+            0 -> null
+            else -> getMovieMockList().shuffled().slice(0..7)
+        }
+    }
+
+    private fun getMovieMockList() = listOf(
         MovieDto(
             title = "Гнев человеческий",
             description = "Эйч — загадочный и холодный на вид джентльмен, но внутри него пылает жажда справедливости. Преследуя...",
