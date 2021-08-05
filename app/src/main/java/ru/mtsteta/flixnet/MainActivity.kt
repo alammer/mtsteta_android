@@ -23,8 +23,7 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.beginTransaction()
                 .add(R.id.main_container, MainScreenFragment())
                 .commit()
-        }
-        else {
+        } else {
             when (supportFragmentManager.findFragmentById(R.id.main_container)) {
                 is DetailFragment -> bottomNavigationView.menu.setGroupCheckable(0, false, true)
             }
