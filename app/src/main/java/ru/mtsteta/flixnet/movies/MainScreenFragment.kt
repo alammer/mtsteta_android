@@ -23,13 +23,16 @@ class MainScreenFragment : Fragment() {
     private var movies: List<MovieDto>? = null
 
     private val exceptionHandler = CoroutineExceptionHandler { coroutineContext, exception ->
-        Log.i("MainScreenFragment", "Catch exception $exception from coroutine with context $coroutineContext")
+        Log.i(
+            "MainScreenFragment",
+            "Catch exception $exception from coroutine with context $coroutineContext"
+        )
         Toast.makeText(context, "Uknown server error", Toast.LENGTH_SHORT).show()
     }
 
     private suspend fun loadMovieList(): List<MovieDto>? = withContext(Dispatchers.IO) {
-         delay(3000L)
-         MoviesDataSourceImpl().getMovies()
+        delay(3000L)
+        MoviesDataSourceImpl().getMovies()
     }
 
     override fun onCreateView(
@@ -69,29 +72,36 @@ class MainScreenFragment : Fragment() {
 
         movieRecycler?.addItemDecoration(MovieSpaceItemDecoration(resources.getDimensionPixelSize(R.dimen.mainscreen_movie_top_spacing)))
 
-        lifecycleScope.launch (exceptionHandler) {
+        lifecycleScope.launch(exceptionHandler) {
             val recentMovieList = loadMovieList()
 
             if (recentMovieList?.any { it.title.isNullOrBlank() } == true) {
                 movieAdapter.submitList(movies)
-                throw IllegalArgumentException ("Title Not Found!") }
+                throw IllegalArgumentException("Title Not Found!")
+            }
 
-            recentMovieList?.let { movieAdapter.submitList(it)
-                movies = it.toList() } ?: Log.i("MainScreenFragment", "Get empty list!!!")
+            recentMovieList?.let {
+                movieAdapter.submitList(it)
+                movies = it.toList()
+            } ?: Log.i("MainScreenFragment", "Get empty list!!!")
         }
 
         val swipeRefresher = view.findViewById<SwipeRefreshLayout>(R.id.swipeLayout)
 
         swipeRefresher.setOnRefreshListener {
-            lifecycleScope.launch (exceptionHandler) {
+            lifecycleScope.launch(exceptionHandler) {
                 val recentMovieList = loadMovieList()
 
                 if (recentMovieList?.any { it.title.isNullOrBlank() } == true) {
                     movieAdapter.submitList(movies)
-                    throw IllegalArgumentException ("Title Not Found!") }
+                    throw IllegalArgumentException("Title Not Found!")
+                }
 
-                recentMovieList?.let { movieAdapter.submitList(it)
-                    movies = it.toList() } ?: Toast.makeText(context, "Network connection failed", Toast.LENGTH_SHORT).show()//Log.i("MainScreenFragment", "Get empty list!!!")
+                recentMovieList?.let {
+                    movieAdapter.submitList(it)
+                    movies = it.toList()
+                } ?: Toast.makeText(context, "Network connection failed", Toast.LENGTH_SHORT)
+                    .show()//Log.i("MainScreenFragment", "Get empty list!!!")
             }
             swipeRefresher.isRefreshing = false
         }
