@@ -5,7 +5,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class MovieDto(
-    val title: String? = null,
+    val title: String,
     val description: String,
     val genre: String,
     val rateScore: Int,
