@@ -17,13 +17,18 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        bottomNavigationView = findViewById(R.id.bottomNavView)
+
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
                 .add(R.id.main_container, MainScreenFragment())
                 .commit()
         }
-
-        bottomNavigationView = findViewById(R.id.bottomNavView)
+        else {
+            when (supportFragmentManager.findFragmentById(R.id.main_container)) {
+                is DetailFragment -> bottomNavigationView.menu.setGroupCheckable(0, false, true)
+            }
+        }
 
         supportFragmentManager.addOnBackStackChangedListener {
             when (supportFragmentManager.findFragmentById(R.id.main_container)) {
