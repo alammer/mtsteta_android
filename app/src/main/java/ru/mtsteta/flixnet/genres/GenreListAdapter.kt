@@ -4,14 +4,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import ru.mtsteta.flixnet.R
+import ru.mtsteta.flixnet.repo.MovieDto
 
 class GenreListAdapter(
-    private val items: List<String>,
     private val clickListener: GenreClickListener
 ) :
-    RecyclerView.Adapter<GenreListAdapter.GenreViewHolder>() {
+    ListAdapter<String, GenreListAdapter.GenreViewHolder>(DiffCallback) {
 
     class GenreViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val genreTextView = itemView.findViewById<TextView>(R.id.tvGenreItem)
@@ -22,8 +24,6 @@ class GenreListAdapter(
         }
     }
 
-    override fun getItemCount() = items.size
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GenreViewHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.genre_rv_item, parent, false)
@@ -31,7 +31,18 @@ class GenreListAdapter(
     }
 
     override fun onBindViewHolder(holder: GenreViewHolder, position: Int) {
-        holder.bind(clickListener, items[position], position)
+        holder.bind(clickListener,getItem(position), position)
+    }
+
+    companion object DiffCallback : DiffUtil.ItemCallback<String>() {
+        override fun areItemsTheSame(oldItem: String, newItem: String): Boolean {
+            return oldItem === newItem
+        }
+
+        override fun areContentsTheSame(oldItem: String, newItem: String): Boolean {
+            return oldItem == newItem
+        }
+
     }
 }
 

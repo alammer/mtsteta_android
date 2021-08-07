@@ -1,4 +1,4 @@
-package ru.mtsteta.flixnet.movies
+package ru.mtsteta.flixnet.repo
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

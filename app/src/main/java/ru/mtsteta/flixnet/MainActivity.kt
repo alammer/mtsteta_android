@@ -1,11 +1,10 @@
 package ru.mtsteta.flixnet
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import ru.mtsteta.flixnet.detail.DetailFragment
+import ru.mtsteta.flixnet.detailinfo.DetailFragment
 import ru.mtsteta.flixnet.movies.*
 import ru.mtsteta.flixnet.profile.ProfileFragment
 

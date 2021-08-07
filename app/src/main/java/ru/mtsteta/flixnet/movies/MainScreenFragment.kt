@@ -7,33 +7,23 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import kotlinx.coroutines.*
 import ru.mtsteta.flixnet.R
-import ru.mtsteta.flixnet.detail.DetailFragment
-import ru.mtsteta.flixnet.fakeRepo.MoviesDataSourceImpl
+import ru.mtsteta.flixnet.detailinfo.DetailFragment
+import ru.mtsteta.flixnet.repo.MoviesDataSourceImpl
 import ru.mtsteta.flixnet.genres.GenreClickListener
 import ru.mtsteta.flixnet.genres.GenreListAdapter
+import ru.mtsteta.flixnet.repo.MovieDto
 import java.lang.IllegalArgumentException
 
 class MainScreenFragment : Fragment() {
 
-    private var movies: List<MovieDto>? = null
-
-    private val exceptionHandler = CoroutineExceptionHandler { coroutineContext, exception ->
-        Log.i(
-            "MainScreenFragment",
-            "Catch exception $exception from coroutine with context $coroutineContext"
-        )
-        Toast.makeText(context, "Uknown server error", Toast.LENGTH_SHORT).show()
-    }
-
-    private suspend fun loadMovieList(): List<MovieDto>? = withContext(Dispatchers.IO) {
-        delay(3000L)
-        MoviesDataSourceImpl().getMovies()
-    }
+    private val moviesViewModel: MoviesViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,8 +36,13 @@ class MainScreenFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         val genreRecycler = view.findViewById<RecyclerView>(R.id.rvGenreList)
+
+        val movieRecycler = view.findViewById<RecyclerView>(R.id.rvMovieList)
+
+        val swipeRefresher = view.findViewById<SwipeRefreshLayout>(R.id.swipeLayout)
+
         val genres = MoviesDataSourceImpl().genreList
-        val genreAdapter = GenreListAdapter(genres, GenreClickListener {
+        val genreAdapter = GenreListAdapter(GenreClickListener {
             TODO("We should implement logic for GenreClickListener later")
         })
 
@@ -55,8 +50,6 @@ class MainScreenFragment : Fragment() {
             RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
 
         genreRecycler?.adapter = genreAdapter
-
-        val movieRecycler = view.findViewById<RecyclerView>(R.id.rvMovieList)
 
         val movieAdapter = MovieListAdapter(MovieClickListener { movieItem: MovieDto ->
             this.activity?.supportFragmentManager?.beginTransaction()
@@ -72,38 +65,21 @@ class MainScreenFragment : Fragment() {
 
         movieRecycler?.addItemDecoration(MovieSpaceItemDecoration(resources.getDimensionPixelSize(R.dimen.mainscreen_movie_top_spacing)))
 
-        lifecycleScope.launch(exceptionHandler) {
-            val recentMovieList = loadMovieList()
+        moviesViewModel.movieList.observe(viewLifecycleOwner, Observer {
+            it?.let { movieAdapter.submitList(it) } ?: Log.i("MainScreenFragment", "Function called: Observe() but movieList is null")
+        } )
 
-            if (recentMovieList?.any { it.title.isNullOrBlank() } == true) {
-                movieAdapter.submitList(movies)
-                throw IllegalArgumentException("Title Not Found!")
-            }
+        moviesViewModel.genreList.observe(viewLifecycleOwner, Observer {
+            genreAdapter.submitList(it)
+        })
 
-            recentMovieList?.let {
-                movieAdapter.submitList(it)
-                movies = it.toList()
-            } ?: Log.i("MainScreenFragment", "Get empty list!!!")
-        }
-
-        val swipeRefresher = view.findViewById<SwipeRefreshLayout>(R.id.swipeLayout)
+        moviesViewModel.refreshStatus.observe(viewLifecycleOwner, Observer {
+            //TODO("change status of refresh")
+        })
 
         swipeRefresher.setOnRefreshListener {
-            lifecycleScope.launch(exceptionHandler) {
-                val recentMovieList = loadMovieList()
-
-                if (recentMovieList?.any { it.title.isNullOrBlank() } == true) {
-                    movieAdapter.submitList(movies)
-                    throw IllegalArgumentException("Title Not Found!")
-                }
-
-                recentMovieList?.let {
-                    movieAdapter.submitList(it)
-                    movies = it.toList()
-                } ?: Toast.makeText(context, "Network connection failed", Toast.LENGTH_SHORT)
-                    .show()//Log.i("MainScreenFragment", "Get empty list!!!")
-            }
-            swipeRefresher.isRefreshing = false
+            moviesViewModel.refreshMovieList()
+            //swipeRefresher.isRefreshing = false
         }
 
         super.onViewCreated(view, savedInstanceState)

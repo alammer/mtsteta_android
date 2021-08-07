@@ -1,7 +1,5 @@
-package ru.mtsteta.flixnet.fakeRepo
+package ru.mtsteta.flixnet.repo
 
-import android.util.Log
-import ru.mtsteta.flixnet.movies.MovieDto
 import kotlin.random.Random
 
 class MoviesDataSourceImpl : MoviesDataSource {

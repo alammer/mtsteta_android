@@ -1,4 +1,4 @@
-package ru.mtsteta.flixnet.detail
+package ru.mtsteta.flixnet.detailinfo
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment
 import coil.load
 import com.google.android.material.imageview.ShapeableImageView
 import ru.mtsteta.flixnet.R
-import ru.mtsteta.flixnet.movies.MovieDto
+import ru.mtsteta.flixnet.repo.MovieDto
 
 private const val MOVIE_DTO_KEY = "Movie"
 

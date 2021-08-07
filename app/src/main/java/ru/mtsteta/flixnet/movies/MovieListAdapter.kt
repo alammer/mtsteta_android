@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import ru.mtsteta.flixnet.R
+import ru.mtsteta.flixnet.repo.MovieDto
 
 class MovieListAdapter(private val clickListener: MovieClickListener) :
     ListAdapter<MovieDto, MovieListAdapter.MovieListViewHolder>(DiffCallback) {
