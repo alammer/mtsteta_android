@@ -1,8 +1,10 @@
 package ru.mtsteta.flixnet.repo
 
 import android.os.Parcelable
+import androidx.annotation.Keep
 import kotlinx.parcelize.Parcelize
 
+@Keep
 @Parcelize
 data class MovieDto(
     val title: String? = null,

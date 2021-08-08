@@ -9,16 +9,17 @@ import android.widget.RatingBar
 import android.widget.TextView
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.navArgs
 import coil.load
 import com.google.android.material.imageview.ShapeableImageView
 import ru.mtsteta.flixnet.R
 import ru.mtsteta.flixnet.repo.MovieDto
 
-private const val MOVIE_DTO_KEY = "Movie"
-
 class DetailFragment : Fragment() {
 
     private var movieDetail: MovieDto? = null
+
+    private val args: DetailFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,9 +31,8 @@ class DetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        arguments?.run { movieDetail = getParcelable(MOVIE_DTO_KEY) }
 
-        movieDetail?.run {
+        args.movieItem.run {
 
             val tvTitle = view.findViewById<TextView>(R.id.tvMovieTitle).apply {
                 text = title
@@ -55,22 +55,13 @@ class DetailFragment : Fragment() {
             }
 
             val imgPoster = view.findViewById<ShapeableImageView>(R.id.imgPoster).apply {
-                load(imageUrl.toUri())
+                load(imageUrl.toUri()){
+                    error(R.drawable.broken_image)
+                }
                 scaleType = ImageView.ScaleType.CENTER_CROP
             }
         }
 
         super.onViewCreated(view, savedInstanceState)
-    }
-
-    companion object {
-        @JvmStatic
-        fun newInstance(movie: MovieDto): DetailFragment {
-            val args = Bundle()
-            args.putParcelable(MOVIE_DTO_KEY, movie)
-            val fragment = DetailFragment()
-            fragment.arguments = args
-            return fragment
-        }
     }
 }

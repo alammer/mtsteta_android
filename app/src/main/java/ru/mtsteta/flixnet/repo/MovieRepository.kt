@@ -1,13 +1,10 @@
 package ru.mtsteta.flixnet.repo
 
-import android.util.Log
-import android.widget.Toast
-import kotlinx.coroutines.CoroutineExceptionHandler
+import androidx.annotation.Keep
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
-import java.lang.IllegalArgumentException
 
+@Keep
 enum class RefreshMovieStatus { FAILURE, ERROR, OK }
 
 class MovieRepository () {

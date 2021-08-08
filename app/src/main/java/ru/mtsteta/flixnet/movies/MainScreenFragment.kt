@@ -8,12 +8,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import kotlinx.coroutines.*
 import ru.mtsteta.flixnet.R
-import ru.mtsteta.flixnet.detailinfo.DetailFragment
-import ru.mtsteta.flixnet.repo.MoviesDataSourceImpl
 import ru.mtsteta.flixnet.genres.GenreClickListener
 import ru.mtsteta.flixnet.genres.GenreListAdapter
 import ru.mtsteta.flixnet.repo.MovieDto
@@ -39,7 +37,6 @@ class MainScreenFragment : Fragment() {
 
         val swipeRefresher = view.findViewById<SwipeRefreshLayout>(R.id.swipeLayout)
 
-        val genres = MoviesDataSourceImpl().genreList
         val genreAdapter = GenreListAdapter(GenreClickListener {
             //TODO("We should implement logic for GenreClickListener later")
         })
@@ -50,10 +47,8 @@ class MainScreenFragment : Fragment() {
         genreRecycler.adapter = genreAdapter
 
         val movieAdapter = MovieListAdapter(MovieClickListener { movieItem: MovieDto ->
-            this.activity?.supportFragmentManager?.beginTransaction()
-                ?.add(R.id.main_container, DetailFragment.newInstance(movieItem))
-                ?.addToBackStack(null)
-                ?.commit()
+            val direction = MainScreenFragmentDirections.actionMainScreenFragmentToDetailFragment(movieItem)
+            findNavController().navigate(direction)
         })
 
         movieAdapter.stateRestorationPolicy =

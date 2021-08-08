@@ -21,9 +21,9 @@ class MoviesDataSourceImpl : MoviesDataSource {
     )
 
     override fun getMovies(): List<MovieDto>? {
-        return when (Random.nextInt(0, 22) % 7) {
+        return when (Random.nextInt(0, 99) % 45) {
             0 -> null
-            else -> getMovieMockList().shuffled().slice(0..7)
+            else -> getMovieMockList().shuffled()//.slice(0..7)
         }
     }
 
@@ -124,13 +124,13 @@ class MoviesDataSourceImpl : MoviesDataSource {
             genre = genreList.random(),
             imageUrl = "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/b08rGloeZSuJyx6wDX2Q8plC6ID.jpg"
         ),
-        MovieDto(
-            title = null,
-            description = "Есть на земле одно гнилое место, откуда мечтают свалить даже самые отъявленные злодеи. Тюрьма Белль Рив — для преступников со сверхспособностями. Она же — ад. Она же — база рекрутов для суперсекретного проекта «Отряд самоубийц».",
-            rateScore = 5,
-            ageLimit = 18,
-            genre = genreList.random(),
-            imageUrl = "https://www.themoviedb.org/t/p/w600_and_00_bestv2/b08rGloeZSuJyx6wDX2Q8plC6ID.jpg"
-        ),
+        //MovieDto(
+        //    title = null,
+        //    description = "Есть на земле одно гнилое место, откуда мечтают свалить даже самые отъявленные злодеи. Тюрьма Белль Рив — для преступников со сверхспособностями. Она же — ад. Она же — база рекрутов для суперсекретного проекта «Отряд самоубийц».",
+        //    rateScore = 5,
+        //    ageLimit = 18,
+        //    genre = genreList.random(),
+        //    imageUrl = "https://www.themoviedb.org/t/p/w600_and_00_bestv2/b08rGloeZSuJyx6wDX2Q8plC6ID.jpg"
+        //),
     )
 }

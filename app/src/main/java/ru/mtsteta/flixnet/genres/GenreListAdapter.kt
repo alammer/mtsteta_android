@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import ru.mtsteta.flixnet.R
-import ru.mtsteta.flixnet.repo.MovieDto
 
 class GenreListAdapter(
     private val clickListener: GenreClickListener
@@ -31,7 +30,7 @@ class GenreListAdapter(
     }
 
     override fun onBindViewHolder(holder: GenreViewHolder, position: Int) {
-        holder.bind(clickListener,getItem(position), position)
+        holder.bind(clickListener, getItem(position), position)
     }
 
     companion object DiffCallback : DiffUtil.ItemCallback<String>() {

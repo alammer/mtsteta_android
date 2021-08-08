@@ -36,7 +36,7 @@ class MovieListAdapter(private val clickListener: MovieClickListener) :
             infoTextView.text = item.description
             ratingBar.rating = item.rateScore.toFloat()
             ageLimitTextView.text = "${item.ageLimit}+"
-            posterImage.load(item.imageUrl){
+            posterImage.load(item.imageUrl) {
                 placeholder(R.drawable.loading_animation)
                 error(R.drawable.broken_image)
             }
@@ -68,7 +68,6 @@ class MovieListAdapter(private val clickListener: MovieClickListener) :
         override fun areContentsTheSame(oldItem: MovieDto, newItem: MovieDto): Boolean {
             return oldItem.title == newItem.title
         }
-
     }
 }
 

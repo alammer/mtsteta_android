@@ -1,16 +1,19 @@
 package ru.mtsteta.flixnet
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import ru.mtsteta.flixnet.detailinfo.DetailFragment
 import ru.mtsteta.flixnet.movies.*
-import ru.mtsteta.flixnet.profile.ProfileFragment
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var bottomNavigationView: BottomNavigationView
+
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -20,24 +23,23 @@ class MainActivity : AppCompatActivity() {
 
         bottomNavigationView = findViewById(R.id.bottomNavView)
 
-        if (savedInstanceState == null) {
-            supportFragmentManager.beginTransaction()
-                .add(R.id.main_container, MainScreenFragment())
-                .commit()
-        } else {
-            when (supportFragmentManager.findFragmentById(R.id.main_container)) {
-                is DetailFragment -> bottomNavigationView.menu.setGroupCheckable(0, false, true)
-            }
-        }
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
 
-        supportFragmentManager.addOnBackStackChangedListener {
-            when (supportFragmentManager.findFragmentById(R.id.main_container)) {
-                is DetailFragment -> bottomNavigationView.menu.setGroupCheckable(0, false, true)
-                is MainScreenFragment -> {
+        navController = navHostFragment.navController
+
+        bottomNavigationView.setupWithNavController(navController)
+
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                R.id.detailFragment -> bottomNavigationView.menu.setGroupCheckable(0, false, true)
+
+                R.id.mainScreenFragment -> {
                     bottomNavigationView.menu.setGroupCheckable(0, true, true)
                     bottomNavigationView.menu.findItem(R.id.home)?.run { isChecked = true }
                 }
-                is ProfileFragment -> {
+
+                R.id.profileFragment -> {
                     bottomNavigationView.menu.setGroupCheckable(0, true, true)
                     bottomNavigationView.menu.findItem(R.id.profile)?.run { isChecked = true }
                 }
@@ -45,35 +47,27 @@ class MainActivity : AppCompatActivity() {
         }
 
         bottomNavigationView.setOnItemSelectedListener {
-            val fromDetailFragment =
-                supportFragmentManager.findFragmentById(R.id.main_container) is DetailFragment
+            val fromDetailFragment = navController.currentDestination?.id == R.id.detailFragment
             when (it.itemId) {
                 R.id.home -> {
                     if (fromDetailFragment) {
-                        supportFragmentManager.popBackStack()
-                    }
-                    if (!it.isChecked) {
-                        loadFragment(MainScreenFragment())
-                    }
+                        navController.navigate(R.id.action_detailFragment_to_mainScreenFragment)
+                    } else {
+                        if (!it.isChecked) navController.navigate(R.id.action_profileFragment_to_mainScreenFragment)
 
+                    }
                     return@setOnItemSelectedListener true
                 }
-
                 R.id.profile -> {
-                    if (!it.isChecked) {
-                        loadFragment(ProfileFragment(), fromDetailFragment)
+                    if (fromDetailFragment) {
+                        navController.navigate(R.id.action_detailFragment_to_profileFragment)
+                    } else {
+                        if (!it.isChecked) navController.navigate(R.id.action_mainScreenFragment_to_profileFragment)
                     }
                     return@setOnItemSelectedListener true
                 }
             }
             return@setOnItemSelectedListener false
         }
-    }
-
-    private fun loadFragment(fragment: Fragment, addToBackStack: Boolean = false) {
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.main_container, fragment)
-        if (addToBackStack) transaction.addToBackStack(null)
-        transaction.commit()
     }
 }
