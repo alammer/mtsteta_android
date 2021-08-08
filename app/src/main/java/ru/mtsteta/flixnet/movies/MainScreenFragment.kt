@@ -8,8 +8,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import kotlinx.coroutines.*
@@ -19,7 +17,7 @@ import ru.mtsteta.flixnet.repo.MoviesDataSourceImpl
 import ru.mtsteta.flixnet.genres.GenreClickListener
 import ru.mtsteta.flixnet.genres.GenreListAdapter
 import ru.mtsteta.flixnet.repo.MovieDto
-import java.lang.IllegalArgumentException
+import ru.mtsteta.flixnet.repo.RefreshMovieStatus
 
 class MainScreenFragment : Fragment() {
 
@@ -43,13 +41,13 @@ class MainScreenFragment : Fragment() {
 
         val genres = MoviesDataSourceImpl().genreList
         val genreAdapter = GenreListAdapter(GenreClickListener {
-            TODO("We should implement logic for GenreClickListener later")
+            //TODO("We should implement logic for GenreClickListener later")
         })
 
         genreAdapter.stateRestorationPolicy =
             RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
 
-        genreRecycler?.adapter = genreAdapter
+        genreRecycler.adapter = genreAdapter
 
         val movieAdapter = MovieListAdapter(MovieClickListener { movieItem: MovieDto ->
             this.activity?.supportFragmentManager?.beginTransaction()
@@ -61,25 +59,44 @@ class MainScreenFragment : Fragment() {
         movieAdapter.stateRestorationPolicy =
             RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
 
-        movieRecycler?.adapter = movieAdapter
+        movieRecycler.adapter = movieAdapter
 
-        movieRecycler?.addItemDecoration(MovieSpaceItemDecoration(resources.getDimensionPixelSize(R.dimen.mainscreen_movie_top_spacing)))
+        movieRecycler.addItemDecoration(MovieSpaceItemDecoration(resources.getDimensionPixelSize(R.dimen.mainscreen_movie_top_spacing)))
 
-        moviesViewModel.movieList.observe(viewLifecycleOwner, Observer {
-            it?.let { movieAdapter.submitList(it) } ?: Log.i("MainScreenFragment", "Function called: Observe() but movieList is null")
-        } )
+        moviesViewModel.movieList.observe(viewLifecycleOwner, {
+            it?.let { movieAdapter.submitList(it) } ?: Log.i(
+                "MainScreenFragment",
+                "Function called: Observe() but movieList is null"
+            )
+        })
 
-        moviesViewModel.genreList.observe(viewLifecycleOwner, Observer {
+        moviesViewModel.genreList.observe(viewLifecycleOwner, {
             genreAdapter.submitList(it)
         })
 
-        moviesViewModel.refreshStatus.observe(viewLifecycleOwner, Observer {
-            //TODO("change status of refresh")
+        moviesViewModel.refreshStatus.observe(viewLifecycleOwner, {
+            Log.i("Movie", "Function called: changeStatus = ${moviesViewModel.changeStatus}")
+            swipeRefresher.isRefreshing = false
+            if (moviesViewModel.changeStatus) {
+                when (it) {
+                    RefreshMovieStatus.ERROR -> Toast.makeText(
+                        context,
+                        "Server error",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    RefreshMovieStatus.FAILURE -> Toast.makeText(
+                        context,
+                        "Network connection failed",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    else -> Toast.makeText(context, "Movie list updated", Toast.LENGTH_SHORT).show()
+                }
+                moviesViewModel.changeStatus = false
+            }
         })
 
         swipeRefresher.setOnRefreshListener {
             moviesViewModel.refreshMovieList()
-            //swipeRefresher.isRefreshing = false
         }
 
         super.onViewCreated(view, savedInstanceState)

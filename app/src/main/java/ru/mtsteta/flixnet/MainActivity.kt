@@ -51,7 +51,6 @@ class MainActivity : AppCompatActivity() {
                 R.id.home -> {
                     if (fromDetailFragment) {
                         supportFragmentManager.popBackStack()
-                        loadFragment(MainScreenFragment())
                     }
                     if (!it.isChecked) {
                         loadFragment(MainScreenFragment())

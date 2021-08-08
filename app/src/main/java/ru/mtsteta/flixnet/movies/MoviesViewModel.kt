@@ -1,5 +1,6 @@
 package ru.mtsteta.flixnet.movies
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,6 +11,8 @@ import ru.mtsteta.flixnet.repo.MovieRepository
 import ru.mtsteta.flixnet.repo.RefreshMovieStatus
 
 class MoviesViewModel : ViewModel() {
+
+    var changeStatus = false
 
     private val repository = MovieRepository()
 
@@ -28,7 +31,11 @@ class MoviesViewModel : ViewModel() {
     }
 
     fun refreshMovieList() {
+
         viewModelScope.launch {
+
+            changeStatus = true
+            Log.i("MoviesViewModel", "Function called: changeStatus = $changeStatus")
 
             val responce = repository.refreshMovies()
 
@@ -39,7 +46,6 @@ class MoviesViewModel : ViewModel() {
                 }
                 RefreshMovieStatus.FAILURE -> _refreshStatus.value = RefreshMovieStatus.FAILURE
                 else -> _refreshStatus.value = RefreshMovieStatus.ERROR
-
             }
         }
     }
