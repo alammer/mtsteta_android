@@ -23,7 +23,7 @@ class MoviesDataSourceImpl : MoviesDataSource {
     )
 
     override fun getMovies(): List<MovieDto>? {
-        return when (Random.nextInt(0, 22) % 7) {
+        return when (Random.nextInt(0, 99) % 33) {
             0 -> null
             else -> getMovieMockList().shuffled().slice(0..7)
         }

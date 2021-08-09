@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.beginTransaction()
                 .add(R.id.main_container, MainScreenFragment())
                 .commit()
+
         } else {
             when (supportFragmentManager.findFragmentById(R.id.main_container)) {
                 is DetailFragment -> bottomNavigationView.menu.setGroupCheckable(0, false, true)
@@ -53,11 +54,11 @@ class MainActivity : AppCompatActivity() {
                     if (fromDetailFragment) {
                         supportFragmentManager.popBackStack()
                         loadFragment(MainScreenFragment())
+                    } else {
+                        if (!it.isChecked) {
+                            loadFragment(MainScreenFragment())
+                        }
                     }
-                    if (!it.isChecked) {
-                        loadFragment(MainScreenFragment())
-                    }
-
                     return@setOnItemSelectedListener true
                 }
 

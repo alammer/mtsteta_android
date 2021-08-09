@@ -20,19 +20,12 @@ import java.lang.IllegalArgumentException
 
 class MainScreenFragment : Fragment() {
 
-    private var movies: List<MovieDto>? = null
-
     private val exceptionHandler = CoroutineExceptionHandler { coroutineContext, exception ->
         Log.i(
             "MainScreenFragment",
             "Catch exception $exception from coroutine with context $coroutineContext"
         )
         Toast.makeText(context, "Uknown server error", Toast.LENGTH_SHORT).show()
-    }
-
-    private suspend fun loadMovieList(): List<MovieDto>? = withContext(Dispatchers.IO) {
-        delay(3000L)
-        MoviesDataSourceImpl().getMovies()
     }
 
     override fun onCreateView(
@@ -45,7 +38,12 @@ class MainScreenFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
+        val swipeRefresher = view.findViewById<SwipeRefreshLayout>(R.id.swipeLayout)
+
+        val movieRecycler = view.findViewById<RecyclerView>(R.id.rvMovieList)
+
         val genreRecycler = view.findViewById<RecyclerView>(R.id.rvGenreList)
+
         val genres = MoviesDataSourceImpl().genreList
         val genreAdapter = GenreListAdapter(genres, GenreClickListener {
             TODO("We should implement logic for GenreClickListener later")
@@ -55,8 +53,6 @@ class MainScreenFragment : Fragment() {
             RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
 
         genreRecycler?.adapter = genreAdapter
-
-        val movieRecycler = view.findViewById<RecyclerView>(R.id.rvMovieList)
 
         val movieAdapter = MovieListAdapter(MovieClickListener { movieItem: MovieDto ->
             this.activity?.supportFragmentManager?.beginTransaction()
@@ -72,41 +68,36 @@ class MainScreenFragment : Fragment() {
 
         movieRecycler?.addItemDecoration(MovieSpaceItemDecoration(resources.getDimensionPixelSize(R.dimen.mainscreen_movie_top_spacing)))
 
-        lifecycleScope.launch(exceptionHandler) {
-            val recentMovieList = loadMovieList()
-
-            if (recentMovieList?.any { it.title.isNullOrBlank() } == true) {
-                movieAdapter.submitList(movies)
-                throw IllegalArgumentException("Title Not Found!")
-            }
-
-            recentMovieList?.let {
-                movieAdapter.submitList(it)
-                movies = it.toList()
-            } ?: Log.i("MainScreenFragment", "Get empty list!!!")
-        }
-
-        val swipeRefresher = view.findViewById<SwipeRefreshLayout>(R.id.swipeLayout)
+        refresMovieList(movieAdapter)
 
         swipeRefresher.setOnRefreshListener {
-            lifecycleScope.launch(exceptionHandler) {
-                val recentMovieList = loadMovieList()
-
-                if (recentMovieList?.any { it.title.isNullOrBlank() } == true) {
-                    movieAdapter.submitList(movies)
-                    throw IllegalArgumentException("Title Not Found!")
-                }
-
-                recentMovieList?.let {
-                    movieAdapter.submitList(it)
-                    movies = it.toList()
-                } ?: Toast.makeText(context, "Network connection failed", Toast.LENGTH_SHORT)
-                    .show()//Log.i("MainScreenFragment", "Get empty list!!!")
-            }
+            refresMovieList(movieAdapter)
             swipeRefresher.isRefreshing = false
         }
 
         super.onViewCreated(view, savedInstanceState)
     }
+
+    private fun refresMovieList(movieListAdapter: MovieListAdapter) {
+
+        lifecycleScope.launch(exceptionHandler) {
+            val recentMovieList = loadMovieList()
+
+            if (recentMovieList?.any { it.title.isNullOrBlank() } == true) {
+                throw IllegalArgumentException("Title Not Found!")
+            }
+
+            recentMovieList?.let {
+                movieListAdapter.submitList(it)
+            } ?: Toast.makeText(context, "Network connection failed", Toast.LENGTH_SHORT)
+                .show()
+        }
+    }
+
+    private suspend fun loadMovieList(): List<MovieDto>? = withContext(Dispatchers.IO) {
+        delay(1500L)
+        MoviesDataSourceImpl().getMovies()
+    }
+
 
 }
