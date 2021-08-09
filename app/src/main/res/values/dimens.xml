@@ -22,7 +22,6 @@
     <dimen name="mainscreen_poster_height">216dp</dimen>
     <dimen name="mainscreen_land_poster_width">144dp</dimen>
     <dimen name="mainscreen_horizontal_margin">20dp</dimen>
-    <dimen name="mainscreen_rv_height">0dp</dimen>
     <dimen name="mainscreen_land_rv_horizontal_padding">20dp</dimen>
     <dimen name="design_bottom_navigation_item_max_width">600dp</dimen>
     <dimen name="design_bottom_navigation_active_item_max_width">600dp</dimen>

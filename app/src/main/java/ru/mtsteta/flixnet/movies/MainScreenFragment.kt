@@ -68,17 +68,17 @@ class MainScreenFragment : Fragment() {
 
         movieRecycler?.addItemDecoration(MovieSpaceItemDecoration(resources.getDimensionPixelSize(R.dimen.mainscreen_movie_top_spacing)))
 
-        refresMovieList(movieAdapter)
+        refreshMovieList(movieAdapter)
 
         swipeRefresher.setOnRefreshListener {
-            refresMovieList(movieAdapter)
+            refreshMovieList(movieAdapter)
             swipeRefresher.isRefreshing = false
         }
 
         super.onViewCreated(view, savedInstanceState)
     }
 
-    private fun refresMovieList(movieListAdapter: MovieListAdapter) {
+    private fun refreshMovieList(movieListAdapter: MovieListAdapter) {
 
         lifecycleScope.launch(exceptionHandler) {
             val recentMovieList = loadMovieList()
