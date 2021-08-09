@@ -7,6 +7,8 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="magenta">#FFFF00FF</color>
+    <color name="orange_700">#F57C00</color>
     <color name="transparent">#000000</color>
     <color name="bg_color_avatar">#4DC4C4C4</color>
     <color name="bg_color_detailed">#F1F1F1</color>

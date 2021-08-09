@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
-import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.ktx.messaging
@@ -31,16 +30,18 @@ class MainActivity : AppCompatActivity() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             // Create channel to show notifications.
-            val channelId = "fcm_default_channel"//getString(R.string.default_notification_channel_id)
+            val channelId = "test_channel_id"//getString(R.string.default_notification_channel_id)
             val channelName = "TestChannel"//getString(R.string.default_notification_channel_name)
             val notificationManager = getSystemService(NotificationManager::class.java)
             notificationManager?.createNotificationChannel(
-                NotificationChannel(channelId,
-                channelName, NotificationManager.IMPORTANCE_LOW)
+                NotificationChannel(
+                    channelId,
+                    channelName, NotificationManager.IMPORTANCE_LOW
+                )
             )
         }
 
-        Firebase.messaging.subscribeToTopic("weather")
+        Firebase.messaging.subscribeToTopic("teta")
             .addOnCompleteListener { task ->
                 var msg = "success subscribe"
                 if (!task.isSuccessful) {
@@ -50,7 +51,7 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
             }
 
-        Firebase.messaging.getToken().addOnCompleteListener(OnCompleteListener { task ->
+        /*Firebase.messaging.getToken().addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {
                 Log.i("MainActivity", "Fetching FCM registration token failed", task.exception)
                 return@OnCompleteListener
@@ -63,9 +64,7 @@ class MainActivity : AppCompatActivity() {
             val msg = "get tocken $token"
             Log.i("MainActivity", "Function called: getToken() - $msg")
             Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
-        })
-
-
+        })*/
 
         bottomNavigationView = findViewById(R.id.bottomNavView)
 
