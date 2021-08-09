@@ -1,12 +1,19 @@
 package ru.mtsteta.flixnet
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.ktx.messaging
 import ru.mtsteta.flixnet.movies.*
 
 class MainActivity : AppCompatActivity() {
@@ -20,6 +27,44 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_main)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            // Create channel to show notifications.
+            val channelId = "fcm_default_channel"//getString(R.string.default_notification_channel_id)
+            val channelName = "TestChannel"//getString(R.string.default_notification_channel_name)
+            val notificationManager = getSystemService(NotificationManager::class.java)
+            notificationManager?.createNotificationChannel(
+                NotificationChannel(channelId,
+                channelName, NotificationManager.IMPORTANCE_LOW)
+            )
+        }
+
+        Firebase.messaging.subscribeToTopic("weather")
+            .addOnCompleteListener { task ->
+                var msg = "success subscribe"
+                if (!task.isSuccessful) {
+                    msg = "complitely failed"
+                }
+                Log.i("MainActivity", "Function called: FCM subscribe to topic : $msg")
+                Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+            }
+
+        Firebase.messaging.getToken().addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.i("MainActivity", "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+
+            // Get new FCM registration token
+            val token = task.result
+
+            // Log and toast
+            val msg = "get tocken $token"
+            Log.i("MainActivity", "Function called: getToken() - $msg")
+            Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+        })
+
+
 
         bottomNavigationView = findViewById(R.id.bottomNavView)
 
@@ -69,5 +114,6 @@ class MainActivity : AppCompatActivity() {
             }
             return@setOnItemSelectedListener false
         }
+
     }
 }
