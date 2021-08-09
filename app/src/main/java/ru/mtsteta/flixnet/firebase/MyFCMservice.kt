@@ -1,4 +1,4 @@
-package ru.mtsteta.flixnet.fcm
+package ru.mtsteta.flixnet.firebase
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
