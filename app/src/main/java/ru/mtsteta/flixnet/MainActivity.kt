@@ -48,7 +48,6 @@ class MainActivity : AppCompatActivity() {
                     msg = "complitely failed"
                 }
                 Log.i("MainActivity", "Function called: FCM subscribe to topic : $msg")
-                Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
             }
 
         /*Firebase.messaging.getToken().addOnCompleteListener(OnCompleteListener { task ->
