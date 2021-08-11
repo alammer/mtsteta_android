@@ -12,5 +12,6 @@ data class MovieDto(
     val genre: String,
     val rateScore: Int,
     val ageLimit: Int,
-    val imageUrl: String
+    val imageUrl: String,
+    val topActors: List<String>? = null
 ) : Parcelable
