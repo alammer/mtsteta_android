@@ -27,46 +27,12 @@ data class Movie(
     var actorsList: List<String>? = null
 )
 
-@Entity(tableName = "actor_table")
-data class Actor(
+@Entity(tableName = "genre_table")
+data class Genre(
     @PrimaryKey(autoGenerate = true)
-    var actorId: Long = 0L,
+    val genreId: Long = 0L,
 
-    @ColumnInfo(name = "actor")
-    val actor: String,
-
-    @ColumnInfo(name = "poster")
-    var imageUrl: String,
-
-    @ColumnInfo(name = "filmography")
-    @TypeConverters(Converters::class)
-    var moviesList: List<String>? = null
-)
-
-@Entity(primaryKeys = ["movieId", "actorId"])
-data class MovieActorXRef(
-    val movie: Long,
-    val actorId: Long
-)
-
-data class MovieCast(
-    @Embedded val movie: Movie,
-    @Relation(
-        parentColumn = "movieId",
-        entityColumn = "actorId",
-        associateBy = Junction(MovieActorXRef::class)
-    )
-    val actors: List<Actor>
-)
-
-data class ActorMovies(
-    @Embedded val actor: Actor,
-    @Relation(
-        parentColumn = "actorId",
-        entityColumn = "movieId",
-        associateBy = Junction(MovieActorXRef::class)
-    )
-    val movies: List<Movie>
+    val genre: String
 )
 
 
