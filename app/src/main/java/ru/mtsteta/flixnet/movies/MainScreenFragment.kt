@@ -15,7 +15,7 @@ import ru.mtsteta.flixnet.R
 import ru.mtsteta.flixnet.genres.GenreClickListener
 import ru.mtsteta.flixnet.genres.GenreListAdapter
 import ru.mtsteta.flixnet.repo.MovieDto
-import ru.mtsteta.flixnet.repo.RefreshMovieStatus
+import ru.mtsteta.flixnet.repo.RefreshDataStatus
 
 class MainScreenFragment : Fragment() {
 
@@ -74,12 +74,12 @@ class MainScreenFragment : Fragment() {
             swipeRefresher.isRefreshing = false
             if (moviesViewModel.changeStatus) {
                 when (it) {
-                    RefreshMovieStatus.ERROR -> Toast.makeText(
+                    RefreshDataStatus.ERROR -> Toast.makeText(
                         context,
                         "Server error",
                         Toast.LENGTH_SHORT
                     ).show()
-                    RefreshMovieStatus.FAILURE -> Toast.makeText(
+                    RefreshDataStatus.FAILURE -> Toast.makeText(
                         context,
                         "Network connection failed",
                         Toast.LENGTH_SHORT
@@ -91,7 +91,7 @@ class MainScreenFragment : Fragment() {
         })
 
         swipeRefresher.setOnRefreshListener {
-            moviesViewModel.refreshMovieList()
+            moviesViewModel.fetchData()
         }
 
         super.onViewCreated(view, savedInstanceState)
