@@ -4,7 +4,7 @@ import androidx.room.*
 import ru.mtsteta.flixnet.repo.ActorDto
 import ru.mtsteta.flixnet.repo.MovieDto
 
-@Entity(tableName = "movie_table", primaryKeys = ["title", "actors"])
+@Entity(tableName = "movie_table", primaryKeys = ["title", "poster"])
 data class Movie(
     @ColumnInfo(name = "title")
     val title: String,
@@ -24,9 +24,9 @@ data class Movie(
     @ColumnInfo(name = "poster")
     var imageUrl: String,
 
+    @field:TypeConverters(Converters::class)
     @ColumnInfo(name = "actors")
-    @TypeConverters(Converters::class)
-    var actorsList: List<String>? = null
+    var actorsList: List<String>?
 )
 
 @Entity(tableName = "actor_table")
@@ -41,14 +41,15 @@ data class Actor(
     @ColumnInfo(name = "photo")
     var imageUrl: String,
 
+    @field:TypeConverters(Converters::class)
     @ColumnInfo(name = "movies")
-    @TypeConverters(Converters::class)
-    var movieList: List<String>? = null
+    var movieList: List<String>?
 )
 
 @Entity(tableName = "genre_table")
 data class Genre(
     @PrimaryKey
+    @ColumnInfo(name = "genre")
     val genre: String
 )
 

@@ -31,7 +31,7 @@ interface MovieDataDao{
     fun clearActors()
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAllGenres(genres: List<String>)
+    fun insertAllGenres(genres: List<Genre>)
 
     @Query("SELECT * from genre_table")
     fun getGenres(): List<String>?

@@ -5,6 +5,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
 import ru.mtsteta.flixnet.database.Genre
 import ru.mtsteta.flixnet.database.MovieDataBase
@@ -21,12 +22,12 @@ class MovieRepository() {
     private val dataDao = MovieDataBase.instance.movieDataDao
 
 
-    private suspend fun loadMovieList(): List<MovieDto>? = withContext(Dispatchers.IO) {
+    private fun loadMovieList(): List<MovieDto>?  {
         var localMovies = dataDao.getAllMovies()?.map { it.asDomainModel() }
-        if (localMovies == null) localMovies = fakeDataSource.getMovies()?.also { domainModelList ->
+        if (localMovies.isNullOrEmpty()) localMovies = fakeDataSource.getMovies()?.also { domainModelList ->
             dataDao.insertAllMovies(domainModelList.map { it.asDataBaseModel() })
         }
-        localMovies
+        return localMovies
     }
 
     suspend fun loadActorList(): List<ActorDto>? = withContext(Dispatchers.IO) {
@@ -39,8 +40,8 @@ class MovieRepository() {
 
     suspend fun loadGenres(): List<String> = withContext(Dispatchers.IO) {
         var localGenres = dataDao.getGenres()
-        if (localGenres == null) localGenres = fakeDataSource.genreList.also {
-            dataDao.insertAllGenres(it)
+        if (localGenres == null) localGenres = fakeDataSource.genreList.also { genres ->
+            dataDao.insertAllGenres(genres.map { Genre(it) })
         }
         localGenres
     }
@@ -61,6 +62,7 @@ class MovieRepository() {
                     emit(RefreshDataStatus.OK to it)
                 } ?: emit(RefreshDataStatus.FAILURE to null)
             }
-        }.distinctUntilChanged()
+        }.flowOn(Dispatchers.IO)
+            .distinctUntilChanged()
     }
 }
