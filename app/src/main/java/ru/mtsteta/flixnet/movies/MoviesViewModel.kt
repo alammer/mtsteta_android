@@ -31,10 +31,10 @@ class MoviesViewModel : ViewModel() {
     private val _genreList = MutableLiveData<List<String>>()
 
     init {
-        fetchCommonData()
+        fetchInitialData()
     }
 
-    private fun fetchCommonData() {
+    private fun fetchInitialData() {
         viewModelScope.launch {
             repository.loadActorList()?.also { _actorList.value = it }
             repository.loadGenres().also { _genreList.postValue(it) }
@@ -49,17 +49,17 @@ class MoviesViewModel : ViewModel() {
             changeStatus = true
             Log.i("MoviesViewModel", "Function called: changeStatus = $changeStatus")
 
-            repository.refreshMovie().collect {
-                when (it.first) {
-                    RefreshDataStatus.OK -> {
-                        _movieList.value = it.second
-                        _refreshStatus.value = RefreshDataStatus.OK
-                    }
-                    RefreshDataStatus.FAILURE -> _refreshStatus.value = RefreshDataStatus.FAILURE
-                    else -> _refreshStatus.value = RefreshDataStatus.ERROR
-                }
-            }
+            val responce = repository.refreshMovie()
 
+
+            when (responce.first) {
+                RefreshDataStatus.OK -> {
+                    _movieList.value = responce.second
+                    _refreshStatus.value = RefreshDataStatus.OK
+                }
+                RefreshDataStatus.FAILURE -> _refreshStatus.value = RefreshDataStatus.FAILURE
+                else -> _refreshStatus.value = RefreshDataStatus.ERROR
+            }
         }
     }
 }

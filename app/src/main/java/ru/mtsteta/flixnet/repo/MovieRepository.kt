@@ -21,48 +21,46 @@ class MovieRepository() {
 
     private val dataDao = MovieDataBase.instance.movieDataDao
 
-
-    private fun loadMovieList(): List<MovieDto>?  {
-        var localMovies = dataDao.getAllMovies()?.map { it.asDomainModel() }
-        if (localMovies.isNullOrEmpty()) localMovies = fakeDataSource.getMovies()?.also { domainModelList ->
-            dataDao.insertAllMovies(domainModelList.map { it.asDataBaseModel() })
-        }
-        return localMovies
-    }
-
     suspend fun loadActorList(): List<ActorDto>? = withContext(Dispatchers.IO) {
         var localActors = dataDao.getAllActors()?.map { it.asDomainModel() }
-        if (localActors == null) localActors = fakeDataSource.getActors()?.also { domainModelList ->
-            dataDao.insertAllActors(domainModelList.map { it.asDataBaseModel() })
-        }
+        if (localActors.isNullOrEmpty()) localActors =
+            fakeDataSource.getActors()?.also { domainModelList ->
+                dataDao.insertAllActors(domainModelList.map { it.asDataBaseModel() })
+            }
         localActors
     }
 
     suspend fun loadGenres(): List<String> = withContext(Dispatchers.IO) {
         var localGenres = dataDao.getGenres()
-        if (localGenres == null) localGenres = fakeDataSource.genreList.also { genres ->
+        if (localGenres.isNullOrEmpty()) localGenres = fakeDataSource.genreList.also { genres ->
             dataDao.insertAllGenres(genres.map { Genre(it) })
         }
         localGenres
     }
 
+    fun loadMovieList(): List<MovieDto>? {
+        var localMovies = dataDao.getAllMovies()?.map { it.asDomainModel() }
+        if (localMovies.isNullOrEmpty()) localMovies =
+            fakeDataSource.getMovies()?.also { domainModelList ->
+                dataDao.insertAllMovies(domainModelList.map { it.asDataBaseModel() })
+            }
+        return localMovies
+    }
 
-    suspend fun refreshMovie(): Flow<Pair<RefreshDataStatus, List<MovieDto>?>> {
 
-        return flow {
+    suspend fun refreshMovie(): Pair<RefreshDataStatus, List<MovieDto>?> =
+        withContext((Dispatchers.IO)) {
 
             loadMovieList()
 
             val recentMovieList = dataDao.getAllMovies()?.map { it.asDomainModel() }
 
             if (recentMovieList?.any { it.title.isNullOrBlank() } == true) {
-                emit(RefreshDataStatus.ERROR to null)
+                RefreshDataStatus.ERROR to null
             } else {
                 recentMovieList?.let {
-                    emit(RefreshDataStatus.OK to it)
-                } ?: emit(RefreshDataStatus.FAILURE to null)
+                    RefreshDataStatus.OK to it
+                } ?: RefreshDataStatus.FAILURE to null
             }
-        }.flowOn(Dispatchers.IO)
-            .distinctUntilChanged()
-    }
+        }
 }
