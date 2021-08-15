@@ -179,8 +179,8 @@
             android:id="@+id/tvNotifyItem"
             style="@style/ProfileSettingItemSelector"
             app:layout_constraintBottom_toBottomOf="@id/tvNotifyingAndSound"
-            app:layout_constraintTop_toTopOf="@id/tvNotifyingAndSound"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tvNotifyingAndSound" />
 
         <TextView
             android:id="@+id/tvPrivacy"
@@ -193,8 +193,8 @@
             android:id="@+id/tvPrivacyItem"
             style="@style/ProfileSettingItemSelector"
             app:layout_constraintBottom_toBottomOf="@id/tvPrivacy"
-            app:layout_constraintTop_toTopOf="@id/tvPrivacy"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tvPrivacy" />
 
         <TextView
             android:id="@+id/tvTheme"
@@ -207,8 +207,8 @@
             android:id="@+id/tvThemeItem"
             style="@style/ProfileSettingItemSelector"
             app:layout_constraintBottom_toBottomOf="@id/tvTheme"
-            app:layout_constraintTop_toTopOf="@id/tvTheme"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tvTheme" />
 
         <TextView
             android:id="@+id/tvLanguage"
@@ -221,8 +221,8 @@
             android:id="@+id/tvLanguageItem"
             style="@style/ProfileSettingItemSelector"
             app:layout_constraintBottom_toBottomOf="@id/tvLanguage"
-            app:layout_constraintTop_toTopOf="@id/tvLanguage"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tvLanguage" />
 
         <TextView
             android:id="@+id/tvDataMemory"
@@ -235,8 +235,8 @@
             android:id="@+id/tvDataMemoryItem"
             style="@style/ProfileSettingItemSelector"
             app:layout_constraintBottom_toBottomOf="@id/tvDataMemory"
-            app:layout_constraintTop_toTopOf="@id/tvDataMemory"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tvDataMemory" />
 
         <TextView
             android:id="@+id/tvAppSupportTitle"
@@ -257,8 +257,8 @@
             android:id="@+id/tvQuestionItem"
             style="@style/ProfileSettingItemSelector"
             app:layout_constraintBottom_toBottomOf="@id/tvQuestion"
-            app:layout_constraintTop_toTopOf="@id/tvQuestion"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tvQuestion" />
 
         <TextView
             android:id="@+id/tvReportProblem"
@@ -271,8 +271,8 @@
             android:id="@+id/tvReportItem"
             style="@style/ProfileSettingItemSelector"
             app:layout_constraintBottom_toBottomOf="@id/tvReportProblem"
-            app:layout_constraintTop_toTopOf="@id/tvReportProblem"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tvReportProblem" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnExit"

@@ -63,13 +63,16 @@
 
                 <TextView
                     android:id="@+id/tvMovieTitle"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/detailed_common_top_margin"
                     android:layout_marginStart="@dimen/detailed_horizontal_margin"
+                    android:layout_marginEnd="@dimen/mainscreen_title_end_margin"
                     android:fontFamily="@font/roboto_medium"
                     android:text="@string/movie_name"
                     android:textSize="@dimen/large_text_size"
+                    android:ellipsize="end"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tvDetailGenre" />
 

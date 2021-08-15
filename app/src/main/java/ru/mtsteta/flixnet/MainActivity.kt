@@ -14,7 +14,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var bottomNavigationView: BottomNavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_main)
 
         bottomNavigationView = findViewById(R.id.bottomNavView)
@@ -50,11 +52,12 @@ class MainActivity : AppCompatActivity() {
                 R.id.home -> {
                     if (fromDetailFragment) {
                         supportFragmentManager.popBackStack()
-                    }
-                    if (!it.isChecked) {
                         loadFragment(MainScreenFragment())
+                    } else {
+                        if (!it.isChecked) {
+                            loadFragment(MainScreenFragment())
+                        }
                     }
-
                     return@setOnItemSelectedListener true
                 }
 

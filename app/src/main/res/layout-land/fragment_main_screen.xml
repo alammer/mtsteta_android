@@ -23,7 +23,7 @@
         android:layout_marginStart="20dp"
         android:fontFamily="@font/roboto_bold"
         android:text="@string/main_screen_title"
-        android:textSize="@dimen/mainscreen_title_text_size"
+        android:textSize="@dimen/big_text_size"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -39,20 +39,25 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/genre_rv_item" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvMovieList"
-        android:layout_width="wrap_content"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeLayout"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="16dp"
-        android:paddingHorizontal="20dp"
-        android:clipToPadding="false"
-        android:orientation="horizontal"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/rvGenreList"
-        tools:listitem="@layout/movies_rv_item" />
+        app:layout_constraintTop_toBottomOf="@id/rvGenreList">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvMovieList"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:clipToPadding="false"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/mainscreen_land_rv_horizontal_padding"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/movies_rv_item" />
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
