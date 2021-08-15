@@ -47,7 +47,6 @@ class MovieRepository() {
         return localMovies
     }
 
-
     suspend fun refreshMovie(): Pair<RefreshDataStatus, List<MovieDto>?> =
         withContext((Dispatchers.IO)) {
 
@@ -55,7 +54,7 @@ class MovieRepository() {
 
             val recentMovieList = dataDao.getAllMovies()?.map { it.asDomainModel() }
 
-            if (recentMovieList?.any { it.title.isNullOrBlank() } == true) {
+            if (recentMovieList?.any { it.title.isNullOrEmpty() } == true) {
                 RefreshDataStatus.ERROR to null
             } else {
                 recentMovieList?.let {

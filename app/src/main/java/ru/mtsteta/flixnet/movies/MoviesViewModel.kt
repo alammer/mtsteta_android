@@ -51,7 +51,6 @@ class MoviesViewModel : ViewModel() {
 
             val responce = repository.refreshMovie()
 
-
             when (responce.first) {
                 RefreshDataStatus.OK -> {
                     _movieList.value = responce.second
