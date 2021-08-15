@@ -17,7 +17,12 @@ import ru.mtsteta.flixnet.repo.MovieDto
 
 class DetailFragment : Fragment() {
 
-    private var movieDetail: MovieDto? = null
+    private lateinit var tvTitle: TextView
+    private lateinit var tvInfo: TextView
+    private lateinit var tvAgeLimit: TextView
+    private lateinit var tvGenre: TextView
+    private lateinit var rbMovie: RatingBar
+    private lateinit var imgPoster: ShapeableImageView
 
     private val args: DetailFragmentArgs by navArgs()
 
@@ -31,37 +36,37 @@ class DetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
+        initItem(view, args.movieItem)
 
-        args.movieItem.run {
+        super.onViewCreated(view, savedInstanceState)
+    }
 
-            val tvTitle = view.findViewById<TextView>(R.id.tvMovieTitle).apply {
-                text = title
-            }
+    private fun initItem(view: View, movie: MovieDto) {
 
-            val tvInfo = view.findViewById<TextView>(R.id.tvDetailInfoText).apply {
-                text = description
-            }
+        tvTitle = view.findViewById(R.id.tvMovieTitle)
 
-            val tvAgeLimit = view.findViewById<TextView>(R.id.tvAgeLimit).apply {
-                text = "$ageLimit+"
-            }
+        tvInfo = view.findViewById(R.id.tvDetailInfoText)
 
-            val tvGenre = view.findViewById<TextView>(R.id.tvDetailGenre).apply {
-                text = genre
-            }
+        tvAgeLimit = view.findViewById(R.id.tvAgeLimit)
 
-            val rbMovie = view.findViewById<RatingBar>(R.id.detailMovieRating).apply {
-                rating = rateScore.toFloat()
-            }
+        tvGenre = view.findViewById(R.id.tvDetailGenre)
 
-            val imgPoster = view.findViewById<ShapeableImageView>(R.id.imgPoster).apply {
-                load(imageUrl.toUri()){
+        rbMovie = view.findViewById(R.id.detailMovieRating)
+
+        imgPoster = view.findViewById(R.id.imgPoster)
+
+        movie.run {
+            tvTitle.text = title
+            tvInfo.text = description
+            tvAgeLimit.text = "$ageLimit+"
+            tvGenre.text = genre
+            rbMovie.rating = rateScore.toFloat()
+            imgPoster.apply {
+                load(imageUrl.toUri()) {
                     error(R.drawable.broken_image)
                 }
                 scaleType = ImageView.ScaleType.CENTER_CROP
             }
         }
-
-        super.onViewCreated(view, savedInstanceState)
     }
 }

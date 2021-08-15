@@ -21,6 +21,13 @@ class MainScreenFragment : Fragment() {
 
     private val moviesViewModel: MoviesViewModel by viewModels()
 
+    private lateinit var genreRecycler: RecyclerView
+    private lateinit var movieRecycler: RecyclerView
+    private lateinit var swipeRefresher: SwipeRefreshLayout
+    private lateinit var genreAdapter: GenreListAdapter
+    private lateinit var movieAdapter: MovieListAdapter
+
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -31,32 +38,7 @@ class MainScreenFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        val genreRecycler = view.findViewById<RecyclerView>(R.id.rvGenreList)
-
-        val movieRecycler = view.findViewById<RecyclerView>(R.id.rvMovieList)
-
-        val swipeRefresher = view.findViewById<SwipeRefreshLayout>(R.id.swipeLayout)
-
-        val genreAdapter = GenreListAdapter(GenreClickListener {
-            //TODO("We should implement logic for GenreClickListener later")
-        })
-
-        genreAdapter.stateRestorationPolicy =
-            RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
-
-        genreRecycler.adapter = genreAdapter
-
-        val movieAdapter = MovieListAdapter(MovieClickListener { movieItem: MovieDto ->
-            val direction = MainScreenFragmentDirections.actionMainScreenFragmentToDetailFragment(movieItem)
-            findNavController().navigate(direction)
-        })
-
-        movieAdapter.stateRestorationPolicy =
-            RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
-
-        movieRecycler.adapter = movieAdapter
-
-        movieRecycler.addItemDecoration(MovieSpaceItemDecoration(resources.getDimensionPixelSize(R.dimen.mainscreen_movie_top_spacing)))
+        init(view)
 
         moviesViewModel.movieList.observe(viewLifecycleOwner, {
             it?.let { movieAdapter.submitList(it) } ?: Log.i(
@@ -90,11 +72,40 @@ class MainScreenFragment : Fragment() {
             }
         })
 
-        swipeRefresher.setOnRefreshListener {
-            moviesViewModel.refreshMovieList()
-        }
-
         super.onViewCreated(view, savedInstanceState)
     }
 
+    private fun init(view: View) {
+
+        genreRecycler = view.findViewById(R.id.rvGenreList)
+
+        movieRecycler = view.findViewById(R.id.rvMovieList)
+
+        swipeRefresher = view.findViewById(R.id.swipeLayout)
+
+        genreAdapter = GenreListAdapter(GenreClickListener {
+            //TODO("We should implement logic for GenreClickListener later")
+        })
+
+        genreAdapter.stateRestorationPolicy =
+            RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
+
+        genreRecycler.adapter = genreAdapter
+
+        movieAdapter = MovieListAdapter(MovieClickListener { movieItem: MovieDto ->
+            val direction = MainScreenFragmentDirections.actionMainToDetail(movieItem)
+            findNavController().navigate(direction)
+        })
+
+        movieAdapter.stateRestorationPolicy =
+            RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
+
+        movieRecycler.adapter = movieAdapter
+
+        movieRecycler.addItemDecoration(MovieSpaceItemDecoration(resources.getDimensionPixelSize(R.dimen.mainscreen_movie_top_spacing)))
+
+        swipeRefresher.setOnRefreshListener {
+            moviesViewModel.refreshMovieList()
+        }
+    }
 }

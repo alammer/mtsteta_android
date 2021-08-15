@@ -20,22 +20,28 @@ class MyFCMService : FirebaseMessagingService() {
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
 
         // TODO(developer): Handle FCM messages here.
-        Log.i(TAG, "From: ${remoteMessage.from}")
+        Log.i("MyFCMservice", "From: ${remoteMessage.from}")
 
         // Check if message contains a data payload.
         if (remoteMessage.data.isNotEmpty()) {
-            Log.i(TAG, "Message data payload: ${remoteMessage.data}")
+            Log.i(
+                "MyFCMservice",
+                "Function called: onMessageReceived() message data payload: ${remoteMessage.data}"
+            )
         }
 
         remoteMessage.notification?.let {
-            Log.i(TAG, "Message Notification Body: ${it.body}")
+            Log.i(
+                "MyFCMservice",
+                "Function called: onMessageReceived() message Notification Body: ${it.body} "
+            )
         }
 
         remoteMessage.notification?.body?.let { sendNotification(it) }
     }
 
     override fun onNewToken(token: String) {
-        Log.i(TAG, "Refreshed token: $token")
+        Log.i("MyFCMservice", "Function called: onNewToken() refreshed token: $token ")
     }
 
     private fun sendNotification(messageBody: String) {
@@ -46,16 +52,27 @@ class MyFCMService : FirebaseMessagingService() {
             PendingIntent.FLAG_ONE_SHOT
         )
 
-        val channelId = "fcm_default_channel"
+        val channelId = getString(R.string.default_fg_notification_channel_id)
+        val channelName = getString(R.string.default_fg_notofication_channel_name)
+
+        createFGNotificationChannel(pendingIntent, channelId, channelName, messageBody)
+    }
+
+    private fun createFGNotificationChannel(
+        channelIntent: PendingIntent,
+        channelId: String,
+        channelName: String,
+        message: String
+    ) {
         val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
         val notificationBuilder = NotificationCompat.Builder(this, channelId)
             .setSmallIcon(R.drawable.ic_filled_star)
             .setColor(ContextCompat.getColor(this, R.color.orange_700))
-            .setContentTitle("FCM message")
-            .setContentText(messageBody)
+            .setContentTitle(getString(R.string.default_fg_notification_channel_title))
+            .setContentText(message)
             .setAutoCancel(true)
             .setSound(defaultSoundUri)
-            .setContentIntent(pendingIntent)
+            .setContentIntent(channelIntent)
 
         val notificationManager =
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -64,17 +81,12 @@ class MyFCMService : FirebaseMessagingService() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
                 channelId,
-                "Channel human readable title",
+                channelName,
                 NotificationManager.IMPORTANCE_DEFAULT
             )
             notificationManager.createNotificationChannel(channel)
         }
 
         notificationManager.notify(0, notificationBuilder.build())
-    }
-
-    companion object {
-
-        private const val TAG = "Main"
     }
 }

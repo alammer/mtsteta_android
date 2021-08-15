@@ -34,6 +34,7 @@ class GenreListAdapter(
     }
 
     companion object DiffCallback : DiffUtil.ItemCallback<String>() {
+
         override fun areItemsTheSame(oldItem: String, newItem: String): Boolean {
             return oldItem === newItem
         }
