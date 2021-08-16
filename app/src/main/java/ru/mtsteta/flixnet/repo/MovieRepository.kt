@@ -19,8 +19,6 @@ class MovieRepository () {
 
     suspend fun refreshMovies(): Pair<RefreshMovieStatus, List<MovieDto>?> {
 
-        var status =  RefreshMovieStatus.FAILURE
-
         val recentMovieList = loadMovieList()
 
         if (recentMovieList?.any { it.title.isNullOrBlank() } == true) {
