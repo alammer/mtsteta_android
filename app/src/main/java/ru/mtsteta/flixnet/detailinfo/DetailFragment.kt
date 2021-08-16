@@ -36,12 +36,15 @@ class DetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        initItem(view, args.movieItem)
+        initViews(view)
+
+        loadData(args.movieItem)
 
         super.onViewCreated(view, savedInstanceState)
+
     }
 
-    private fun initItem(view: View, movie: MovieDto) {
+    private fun initViews(view: View) {
 
         tvTitle = view.findViewById(R.id.tvMovieTitle)
 
@@ -54,11 +57,13 @@ class DetailFragment : Fragment() {
         rbMovie = view.findViewById(R.id.detailMovieRating)
 
         imgPoster = view.findViewById(R.id.imgPoster)
+    }
 
+    private fun loadData(movie: MovieDto) {
         movie.run {
             tvTitle.text = title
             tvInfo.text = description
-            tvAgeLimit.text = "$ageLimit+"
+            tvAgeLimit.text = getString(R.string.age_limit_formatter, ageLimit)
             tvGenre.text = genre
             rbMovie.rating = rateScore.toFloat()
             imgPoster.apply {

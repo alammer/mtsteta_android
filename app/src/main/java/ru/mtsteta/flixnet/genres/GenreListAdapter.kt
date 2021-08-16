@@ -12,7 +12,7 @@ import ru.mtsteta.flixnet.R
 class GenreListAdapter(
     private val clickListener: GenreClickListener
 ) :
-    ListAdapter<String, GenreListAdapter.GenreViewHolder>(DiffCallback) {
+    ListAdapter<String, GenreListAdapter.GenreViewHolder>(GenreDiffCallback()) {
 
     class GenreViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val genreTextView = itemView.findViewById<TextView>(R.id.tvGenreItem)
@@ -32,18 +32,18 @@ class GenreListAdapter(
     override fun onBindViewHolder(holder: GenreViewHolder, position: Int) {
         holder.bind(clickListener, getItem(position), position)
     }
+}
 
-    companion object DiffCallback : DiffUtil.ItemCallback<String>() {
+private class GenreDiffCallback : DiffUtil.ItemCallback<String>() {
 
-        override fun areItemsTheSame(oldItem: String, newItem: String): Boolean {
-            return oldItem === newItem
-        }
-
-        override fun areContentsTheSame(oldItem: String, newItem: String): Boolean {
-            return oldItem == newItem
-        }
-
+    override fun areItemsTheSame(oldItem: String, newItem: String): Boolean {
+        return oldItem === newItem
     }
+
+    override fun areContentsTheSame(oldItem: String, newItem: String): Boolean {
+        return oldItem == newItem
+    }
+
 }
 
 class GenreClickListener(val clickListener: (genre: String) -> Unit) {

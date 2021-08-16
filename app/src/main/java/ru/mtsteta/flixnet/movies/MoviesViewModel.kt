@@ -37,11 +37,11 @@ class MoviesViewModel : ViewModel() {
             changeStatus = true
             Log.i("MoviesViewModel", "Function called: changeStatus = $changeStatus")
 
-            val response = repository.refreshMovies()
+            val (status, content) = repository.refreshMovies()
 
-            when (response.first) {
+            when (status) {
                 RefreshMovieStatus.OK -> {
-                    _movieList.value = response.second
+                    _movieList.value = content
                     _refreshStatus.value = RefreshMovieStatus.OK
                 }
                 RefreshMovieStatus.FAILURE -> _refreshStatus.value = RefreshMovieStatus.FAILURE
