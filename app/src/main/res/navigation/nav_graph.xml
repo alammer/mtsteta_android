@@ -9,13 +9,13 @@
         android:name="ru.mtsteta.flixnet.movies.MainScreenFragment"
         android:label="MainScreenFragment" >
         <action
-            android:id="@+id/action_mainScreenFragment_to_detailFragment"
+            android:id="@+id/actionMainToDetail"
             app:destination="@id/detailFragment"
             app:launchSingleTop="true"
             app:popUpTo="@id/detailFragment"
             app:popUpToInclusive="true" />
         <action
-            android:id="@+id/action_mainScreenFragment_to_profileFragment"
+            android:id="@+id/actionMainToProfile"
             app:destination="@id/profileFragment"
             app:popUpTo="@id/nav_graph"
             app:popUpToInclusive="true" />
@@ -29,10 +29,10 @@
             android:name="movieItem"
             app:argType="ru.mtsteta.flixnet.repo.MovieDto" />
         <action
-            android:id="@+id/action_detailFragment_to_profileFragment"
+            android:id="@+id/actionDetailToProfile"
             app:destination="@id/profileFragment" />
         <action
-            android:id="@+id/action_detailFragment_to_mainScreenFragment"
+            android:id="@+id/actionDetailToMain"
             app:destination="@id/mainScreenFragment" />
     </fragment>
 
@@ -41,12 +41,12 @@
         android:name="ru.mtsteta.flixnet.profile.ProfileFragment"
         android:label="ProfileFragment" >
         <action
-            android:id="@+id/action_profileFragment_to_mainScreenFragment"
+            android:id="@+id/actionProfileToMain"
             app:destination="@id/mainScreenFragment"
             app:popUpTo="@id/nav_graph"
             app:popUpToInclusive="true" />
         <action
-            android:id="@+id/action_profileFragment_to_detailFragment"
+            android:id="@+id/actionProfileToDetail"
             app:destination="@id/detailFragment" />
     </fragment>
 

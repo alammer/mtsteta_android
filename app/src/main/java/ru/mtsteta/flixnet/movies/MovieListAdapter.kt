@@ -15,7 +15,7 @@ import ru.mtsteta.flixnet.R
 import ru.mtsteta.flixnet.repo.MovieDto
 
 class MovieListAdapter(private val clickListener: MovieClickListener) :
-    ListAdapter<MovieDto, MovieListAdapter.MovieListViewHolder>(DiffCallback) {
+    ListAdapter<MovieDto, MovieListAdapter.MovieListViewHolder>(MoviesDiffCallback()) {
 
     class MovieListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -35,7 +35,7 @@ class MovieListAdapter(private val clickListener: MovieClickListener) :
             titleTextView.text = item.title
             infoTextView.text = item.description
             ratingBar.rating = item.rateScore.toFloat()
-            ageLimitTextView.text = "${item.ageLimit}+"
+            ageLimitTextView.text = itemView.context.getString(R.string.age_limit_formatter, item.ageLimit)
             posterImage.load(item.imageUrl) {
                 placeholder(R.drawable.loading_animation)
                 error(R.drawable.broken_image)
@@ -59,15 +59,15 @@ class MovieListAdapter(private val clickListener: MovieClickListener) :
     ) {
         holder.bind(clickListener, getItem(position), position)
     }
+}
 
-    companion object DiffCallback : DiffUtil.ItemCallback<MovieDto>() {
-        override fun areItemsTheSame(oldItem: MovieDto, newItem: MovieDto): Boolean {
-            return oldItem == newItem
-        }
+private class MoviesDiffCallback : DiffUtil.ItemCallback<MovieDto>() {
+    override fun areItemsTheSame(oldItem: MovieDto, newItem: MovieDto): Boolean {
+        return oldItem == newItem
+    }
 
-        override fun areContentsTheSame(oldItem: MovieDto, newItem: MovieDto): Boolean {
-            return oldItem.title == newItem.title
-        }
+    override fun areContentsTheSame(oldItem: MovieDto, newItem: MovieDto): Boolean {
+        return oldItem.title == newItem.title
     }
 }
 
