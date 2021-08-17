@@ -38,7 +38,7 @@ data class Actor(
     @ColumnInfo(name = "bio")
     var bio: String,
 
-    @ColumnInfo(name = "poster")
+    @ColumnInfo(name = "photo")
     var imageUrl: String,
 
     @field:TypeConverters(Converters::class)
