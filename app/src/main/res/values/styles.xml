@@ -98,6 +98,17 @@
         <item name="android:fontFamily">@font/roboto</item>
     </style>
 
+    <style name="SignButton" parent="android:Widget.Material.Button">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:background">@drawable/button_background</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">@dimen/large_text_size</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:fontFamily">@font/roboto</item>
+    </style>
+
     <style name="ProfileSettingItemSelector" parent="android:Widget.TextView">
         <item name="android:layout_width">6dp</item>
         <item name="android:layout_height">9dp</item>

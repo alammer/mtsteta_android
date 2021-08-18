@@ -5,14 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_color_mainscreen"
-    android:paddingHorizontal="20dp"
+    android:paddingHorizontal="@dimen/signup_horizontal_padding"
     app:chainUseRtl="true">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto_bold"
-        android:text="Создать профиль"
+        android:text="@string/signup_fragment_title"
         android:textAlignment="center"
         android:textSize="@dimen/large_text_size"
         app:layout_constraintBottom_toTopOf="@+id/etUserName"
@@ -23,7 +23,7 @@
     <EditText
         android:id="@+id/etUserName"
         style="@style/SignField"
-        android:hint="Имя"
+        android:hint="@string/signup_name_hint"
         android:inputType="text"
         app:layout_constraintBottom_toTopOf="@id/etEmail"
         app:layout_constraintEnd_toEndOf="parent"
@@ -34,7 +34,7 @@
     <EditText
         android:id="@+id/etEmail"
         style="@style/SignField"
-        android:hint="user_mail@mail"
+        android:hint="@string/signup_mail_hint"
         android:inputType="textEmailAddress"
         app:layout_constraintBottom_toTopOf="@id/etPhone"
         app:layout_constraintEnd_toEndOf="parent"
@@ -44,7 +44,7 @@
     <EditText
         android:id="@+id/etPhone"
         style="@style/SignField"
-        android:hint="Телефон"
+        android:hint="@string/signup_phone_hint"
         android:inputType="phone"
         app:layout_constraintBottom_toTopOf="@id/etPassword"
         app:layout_constraintEnd_toEndOf="parent"
@@ -54,7 +54,7 @@
     <EditText
         android:id="@+id/etPassword"
         style="@style/SignField"
-        android:hint="Пароль"
+        android:hint="@string/signup_password_hint"
         android:inputType="textPassword"
         app:layout_constraintBottom_toTopOf="@id/etConfirmPassword"
         app:layout_constraintEnd_toEndOf="parent"
@@ -64,7 +64,7 @@
     <EditText
         android:id="@+id/etConfirmPassword"
         style="@style/SignField"
-        android:hint="Подтверждение пароля"
+        android:hint="@string/signup_confirmpass_hint"
         android:inputType="textPassword"
         app:layout_constraintBottom_toTopOf="@id/btnCreateAccount"
         app:layout_constraintEnd_toEndOf="parent"
@@ -73,15 +73,9 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnCreateAccount"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
+        style="@style/SignButton"
         android:layout_marginVertical="40dp"
-        android:background="@drawable/button_background"
-        android:fontFamily="@font/roboto"
-        android:text="Сохранить"
-        android:textAllCaps="false"
-        android:textColor="@color/black"
-        android:textSize="@dimen/big_text_size"
+        android:text="@string/signup_btn_label"
         app:backgroundTint="@null"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

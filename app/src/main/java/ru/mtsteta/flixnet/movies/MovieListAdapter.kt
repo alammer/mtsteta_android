@@ -35,7 +35,7 @@ class MovieListAdapter(private val clickListener: MovieClickListener) :
             titleTextView.text = item.title
             infoTextView.text = item.description
             ratingBar.rating = item.rateScore.toFloat()
-            ageLimitTextView.text = itemView.context.getString(R.string.age_limit_formatter, item.ageLimit)
+            ageLimitTextView.text = itemView.context.getString(R.string.age_limit_template, item.ageLimit)
             posterImage.load(item.imageUrl) {
                 placeholder(R.drawable.loading_animation)
                 error(R.drawable.broken_image)

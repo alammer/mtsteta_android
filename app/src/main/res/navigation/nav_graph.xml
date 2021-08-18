@@ -49,5 +49,14 @@
             android:id="@+id/actionProfileToDetail"
             app:destination="@id/detailFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="ru.mtsteta.flixnet.login.LoginFragment"
+        android:label="LoginFragment" />
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="ru.mtsteta.flixnet.login.SignUpFragment"
+        android:label="SignUpFragment" />
+
 
 </navigation>

@@ -63,7 +63,7 @@ class DetailFragment : Fragment() {
         movie.run {
             tvTitle.text = title
             tvInfo.text = description
-            tvAgeLimit.text = getString(R.string.age_limit_formatter, ageLimit)
+            tvAgeLimit.text = getString(R.string.age_limit_template, ageLimit)
             tvGenre.text = genre
             rbMovie.rating = rateScore.toFloat()
             imgPoster.apply {
