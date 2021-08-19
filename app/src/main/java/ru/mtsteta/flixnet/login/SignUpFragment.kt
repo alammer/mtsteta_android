@@ -1,11 +1,11 @@
 package ru.mtsteta.flixnet.login
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -23,7 +23,6 @@ class SignUpFragment : Fragment() {
     private lateinit var userPass: TextView
     private lateinit var confirmPass: TextView
     private lateinit var btnCreate: MaterialButton
-
     private lateinit var navController: NavController
 
     private val loginViewModel: LoginViewModel by activityViewModels()
@@ -51,10 +50,13 @@ class SignUpFragment : Fragment() {
         loginViewModel.authStatus.observe(viewLifecycleOwner, { authenticationState ->
             when (authenticationState) {
                 AuthenticationState.AUTHENTICATED -> {
-                    Log.i("Login", "SignUp get AUTHENTICATED")
                     navController.popBackStack()
                 }
-                else -> Log.i("Login", "SignUp NO_AUTHENTICATED")
+                else -> Toast.makeText(
+                    context,
+                    "Current autentication status is $authenticationState",
+                    Toast.LENGTH_SHORT
+                )
             }
         })
     }

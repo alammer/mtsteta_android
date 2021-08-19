@@ -7,19 +7,18 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContentProviderCompat
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
+import com.google.android.material.button.MaterialButton
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import ru.mtsteta.flixnet.R
 import ru.mtsteta.flixnet.login.AuthenticationState
 import ru.mtsteta.flixnet.login.LoginViewModel
-import ru.mtsteta.flixnet.movies.MoviesViewModel
 
 private const val ENCRYPTED_PREFS_FILE_NAME = "user_prefs"
 
@@ -29,7 +28,7 @@ class ProfileFragment : Fragment() {
 
     private val loginViewModel: LoginViewModel by activityViewModels()
 
-    lateinit var currentUser: ProfileDto
+    private lateinit var btnExit: MaterialButton
 
     private val sharedPreferences by lazy {
         EncryptedSharedPreferences.create(
@@ -54,6 +53,8 @@ class ProfileFragment : Fragment() {
 
         super.onViewCreated(view, savedInstanceState)
 
+        btnExit = view.findViewById(R.id.btnExit)
+
         val navController = findNavController()
 
         val currentUser = sharedPreferences.getParcelable(PREFERENCE_KEY_NAME, null)
@@ -71,25 +72,29 @@ class ProfileFragment : Fragment() {
 
         loginViewModel.authStatus.observe(viewLifecycleOwner, { authenticationState ->
             when (authenticationState) {
-                AuthenticationState.NO_AUTHENTICATED -> {
-                    Log.i("Login", "Profil NO_AUTHENTICATED")
+                AuthenticationState.EMPTY_ACCOUNT -> {
                     navController.navigate(R.id.signUpFragment)
                 }
 
                 AuthenticationState.UNAUTHENTICATED -> {
-                    Log.i("Login", "Profile UNAUTHENTICATED")
-                    navController.navigate(R.id.loginFragment)
-                }
-
-                AuthenticationState.INVALID_AUTHENTICATION -> {
-                    Log.i("Login", "INVALID ATTEMPT")
                     navController.navigate(R.id.mainScreenFragment)
                 }
-                else -> Log.i("Login", "Profile ALREADY AUTHENTICATION")
+
+                AuthenticationState.PROCEED_AUTHENTICATION -> {
+                    navController.navigate(R.id.loginFragment)
+                }
+                else -> Toast.makeText(
+                    context,
+                    "Current autentication status is $authenticationState",
+                    Toast.LENGTH_SHORT
+                )
 
             }
         })
 
+        btnExit.setOnClickListener {
+            loginViewModel.signOff()
+        }
     }
 }
 
