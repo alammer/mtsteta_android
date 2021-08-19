@@ -46,7 +46,7 @@
     <string name="age_limit_template">%d+</string>
     <string name="signup_fragment_title">Создать профиль</string>
     <string name="signup_name_hint">Имя</string>
-    <string name="signup_mail_hint">user_mail@mail</string>
+    <string name="signup_mail_hint">your @email</string>
     <string name="signup_phone_hint">Телефон</string>
     <string name="signup_password_hint">Пароль</string>
     <string name="signup_confirmpass_hint">Подтверждение пароля</string>

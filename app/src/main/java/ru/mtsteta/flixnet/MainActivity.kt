@@ -65,19 +65,20 @@ class MainActivity : AppCompatActivity() {
         }
 
         bottomNavigationView.setOnItemSelectedListener {
-            val fromDetailFragment = navController.currentDestination?.id == R.id.detailFragment
+            val fromFragment = navController.currentDestination?.id
             when (it.itemId) {
                 R.id.home -> {
-                    if (fromDetailFragment) {
-                        navController.navigate(R.id.actionDetailToMain)
-                    } else {
-                        if (!it.isChecked) navController.navigate(R.id.actionProfileToMain)
-
+                    when (fromFragment) {
+                        R.id.detailFragment -> navController.navigate(R.id.actionDetailToMain)
+                        R.id.profileFragment -> navController.navigate(R.id.actionProfileToMain)
+                        R.id.signUpFragment -> navController.navigate(R.id.actionSignUpToMain)
+                        R.id.loginFragment -> navController.navigate(R.id.actionLoginToMain)
                     }
                     return@setOnItemSelectedListener true
                 }
+
                 R.id.profile -> {
-                    if (fromDetailFragment) {
+                    if (fromFragment == R.id.detailFragment) {
                         navController.navigate(R.id.actionDetailToProfile)
                     } else {
                         if (!it.isChecked) navController.navigate(R.id.actionMainToProfile)

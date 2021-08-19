@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContentProviderCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.security.crypto.EncryptedSharedPreferences
@@ -26,7 +27,7 @@ private const val PREFERENCE_KEY_NAME = "user_settings"
 
 class ProfileFragment : Fragment() {
 
-    private val loginViewModel by viewModels<LoginViewModel>()
+    private val loginViewModel: LoginViewModel by activityViewModels()
 
     lateinit var currentUser: ProfileDto
 
@@ -59,23 +60,32 @@ class ProfileFragment : Fragment() {
 
         loginViewModel.setUser(currentUser)
 
+        loginViewModel.authData.observe(viewLifecycleOwner, { userPrefs ->
+            userPrefs?.let {
+                with(sharedPreferences.edit()) {
+                    putParcelable(PREFERENCE_KEY_NAME, it as Parcelable)
+                    apply()
+                }
+            }
+        })
+
         loginViewModel.authStatus.observe(viewLifecycleOwner, { authenticationState ->
             when (authenticationState) {
                 AuthenticationState.NO_AUTHENTICATED -> {
-                    Log.i("ProfileFragment", "NO_AUTHENTICATED")
+                    Log.i("Login", "Profil NO_AUTHENTICATED")
                     navController.navigate(R.id.signUpFragment)
                 }
 
                 AuthenticationState.UNAUTHENTICATED -> {
-                    Log.i("ProfileFragment", "UNAUTHENTICATED")
+                    Log.i("Login", "Profile UNAUTHENTICATED")
                     navController.navigate(R.id.loginFragment)
                 }
 
                 AuthenticationState.INVALID_AUTHENTICATION -> {
-                    Log.i("ProfileFragment", "INVALID ATTEMPT")
+                    Log.i("Login", "INVALID ATTEMPT")
                     navController.navigate(R.id.mainScreenFragment)
                 }
-                else -> Log.i("ProfileFragment", "ALREADY AUTHENTICATION")
+                else -> Log.i("Login", "Profile ALREADY AUTHENTICATION")
 
             }
         })
@@ -86,13 +96,14 @@ class ProfileFragment : Fragment() {
 fun SharedPreferences.Editor.putParcelable(key: String, parcelable: Parcelable) {
     val json = Gson().toJson(parcelable)
     putString(key, json)
+    apply()
 }
 
-inline fun <reified T : Parcelable?> SharedPreferences.getParcelable(key: String, default: T): T {
+fun SharedPreferences.getParcelable(key: String, default: Parcelable?): Parcelable? {
     val json = getString(key, null)
     return try {
         if (json != null)
-            Gson().fromJson(json, T::class.java)
+            Gson().fromJson(json, ProfileDto::class.java)
         else default
     } catch (_: JsonSyntaxException) {
         default
