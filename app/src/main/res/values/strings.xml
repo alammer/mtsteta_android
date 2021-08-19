@@ -37,5 +37,12 @@
     <string name="app_support_question_item">Задать вопрос</string>
     <string name="app_support_report_item">Сообщить о проблеме</string>
     <string name="profile_exit_button">Выйти</string>
+    <string name="default_notification_channel_id">test_channel_id</string>
+    <string name="default_notification_channel_name">TestChannel</string>
+    <string name="default_notification_topic">teta</string>
+    <string name="default_fg_notification_channel_id">fcm_default_channel</string>
+    <string name="default_fg_notification_channel_title">FCM message</string>
+    <string name="default_fg_notofication_channel_name">Channel human readable title</string>
+    <string name="age_limit_template">%d+</string>
 
 </resources>

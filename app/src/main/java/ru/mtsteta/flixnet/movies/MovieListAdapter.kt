@@ -12,9 +12,10 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import ru.mtsteta.flixnet.R
+import ru.mtsteta.flixnet.repo.MovieDto
 
 class MovieListAdapter(private val clickListener: MovieClickListener) :
-    ListAdapter<MovieDto, MovieListAdapter.MovieListViewHolder>(DiffCallback) {
+    ListAdapter<MovieDto, MovieListAdapter.MovieListViewHolder>(MoviesDiffCallback()) {
 
     class MovieListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -34,8 +35,11 @@ class MovieListAdapter(private val clickListener: MovieClickListener) :
             titleTextView.text = item.title
             infoTextView.text = item.description
             ratingBar.rating = item.rateScore.toFloat()
-            ageLimitTextView.text = "${item.ageLimit}+"
-            posterImage.load(item.imageUrl)
+            ageLimitTextView.text = itemView.context.getString(R.string.age_limit_template, item.ageLimit)
+            posterImage.load(item.imageUrl) {
+                placeholder(R.drawable.loading_animation)
+                error(R.drawable.broken_image)
+            }
             itemView.setOnClickListener { clickListener.onClick(item) }
         }
     }
@@ -55,16 +59,15 @@ class MovieListAdapter(private val clickListener: MovieClickListener) :
     ) {
         holder.bind(clickListener, getItem(position), position)
     }
+}
 
-    companion object DiffCallback : DiffUtil.ItemCallback<MovieDto>() {
-        override fun areItemsTheSame(oldItem: MovieDto, newItem: MovieDto): Boolean {
-            return oldItem == newItem
-        }
+private class MoviesDiffCallback : DiffUtil.ItemCallback<MovieDto>() {
+    override fun areItemsTheSame(oldItem: MovieDto, newItem: MovieDto): Boolean {
+        return oldItem == newItem
+    }
 
-        override fun areContentsTheSame(oldItem: MovieDto, newItem: MovieDto): Boolean {
-            return oldItem.title == newItem.title
-        }
-
+    override fun areContentsTheSame(oldItem: MovieDto, newItem: MovieDto): Boolean {
+        return oldItem.title == newItem.title
     }
 }
 
