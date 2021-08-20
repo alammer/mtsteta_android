@@ -9,34 +9,34 @@ interface MovieDataDao{
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAllMovies(movies: List<Movie>)
 
-    @Query("SELECT * from movie_table")
+    @Query("SELECT * FROM movies")
     fun getAllMovies(): List<Movie>?
 
-    @Query("SELECT * from movie_table WHERE title = :title")
+    @Query("SELECT * FROM movies WHERE title = :title")
     fun getMovie(title: String) : Movie?
 
-    @Query("DELETE FROM movie_table")
+    @Query("DELETE FROM movies")
     fun clearMovies()
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAllActors(actors: List<Actor>)
 
-    @Query("SELECT * from actor_table")
+    @Query("SELECT * FROM actors")
     fun getAllActors(): List<Actor>?
 
-    @Query("SELECT * from actor_table WHERE name = :name")
+    @Query("SELECT * FROM actors WHERE name = :name")
     fun getActor(name: String) : Actor?
 
-    @Query("DELETE FROM actor_table")
+    @Query("DELETE FROM actors")
     fun clearActors()
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAllGenres(genres: List<Genre>)
 
-    @Query("SELECT * from genre_table")
+    @Query("SELECT * FROM genres")
     fun getGenres(): List<String>?
 
-    @Query("DELETE FROM genre_table")
+    @Query("DELETE FROM genres")
     fun clearGenres()
 
 }

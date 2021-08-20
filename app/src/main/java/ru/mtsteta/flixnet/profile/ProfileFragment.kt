@@ -10,24 +10,27 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
 import com.google.android.material.button.MaterialButton
 import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.google.gson.JsonSyntaxException
 import ru.mtsteta.flixnet.R
 import ru.mtsteta.flixnet.login.AuthenticationState
 import ru.mtsteta.flixnet.login.LoginViewModel
 
-private const val ENCRYPTED_PREFS_FILE_NAME = "user_prefs"
-
-private const val PREFERENCE_KEY_NAME = "user_settings"
+private val jsonPrefsObject by lazy {
+    GsonBuilder()
+        .serializeNulls()
+        .create()
+}
 
 class ProfileFragment : Fragment() {
 
     private val loginViewModel: LoginViewModel by activityViewModels()
-
     private lateinit var btnExit: MaterialButton
 
     private val sharedPreferences by lazy {
@@ -50,16 +53,13 @@ class ProfileFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
         super.onViewCreated(view, savedInstanceState)
 
-        btnExit = view.findViewById(R.id.btnExit)
+        initViews(view)
 
         val navController = findNavController()
 
-        val currentUser = sharedPreferences.getParcelable(PREFERENCE_KEY_NAME, null)
-
-        loginViewModel.setUser(currentUser)
+        loginViewModel.setUser(sharedPreferences.getParcelable(PREFERENCE_KEY_NAME, null))
 
         loginViewModel.authData.observe(viewLifecycleOwner, { userPrefs ->
             userPrefs?.let {
@@ -75,11 +75,9 @@ class ProfileFragment : Fragment() {
                 AuthenticationState.EMPTY_ACCOUNT -> {
                     navController.navigate(R.id.signUpFragment)
                 }
-
                 AuthenticationState.UNAUTHENTICATED -> {
-                    navController.navigate(R.id.mainScreenFragment)
+                    navController.navigate(R.id.actionProfileToMain)
                 }
-
                 AuthenticationState.PROCEED_AUTHENTICATION -> {
                     navController.navigate(R.id.loginFragment)
                 }
@@ -91,7 +89,10 @@ class ProfileFragment : Fragment() {
 
             }
         })
+    }
 
+    private fun initViews(view: View) {
+        btnExit = view.findViewById(R.id.btnExit)
         btnExit.setOnClickListener {
             loginViewModel.signOff()
         }
@@ -99,7 +100,7 @@ class ProfileFragment : Fragment() {
 }
 
 fun SharedPreferences.Editor.putParcelable(key: String, parcelable: Parcelable) {
-    val json = Gson().toJson(parcelable)
+    val json = jsonPrefsObject.toJson(parcelable)
     putString(key, json)
     apply()
 }
@@ -107,10 +108,15 @@ fun SharedPreferences.Editor.putParcelable(key: String, parcelable: Parcelable) 
 fun SharedPreferences.getParcelable(key: String, default: Parcelable?): Parcelable? {
     val json = getString(key, null)
     return try {
-        if (json != null)
-            Gson().fromJson(json, ProfileDto::class.java)
-        else default
+        if (json != null) {
+            jsonPrefsObject.fromJson(json, ProfileDto::class.java)
+        } else {
+            default
+        }
     } catch (_: JsonSyntaxException) {
         default
     }
 }
+
+private const val ENCRYPTED_PREFS_FILE_NAME = "user_prefs"
+private const val PREFERENCE_KEY_NAME = "user_settings"

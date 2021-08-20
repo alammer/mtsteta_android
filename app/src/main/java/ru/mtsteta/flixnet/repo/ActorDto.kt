@@ -14,4 +14,4 @@ data class ActorDto(
     val recentMovies: List<String>? = null
 ) : Parcelable
 
-fun ActorDto.asDataBaseModel(): Actor = Actor(name, bio,  imageUrl, movieList = null)
+fun ActorDto.toDataBaseModel(): Actor = Actor(name, bio,  imageUrl, movieList = null)

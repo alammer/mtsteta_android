@@ -16,23 +16,21 @@ enum class AuthenticationState {
 class LoginViewModel : ViewModel() {
 
     private var user: ProfileDto? = null
-
     private var initialPrefs: ProfileDto? = null
-
     val authData: LiveData<ProfileDto?> get() = _authData
     private val _authData = MutableLiveData<ProfileDto?>()
-
     val authStatus: LiveData<AuthenticationState> get() = _authStatus
     private val _authStatus = MutableLiveData<AuthenticationState>()
 
     fun setUser(currentUser: Parcelable?) {
-
         if (user == null) {
             _authStatus.value = currentUser?.let {
                 initialPrefs = it as ProfileDto
                 AuthenticationState.PROCEED_AUTHENTICATION
             } ?: AuthenticationState.EMPTY_ACCOUNT
-        } else _authStatus.value = AuthenticationState.AUTHENTICATED
+        } else {
+            _authStatus.value = AuthenticationState.AUTHENTICATED
+        }
     }
 
     fun signOff() {
@@ -50,6 +48,8 @@ class LoginViewModel : ViewModel() {
         if ((userId == initialPrefs?.userName || userId == initialPrefs?.email) && password == initialPrefs?.password) {
             _authStatus.value = AuthenticationState.AUTHENTICATED
             user = initialPrefs
-        } else _authStatus.value = AuthenticationState.INVALID_ATTEMPT
+        }  else {
+            _authStatus.value = AuthenticationState.INVALID_ATTEMPT
+        }
     }
 }

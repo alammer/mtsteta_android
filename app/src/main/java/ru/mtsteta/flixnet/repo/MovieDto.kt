@@ -17,5 +17,5 @@ data class MovieDto(
     val topActors: List<String>? = null
 ) : Parcelable
 
-fun MovieDto.asDataBaseModel(): Movie = Movie(title, description,  genre, rateScore, ageLimit, imageUrl, actorsList = null)
+fun MovieDto.toDataBaseModel(): Movie = Movie(title, description,  genre, rateScore, ageLimit, imageUrl, actorsList = null)
 

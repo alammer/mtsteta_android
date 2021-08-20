@@ -35,27 +35,19 @@ class DetailFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         initViews(view)
 
         loadData(args.movieItem)
-
-        super.onViewCreated(view, savedInstanceState)
-
     }
 
     private fun initViews(view: View) {
-
         tvTitle = view.findViewById(R.id.tvMovieTitle)
-
         tvInfo = view.findViewById(R.id.tvDetailInfoText)
-
         tvAgeLimit = view.findViewById(R.id.tvAgeLimit)
-
         tvGenre = view.findViewById(R.id.tvDetailGenre)
-
         rbMovie = view.findViewById(R.id.detailMovieRating)
-
         imgPoster = view.findViewById(R.id.imgPoster)
     }
 

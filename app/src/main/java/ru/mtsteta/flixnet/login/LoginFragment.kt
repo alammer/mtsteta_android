@@ -29,7 +29,6 @@ class LoginFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         return inflater.inflate(R.layout.fragment_login_screen, container, false)
     }
 
@@ -66,11 +65,8 @@ class LoginFragment : Fragment() {
     }
 
     private fun initViews(view: View) {
-
         userId = view.findViewById(R.id.etUserID)
-
         userPass = view.findViewById(R.id.etUserPassword)
-
         btnLogin = view.findViewById(R.id.btnLogin)
 
         btnLogin.setOnClickListener {

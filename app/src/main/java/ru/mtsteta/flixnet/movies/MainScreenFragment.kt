@@ -38,7 +38,7 @@ class MainScreenFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        init(view)
+        initViews(view)
 
         moviesViewModel.movieList.observe(viewLifecycleOwner, {
             it?.let { movieAdapter.submitList(it) } ?: Log.i(
@@ -66,7 +66,9 @@ class MainScreenFragment : Fragment() {
                         "Network connection failed",
                         Toast.LENGTH_SHORT
                     ).show()
-                    else -> Toast.makeText(context, "Movie list updated", Toast.LENGTH_SHORT).show()
+                    else -> {
+                        Toast.makeText(context, "Movie list updated", Toast.LENGTH_SHORT).show()
+                    }
                 }
                 moviesViewModel.changeStatus = false
             }
@@ -75,12 +77,10 @@ class MainScreenFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
     }
 
-    private fun init(view: View) {
+    private fun initViews(view: View) {
 
         genreRecycler = view.findViewById(R.id.rvGenreList)
-
         movieRecycler = view.findViewById(R.id.rvMovieList)
-
         swipeRefresher = view.findViewById(R.id.swipeLayout)
 
         genreAdapter = GenreListAdapter(GenreClickListener {

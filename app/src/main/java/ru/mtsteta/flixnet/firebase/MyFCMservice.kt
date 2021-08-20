@@ -74,7 +74,6 @@ class MyFCMService : FirebaseMessagingService() {
     }
 
     companion object {
-
         private const val TAG = "Main"
     }
 }

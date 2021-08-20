@@ -81,7 +81,9 @@ class MainActivity : AppCompatActivity() {
                     if (fromFragment == R.id.detailFragment) {
                         navController.navigate(R.id.actionDetailToProfile)
                     } else {
-                        if (!it.isChecked) navController.navigate(R.id.actionMainToProfile)
+                        if (!it.isChecked) {
+                            navController.navigate(R.id.actionMainToProfile)
+                        }
                     }
                     return@setOnItemSelectedListener true
                 }
@@ -120,10 +122,8 @@ class MainActivity : AppCompatActivity() {
                 Log.i("MainActivity", "Fetching FCM registration token failed", task.exception)
                 return@OnCompleteListener
             }
-
             // Get new FCM registration token
             val token = task.result
-
             // Log and toast
             val msg = "get tocken $token"
             Log.i("MainActivity", "Function called: getToken() - $msg")

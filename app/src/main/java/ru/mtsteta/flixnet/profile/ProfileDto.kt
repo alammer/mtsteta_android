@@ -13,7 +13,7 @@ data class ProfileDto(
     val email: String? = null,
     val phone: String? = null,
     val avatarUrl: String? = null,
-    val languge: String? = null,
+    val language: String? = null,
     val darkTheme: Boolean? = false,
     val notification: Boolean? = false,
     val sounds: Boolean? = false,

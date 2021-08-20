@@ -62,21 +62,13 @@ class SignUpFragment : Fragment() {
     }
 
     private fun initViews(view: View) {
-
         userName = view.findViewById(R.id.etUserName)
-
         userMail = view.findViewById(R.id.etNewEmail)
-
         userPhone = view.findViewById(R.id.etNewPhone)
-
         userPhone = view.findViewById(R.id.etNewPhone)
-
         userPass = view.findViewById(R.id.etNewPassword)
-
         confirmPass = view.findViewById(R.id.etConfirmNewPassword)
-
         btnCreate = view.findViewById(R.id.btnCreateAccount)
-
         btnCreate.setOnClickListener {
             loginViewModel.createUser(
                 ProfileDto(
