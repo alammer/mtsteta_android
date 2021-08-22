@@ -54,12 +54,12 @@ class DetailFragment : Fragment() {
     private fun loadData(movie: MovieDto) {
         movie.run {
             tvTitle.text = title
-            tvInfo.text = description
-            tvAgeLimit.text = getString(R.string.age_limit_template, ageLimit)
-            tvGenre.text = genre
+            tvInfo.text = overview
+            tvAgeLimit.text = ageLimit
+            tvGenre.text = genres.toString()
             rbMovie.rating = rateScore.toFloat()
             imgPoster.apply {
-                load(imageUrl.toUri()) {
+                load(imageUrl?.toUri()) {
                     error(R.drawable.broken_image)
                 }
                 scaleType = ImageView.ScaleType.CENTER_CROP

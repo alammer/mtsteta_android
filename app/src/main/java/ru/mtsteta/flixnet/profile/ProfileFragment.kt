@@ -15,17 +15,16 @@ import androidx.navigation.fragment.findNavController
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
 import com.google.android.material.button.MaterialButton
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
-import com.google.gson.JsonSyntaxException
+import kotlinx.serialization.SerializationException
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import ru.mtsteta.flixnet.R
 import ru.mtsteta.flixnet.login.AuthenticationState
 import ru.mtsteta.flixnet.login.LoginViewModel
 
 private val jsonPrefsObject by lazy {
-    GsonBuilder()
-        .serializeNulls()
-        .create()
+    Json { ignoreUnknownKeys = true }
 }
 
 class ProfileFragment : Fragment() {
@@ -100,7 +99,7 @@ class ProfileFragment : Fragment() {
 }
 
 fun SharedPreferences.Editor.putParcelable(key: String, parcelable: Parcelable) {
-    val json = jsonPrefsObject.toJson(parcelable)
+    val json = jsonPrefsObject.encodeToString(parcelable)   //toJson(parcelable)
     putString(key, json)
     apply()
 }
@@ -109,11 +108,11 @@ fun SharedPreferences.getParcelable(key: String, default: Parcelable?): Parcelab
     val json = getString(key, null)
     return try {
         if (json != null) {
-            jsonPrefsObject.fromJson(json, ProfileDto::class.java)
+            jsonPrefsObject.decodeFromString(json)
         } else {
             default
         }
-    } catch (_: JsonSyntaxException) {
+    } catch (_ : SerializationException) {
         default
     }
 }

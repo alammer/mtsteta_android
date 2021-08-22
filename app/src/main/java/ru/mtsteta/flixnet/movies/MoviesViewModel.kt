@@ -16,6 +16,8 @@ class MoviesViewModel : ViewModel() {
 
     var changeStatus = false
 
+    private var genres: MutableMap<Int, String>? = null
+
     private val repository = MovieRepository()
 
     val refreshStatus: LiveData<RefreshDataStatus> get() = _refreshStatus
@@ -27,8 +29,8 @@ class MoviesViewModel : ViewModel() {
     val actorList: LiveData<List<ActorDto>?> get() = _actorList
     private val _actorList = MutableLiveData<List<ActorDto>?>()
 
-    val genreList: LiveData<List<String>> get() = _genreList
-    private val _genreList = MutableLiveData<List<String>>()
+    val genreList: LiveData<Map<Int, String>> get() = _genreList
+    private val _genreList = MutableLiveData<Map<Int, String>>()
 
     init {
         fetchInitialData()
@@ -36,20 +38,23 @@ class MoviesViewModel : ViewModel() {
 
     private fun fetchInitialData() {
         viewModelScope.launch {
-            repository.loadActorList()?.also { _actorList.value = it }
-            repository.loadGenres().also { _genreList.postValue(it) }
+            //repository.loadActorList()?.also { _actorList.value = it }
+            repository.loadGenres()?.also {
+                genres = HashMap(it)
+                _genreList.postValue(it)}
+            repository.loadMovieList()?.also { _movieList.postValue(it) }
         }
         fetchData()
     }
 
-    fun fetchData() {
+    fun fetchData(page: Int = 1, language: String = "ru-RU", region: String = "RU") {
 
         viewModelScope.launch {
 
             changeStatus = true
             Log.i("MoviesViewModel", "Function called: changeStatus = $changeStatus")
 
-            val (status, content) = repository.refreshMovie()
+            val (status, content) = repository.refreshMovie(page, language, region)
 
             when (status) {
                 RefreshDataStatus.OK -> {

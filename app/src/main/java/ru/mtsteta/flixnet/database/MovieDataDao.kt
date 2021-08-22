@@ -1,19 +1,18 @@
 package ru.mtsteta.flixnet.database
 
 import androidx.room.*
-import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface MovieDataDao{
+interface  MovieDataDao{
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insertAllMovies(movies: List<Movie>)
+    fun insertAllMovies(movieLocals: List<MovieLocal>)
 
     @Query("SELECT * FROM movies")
-    fun getAllMovies(): List<Movie>?
+    fun getAllMovies(): List<MovieLocal>?
 
     @Query("SELECT * FROM movies WHERE title = :title")
-    fun getMovie(title: String) : Movie?
+    fun getMovie(title: String) : MovieLocal?
 
     @Query("DELETE FROM movies")
     fun clearMovies()
@@ -31,10 +30,10 @@ interface MovieDataDao{
     fun clearActors()
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAllGenres(genres: List<Genre>)
+    fun insertAllGenres(genreLocals: List<GenreLocal>)
 
     @Query("SELECT * FROM genres")
-    fun getGenres(): List<String>?
+    fun getGenres(): List<GenreLocal>?
 
     @Query("DELETE FROM genres")
     fun clearGenres()

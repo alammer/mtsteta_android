@@ -1,5 +1,8 @@
 package ru.mtsteta.flixnet.movies
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -41,18 +44,20 @@ class MainScreenFragment : Fragment() {
         initViews(view)
 
         moviesViewModel.movieList.observe(viewLifecycleOwner, {
-            it?.let { movieAdapter.submitList(it) } ?: Log.i(
+            it?.let {
+                Log.i("MainScreenFragment", "get updated list ${it.toString()}")
+                movieAdapter.submitList(it) } ?: Log.i(
                 "MainScreenFragment",
                 "Function called: Observe() but movieList is null"
             )
         })
 
         moviesViewModel.genreList.observe(viewLifecycleOwner, {
-            genreAdapter.submitList(it)
+            genreAdapter.submitList(it.values.toList())
         })
 
         moviesViewModel.refreshStatus.observe(viewLifecycleOwner, {
-            Log.i("Movie", "Function called: changeStatus = ${moviesViewModel.changeStatus}")
+            Log.i("MovieLocal", "Function called: changeStatus = ${moviesViewModel.changeStatus}")
             swipeRefresher.isRefreshing = false
             if (moviesViewModel.changeStatus) {
                 when (it) {
@@ -67,7 +72,7 @@ class MainScreenFragment : Fragment() {
                         Toast.LENGTH_SHORT
                     ).show()
                     else -> {
-                        Toast.makeText(context, "Movie list updated", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "MovieLocal list updated", Toast.LENGTH_SHORT).show()
                     }
                 }
                 moviesViewModel.changeStatus = false
@@ -105,7 +110,21 @@ class MainScreenFragment : Fragment() {
         movieRecycler.addItemDecoration(MovieSpaceItemDecoration(resources.getDimensionPixelSize(R.dimen.mainscreen_movie_top_spacing)))
 
         swipeRefresher.setOnRefreshListener {
-            moviesViewModel.fetchData()
+            moviesViewModel.fetchData(page = 2, language = "en-EN", region = "US")
         }
+    }
+}
+
+private fun isInternetAvailable(context: Context): Boolean {
+    val connectivityManager =
+        context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    val networkCapabilities = connectivityManager.activeNetwork ?: return false
+    val activeNetwork =
+        connectivityManager.getNetworkCapabilities(networkCapabilities) ?: return false
+    return when {
+        activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
+        activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+        activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
+        else -> false
     }
 }

@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import ru.mtsteta.flixnet.BuildConfig
 import ru.mtsteta.flixnet.R
 import ru.mtsteta.flixnet.repo.MovieDto
 
@@ -33,10 +34,10 @@ class MovieListAdapter(private val clickListener: MovieClickListener) :
 
         fun bind(clickListener: MovieClickListener, item: MovieDto, position: Int) {
             titleTextView.text = item.title
-            infoTextView.text = item.description
-            ratingBar.rating = item.rateScore.toFloat()
-            ageLimitTextView.text = itemView.context.getString(R.string.age_limit_template, item.ageLimit)
-            posterImage.load(item.imageUrl) {
+            infoTextView.text = item.overview
+            ratingBar.rating = item.rateScore.toFloat()/2.0f
+            ageLimitTextView.text = item.ageLimit
+            posterImage.load(BuildConfig.BASE_IMAGE_URL + item.imageUrl) {
                 placeholder(R.drawable.loading_animation)
                 error(R.drawable.broken_image)
             }

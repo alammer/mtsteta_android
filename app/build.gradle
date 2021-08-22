@@ -5,6 +5,7 @@ plugins {
     id 'androidx.navigation.safeargs.kotlin'
     id 'com.google.gms.google-services'
     id 'kotlin-kapt'
+    id 'org.jetbrains.kotlin.plugin.serialization' version "$kotlin_version"
 }
 
 
@@ -19,10 +20,11 @@ android {
         versionCode 1
         versionName "1.0.0.1"
 
-        buildConfigField("String","TMDB_API_KEY","\"c5a4eedabeac35f94da56dc8c11bd934\"")
-        buildConfigField("String","BASE_URL","\"https://api.tmdb.org/3/\"")
-        buildConfigField("String","BASE_IMAGE_URL","\"https://image.tmdb.org/t/p/\"")
-        buildConfigField("String","BASE_BACK_URL","\"https://image.tmdb.org/t/p/\"")
+        buildConfigField "String","TMDB_API_KEY", '"c5a4eedabeac35f94da56dc8c11bd934"'
+        buildConfigField "String","BASE_URL", '"https://api.tmdb.org/3/"'
+        buildConfigField "String","BASE_IMAGE_URL",'"https://image.tmdb.org/t/p/w342/"'
+        buildConfigField "String","BASE_BACK_URL",'"https://image.tmdb.org/t/p/w780/"'
+        buildConfigField "String","BASE_PROFILE_URL",'"https://image.tmdb.org/t/p/w185/"'
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -89,7 +91,18 @@ dependencies {
     //encrypted sharedprefs
     implementation "androidx.security:security-crypto:1.0.0"
 
-    implementation 'com.google.code.gson:gson:2.8.6'
+    //implementation 'com.google.code.gson:gson:2.8.6'
+
+    implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
+
+
+    //retrofit for network calls
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+
+
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1"
+    implementation 'com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0'
 }
 
 //apply plugin: 'com.google.gms.google-services'
