@@ -5,13 +5,13 @@ import androidx.room.TypeConverter
 class Converters {
 
     @TypeConverter
-    fun toListOfStrings(actors: String?): List<String>? {
-        return actors?.split("|")
+    fun toListOfInts(actors: String?): List<Int>? {
+        return actors?.split(",")?.map { it.toInt() }
     }
 
     @TypeConverter
-    fun fromListOfStrings(actorsList: List<String>?): String? {
-        return actorsList?.joinToString("|")
+    fun fromListOfInts(actorsList: List<Int>?): String? {
+        return actorsList?.joinToString(",")
     }
 
 }

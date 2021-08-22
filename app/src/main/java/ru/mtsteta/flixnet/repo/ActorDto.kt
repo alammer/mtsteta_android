@@ -9,9 +9,7 @@ import ru.mtsteta.flixnet.database.Actor
 @Parcelize
 data class ActorDto(
     val name: String,
-    val bio: String,
-    val imageUrl: String,
-    val recentMovies: List<String>? = null
+    val imageUrl: String?,
 ) : Parcelable
 
-fun ActorDto.toDataBaseModel(): Actor = Actor(name, bio,  imageUrl, movieList = null)
+fun ActorDto.toDataBaseModel(): Actor = Actor(name, imageUrl)

@@ -1,49 +1,50 @@
 package ru.mtsteta.flixnet.database
 
 import androidx.room.*
+import org.jetbrains.annotations.NotNull
 import ru.mtsteta.flixnet.repo.ActorDto
 import ru.mtsteta.flixnet.repo.MovieDto
 
 @Entity(tableName = "movies", primaryKeys = ["title", "poster"])
 data class Movie(
+    @PrimaryKey
+    @NotNull
+    @ColumnInfo(name = "id")
+    val movie_id: Int,
+
+    @NotNull
     @ColumnInfo(name = "title")
     val title: String,
 
     @ColumnInfo
-    var description: String,
-
-    @ColumnInfo(name = "genre")
-    var genre: String,
+    var overview: String?,
 
     @ColumnInfo(name = "rating")
     var rateScore: Int = 0,
 
     @ColumnInfo(name = "age_limit")
-    var ageLimit: Int = 18,
+    var ageLimit: String?,
 
     @ColumnInfo(name = "poster")
-    var imageUrl: String,
+    var imageUrl: String?,
+
+    @ColumnInfo(name = "release_date")
+    var release_date: String?,
 
     @field:TypeConverters(Converters::class)
-    @ColumnInfo(name = "actors")
-    var actorsList: List<String>?
+    @ColumnInfo(name = "genres")
+    var genres: List<Int>?,
 )
 
 @Entity(tableName = "actors")
 data class Actor(
     @PrimaryKey
+    @NotNull
     @ColumnInfo(name = "name")
     val name: String,
 
-    @ColumnInfo(name = "bio")
-    var bio: String,
-
     @ColumnInfo(name = "photo")
-    var imageUrl: String,
-
-    @field:TypeConverters(Converters::class)
-    @ColumnInfo(name = "movies")
-    var movieList: List<String>?
+    var imageUrl: String?,
 )
 
 @Entity(tableName = "genres")
@@ -53,9 +54,9 @@ data class Genre(
     val genre: String
 )
 
-fun Movie.toDomainModel(): MovieDto = MovieDto(title, description,  genre, rateScore, ageLimit, imageUrl, topActors = null)
+fun Movie.toDomainModel(): MovieDto = MovieDto(movie_id, title, overview, rateScore, ageLimit, imageUrl, release_date, genres)
 
-fun Actor.toDomainModel(): ActorDto = ActorDto(name, bio,  imageUrl, recentMovies = null)
+fun Actor.toDomainModel(): ActorDto = ActorDto(name, imageUrl)
 
 
 
