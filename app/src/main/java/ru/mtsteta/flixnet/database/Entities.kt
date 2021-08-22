@@ -28,12 +28,15 @@ data class Movie(
     @ColumnInfo(name = "poster")
     var imageUrl: String?,
 
+    @ColumnInfo(name = "backdrop")
+    var backdropUrl: String?,
+
     @ColumnInfo(name = "release_date")
     var release_date: String?,
 
     @field:TypeConverters(Converters::class)
     @ColumnInfo(name = "genres")
-    var genres: List<Int>?,
+    var genres: List<String>?,
 )
 
 @Entity(tableName = "actors")
@@ -50,11 +53,15 @@ data class Actor(
 @Entity(tableName = "genres")
 data class Genre(
     @PrimaryKey
+    @NotNull
+    @ColumnInfo(name = "genre_id")
+    val genre_id: Int,
+
     @ColumnInfo(name = "genre")
     val genre: String
 )
 
-fun Movie.toDomainModel(): MovieDto = MovieDto(movie_id, title, overview, rateScore, ageLimit, imageUrl, release_date, genres)
+fun Movie.toDomainModel(): MovieDto = MovieDto(movie_id, title, overview, rateScore, ageLimit, imageUrl, backdropUrl, release_date, genres)
 
 fun Actor.toDomainModel(): ActorDto = ActorDto(name, imageUrl)
 

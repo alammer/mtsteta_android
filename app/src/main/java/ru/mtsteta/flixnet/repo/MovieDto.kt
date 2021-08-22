@@ -14,9 +14,10 @@ data class MovieDto(
     val rateScore: Int,
     val ageLimit: String? = null,
     val imageUrl: String? = null,
+    val backdropUrl: String? = null,
     val release_date: String? = null,
-    val genres: List<Int>? = null,
+    val genres: List<String>? = null,
 ) : Parcelable
 
-fun MovieDto.toDataBaseModel(): Movie = Movie(movie_id, title, overview, rateScore, ageLimit, imageUrl, release_date, genres)
+fun MovieDto.toDataBaseModel(): Movie = Movie(movie_id, title, overview, rateScore, ageLimit, imageUrl, backdropUrl, release_date, genres)
 

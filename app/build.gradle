@@ -19,6 +19,11 @@ android {
         versionCode 1
         versionName "1.0.0.1"
 
+        buildConfigField("String","TMDB_API_KEY","\"c5a4eedabeac35f94da56dc8c11bd934\"")
+        buildConfigField("String","BASE_URL","\"https://api.tmdb.org/3/\"")
+        buildConfigField("String","BASE_IMAGE_URL","\"https://image.tmdb.org/t/p/\"")
+        buildConfigField("String","BASE_BACK_URL","\"https://image.tmdb.org/t/p/\"")
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -85,8 +90,6 @@ dependencies {
     implementation "androidx.security:security-crypto:1.0.0"
 
     implementation 'com.google.code.gson:gson:2.8.6'
-
-
 }
 
 //apply plugin: 'com.google.gms.google-services'

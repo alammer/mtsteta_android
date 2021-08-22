@@ -14,4 +14,14 @@ class Converters {
         return actorsList?.joinToString(",")
     }
 
+    @TypeConverter
+    fun toListOfStrings(genres: String?): List<String>? {
+        return genres?.split("|")
+    }
+
+    @TypeConverter
+    fun fromListOfStrings(genresList: List<String>?): String? {
+        return genresList?.joinToString("|")
+    }
+
 }
