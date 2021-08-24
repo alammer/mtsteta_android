@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tab_auth"
+    app:startDestination="@id/SignUpFragment">
+
+    <fragment
+        android:id="@+id/SignUpFragment"
+        android:name="ru.mtsteta.flixnet.login.SignUpFragment"
+        android:label="Start signup">
+
+        <action
+            android:id="@+id/actionSignUpToProfile"
+            app:destination="@id/ProfileFragment"
+            app:popUpTo="@id/SignUpFragment"
+            app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/actionSignUpToLogin"
+            app:destination="@id/LoginFragment"
+            app:popUpTo="@id/SignUpFragment"
+            app:popUpToInclusive="true" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/LoginFragment"
+        android:name="ru.mtsteta.flixnet.login.LoginFragment"
+        android:label="Start login">
+
+        <action
+            android:id="@+id/actionLoginToProfile"
+            app:destination="@id/ProfileFragment"
+            app:popUpTo="@id/LoginFragment"
+            app:popUpToInclusive="true" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/ProfileFragment"
+        android:name="ru.mtsteta.flixnet.profile.ProfileFragment"
+        android:label="Success login" />
+
+</navigation>

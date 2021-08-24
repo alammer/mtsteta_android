@@ -48,7 +48,7 @@ class LoginViewModel : ViewModel() {
         if ((userId == initialPrefs?.userName || userId == initialPrefs?.email) && password == initialPrefs?.password) {
             _authStatus.value = AuthenticationState.AUTHENTICATED
             user = initialPrefs
-        }  else {
+        } else {
             _authStatus.value = AuthenticationState.INVALID_ATTEMPT
         }
     }
