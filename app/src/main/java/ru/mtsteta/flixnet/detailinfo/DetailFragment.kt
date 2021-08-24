@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import coil.load
 import com.google.android.material.imageview.ShapeableImageView
+import ru.mtsteta.flixnet.BuildConfig
 import ru.mtsteta.flixnet.R
 import ru.mtsteta.flixnet.repo.MovieDto
 
@@ -59,7 +60,7 @@ class DetailFragment : Fragment() {
             tvGenre.text = genres.toString()
             rbMovie.rating = rateScore.toFloat()
             imgPoster.apply {
-                load(imageUrl?.toUri()) {
+                load(BuildConfig.BASE_BACK_URL + backdropUrl) {
                     error(R.drawable.broken_image)
                 }
                 scaleType = ImageView.ScaleType.CENTER_CROP

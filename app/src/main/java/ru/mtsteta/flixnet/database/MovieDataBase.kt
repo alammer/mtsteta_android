@@ -17,6 +17,7 @@ abstract class MovieDataBase: RoomDatabase() {
         private const val DB_NAME = "Movies.db"
         val instance: MovieDataBase  by lazy {
             Room.databaseBuilder(App.appContext, MovieDataBase::class.java, DB_NAME)
+                .fallbackToDestructiveMigration()
                 .build()
         }
     }
