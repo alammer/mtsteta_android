@@ -29,16 +29,6 @@ class ProfileFragment : Fragment() {
     private val loginViewModel: LoginViewModel by activityViewModels()
     private lateinit var btnExit: MaterialButton
 
-    private val sharedPreferences by lazy {
-        EncryptedSharedPreferences.create(
-            ENCRYPTED_PREFS_FILE_NAME,
-            MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC),
-            requireContext(),
-            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
-        )
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -55,27 +45,12 @@ class ProfileFragment : Fragment() {
 
         val navController = findNavController()
 
-        loginViewModel.setUser(sharedPreferences.getParcelable(PREFERENCE_KEY_NAME, null))
-
-        loginViewModel.authData.observe(viewLifecycleOwner, { userPrefs ->
-            userPrefs?.let {
-                with(sharedPreferences.edit()) {
-                    putParcelable(PREFERENCE_KEY_NAME, it as Parcelable)
-                    apply()
-                }
-            }
-        })
-
         loginViewModel.authStatus.observe(viewLifecycleOwner, { authenticationState ->
+            Log.i("LoginAuth", "auth status: $authenticationState")
             when (authenticationState) {
-                AuthenticationState.EMPTY_ACCOUNT -> {
-                    navController.navigate(R.id.signUpFragment)
-                }
                 AuthenticationState.UNAUTHENTICATED -> {
-                    navController.navigate(R.id.actionProfileToMain)
-                }
-                AuthenticationState.PROCEED_AUTHENTICATION -> {
-                    navController.navigate(R.id.loginFragment)
+                    //navController.popBackStack(R.id.tab_auth, true)
+                    navController.navigateUp()
                 }
                 else -> Toast.makeText(
                     context,

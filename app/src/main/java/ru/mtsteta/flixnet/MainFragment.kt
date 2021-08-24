@@ -38,7 +38,6 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         view?.run {
             bottomNavView = findViewById(R.id.bottomNavView)
 
-
             // Setup the bottom navigation view with a list of navigation graphs
             bottomNavView.setupWithNavController(
                 navGraphIds = navGraphIds,

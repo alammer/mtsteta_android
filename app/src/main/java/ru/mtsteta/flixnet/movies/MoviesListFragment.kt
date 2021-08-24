@@ -20,7 +20,7 @@ import ru.mtsteta.flixnet.genres.GenreListAdapter
 import ru.mtsteta.flixnet.repo.MovieDto
 import ru.mtsteta.flixnet.repo.RefreshDataStatus
 
-class MainScreenFragment : Fragment() {
+class MoviesListFragment : Fragment() {
 
     private val moviesListViewModel: MoviesListViewModel by viewModels()
 

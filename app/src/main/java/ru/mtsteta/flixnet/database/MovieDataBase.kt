@@ -8,7 +8,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import ru.mtsteta.flixnet.App
 
 
-@Database(entities = [MovieLocal::class, Actor::class, GenreLocal::class], version = 2)
+@Database(entities = [MovieLocal::class, Actor::class, GenreLocal::class], version = 1)
 abstract class MovieDataBase: RoomDatabase() {
 
     abstract val movieDataDao: MovieDataDao
