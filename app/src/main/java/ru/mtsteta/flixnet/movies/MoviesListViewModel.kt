@@ -12,7 +12,7 @@ import ru.mtsteta.flixnet.repo.MovieDto
 import ru.mtsteta.flixnet.repo.MovieRepository
 import ru.mtsteta.flixnet.repo.RefreshDataStatus
 
-class MoviesViewModel : ViewModel() {
+class MoviesListViewModel : ViewModel() {
 
     var changeStatus = false
 
@@ -47,7 +47,7 @@ class MoviesViewModel : ViewModel() {
         viewModelScope.launch {
 
             changeStatus = true
-            Log.i("MoviesViewModel", "Function called: changeStatus = $changeStatus")
+            Log.i("MoviesListViewModel", "Function called: changeStatus = $changeStatus")
 
             val (status, content) = repository.refreshMovie()
 

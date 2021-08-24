@@ -17,9 +17,9 @@ import ru.mtsteta.flixnet.genres.GenreListAdapter
 import ru.mtsteta.flixnet.repo.MovieDto
 import ru.mtsteta.flixnet.repo.RefreshDataStatus
 
-class MainScreenFragment : Fragment() {
+class MoviesListFragment : Fragment() {
 
-    private val moviesViewModel: MoviesViewModel by viewModels()
+    private val moviesListViewModel: MoviesListViewModel by viewModels()
 
     private lateinit var genreRecycler: RecyclerView
     private lateinit var movieRecycler: RecyclerView
@@ -33,28 +33,28 @@ class MainScreenFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_main_screen, container, false)
+        return inflater.inflate(R.layout.fragment_movies_list, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         initViews(view)
 
-        moviesViewModel.movieList.observe(viewLifecycleOwner, {
+        moviesListViewModel.movieList.observe(viewLifecycleOwner, {
             it?.let { movieAdapter.submitList(it) } ?: Log.i(
-                "MainScreenFragment",
+                "MoviesListFragment",
                 "Function called: Observe() but movieList is null"
             )
         })
 
-        moviesViewModel.genreList.observe(viewLifecycleOwner, {
+        moviesListViewModel.genreList.observe(viewLifecycleOwner, {
             genreAdapter.submitList(it)
         })
 
-        moviesViewModel.refreshStatus.observe(viewLifecycleOwner, {
-            Log.i("Movie", "Function called: changeStatus = ${moviesViewModel.changeStatus}")
+        moviesListViewModel.refreshStatus.observe(viewLifecycleOwner, {
+            Log.i("Movie", "Function called: changeStatus = ${moviesListViewModel.changeStatus}")
             swipeRefresher.isRefreshing = false
-            if (moviesViewModel.changeStatus) {
+            if (moviesListViewModel.changeStatus) {
                 when (it) {
                     RefreshDataStatus.ERROR -> Toast.makeText(
                         context,
@@ -70,7 +70,7 @@ class MainScreenFragment : Fragment() {
                         Toast.makeText(context, "Movie list updated", Toast.LENGTH_SHORT).show()
                     }
                 }
-                moviesViewModel.changeStatus = false
+                moviesListViewModel.changeStatus = false
             }
         })
 
@@ -93,7 +93,7 @@ class MainScreenFragment : Fragment() {
         genreRecycler.adapter = genreAdapter
 
         movieAdapter = MovieListAdapter(MovieClickListener { movieItem: MovieDto ->
-            val direction = MainScreenFragmentDirections.actionMainToDetail(movieItem)
+            val direction = MoviesListFragmentDirections.actionMoviesToDetail(movieItem)
             findNavController().navigate(direction)
         })
 
@@ -105,7 +105,7 @@ class MainScreenFragment : Fragment() {
         movieRecycler.addItemDecoration(MovieSpaceItemDecoration(resources.getDimensionPixelSize(R.dimen.mainscreen_movie_top_spacing)))
 
         swipeRefresher.setOnRefreshListener {
-            moviesViewModel.fetchData()
+            moviesListViewModel.fetchData()
         }
     }
 }

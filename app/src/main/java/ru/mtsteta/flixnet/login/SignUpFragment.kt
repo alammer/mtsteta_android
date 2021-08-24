@@ -43,9 +43,9 @@ class SignUpFragment : Fragment() {
 
         navController = findNavController()
 
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
-            navController.navigate(R.id.actionSignUpToMain)
-        }
+        //requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+        //    navController.navigate(R.id.actionSignUpToMain)
+        //}
 
         loginViewModel.authStatus.observe(viewLifecycleOwner, { authenticationState ->
             when (authenticationState) {

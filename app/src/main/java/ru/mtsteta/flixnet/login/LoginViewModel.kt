@@ -10,7 +10,7 @@ import ru.mtsteta.flixnet.profile.ProfileDto
 
 @Keep
 enum class AuthenticationState {
-    AUTHENTICATED, UNAUTHENTICATED, EMPTY_ACCOUNT, PROCEED_AUTHENTICATION, INVALID_ATTEMPT
+    AUTHENTICATED, UNAUTHENTICATED, EMPTY_ACCOUNT, PROCEED_AUTHENTICATION, INVALID_ATTEMPT, CANCELLATION
 }
 
 class LoginViewModel : ViewModel() {
@@ -23,6 +23,11 @@ class LoginViewModel : ViewModel() {
     private val _authStatus = MutableLiveData<AuthenticationState>()
 
     fun setUser(currentUser: Parcelable?) {
+        if (_authStatus.value == AuthenticationState.CANCELLATION) {
+            user = null
+            _authStatus.value = AuthenticationState.UNAUTHENTICATED
+            return
+        }
         if (user == null) {
             _authStatus.value = currentUser?.let {
                 initialPrefs = it as ProfileDto
@@ -51,5 +56,9 @@ class LoginViewModel : ViewModel() {
         }  else {
             _authStatus.value = AuthenticationState.INVALID_ATTEMPT
         }
+    }
+
+    fun cancelAuth(){
+        _authStatus.value = AuthenticationState.CANCELLATION
     }
 }

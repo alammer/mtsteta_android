@@ -71,12 +71,13 @@ class ProfileFragment : Fragment() {
         })
 
         loginViewModel.authStatus.observe(viewLifecycleOwner, { authenticationState ->
+            Log.i("AuthProfileFragment", "auth status: $authenticationState")
             when (authenticationState) {
                 AuthenticationState.EMPTY_ACCOUNT -> {
                     navController.navigate(R.id.signUpFragment)
                 }
-                AuthenticationState.UNAUTHENTICATED -> {
-                    navController.navigate(R.id.actionProfileToMain)
+                AuthenticationState.UNAUTHENTICATED, AuthenticationState.CANCELLATION-> {
+                    navController.popBackStack()//navController.navigate(R.id.actionProfileToMain)
                 }
                 AuthenticationState.PROCEED_AUTHENTICATION -> {
                     navController.navigate(R.id.loginFragment)
