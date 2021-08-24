@@ -23,9 +23,6 @@ import ru.mtsteta.flixnet.R
 import ru.mtsteta.flixnet.login.AuthenticationState
 import ru.mtsteta.flixnet.login.LoginViewModel
 
-private val jsonPrefsObject by lazy {
-    Json { ignoreUnknownKeys = true }
-}
 
 class ProfileFragment : Fragment() {
 
@@ -98,24 +95,3 @@ class ProfileFragment : Fragment() {
     }
 }
 
-fun SharedPreferences.Editor.putParcelable(key: String, parcelable: Parcelable) {
-    val json = jsonPrefsObject.encodeToString(parcelable)   //toJson(parcelable)
-    putString(key, json)
-    apply()
-}
-
-fun SharedPreferences.getParcelable(key: String, default: Parcelable?): Parcelable? {
-    val json = getString(key, null)
-    return try {
-        if (json != null) {
-            jsonPrefsObject.decodeFromString(json)
-        } else {
-            default
-        }
-    } catch (_ : SerializationException) {
-        default
-    }
-}
-
-private const val ENCRYPTED_PREFS_FILE_NAME = "user_prefs"
-private const val PREFERENCE_KEY_NAME = "user_settings"

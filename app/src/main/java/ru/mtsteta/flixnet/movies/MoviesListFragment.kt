@@ -22,7 +22,7 @@ import ru.mtsteta.flixnet.repo.RefreshDataStatus
 
 class MainScreenFragment : Fragment() {
 
-    private val moviesViewModel: MoviesViewModel by viewModels()
+    private val moviesListViewModel: MoviesListViewModel by viewModels()
 
     private lateinit var genreRecycler: RecyclerView
     private lateinit var movieRecycler: RecyclerView
@@ -36,14 +36,14 @@ class MainScreenFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_main_screen, container, false)
+        return inflater.inflate(R.layout.fragment_movies_list, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         initViews(view)
 
-        moviesViewModel.movieList.observe(viewLifecycleOwner, {
+        moviesListViewModel.movieList.observe(viewLifecycleOwner, {
             it?.let {
                 Log.i("MainScreenFragment", "get updated list ${it.toString()}")
                 movieAdapter.submitList(it) } ?: Log.i(
@@ -52,14 +52,14 @@ class MainScreenFragment : Fragment() {
             )
         })
 
-        moviesViewModel.genreList.observe(viewLifecycleOwner, {
+        moviesListViewModel.genreList.observe(viewLifecycleOwner, {
             genreAdapter.submitList(it.values.toList())
         })
 
-        moviesViewModel.refreshStatus.observe(viewLifecycleOwner, {
-            Log.i("MovieLocal", "Function called: changeStatus = ${moviesViewModel.changeStatus}")
+        moviesListViewModel.refreshStatus.observe(viewLifecycleOwner, {
+            Log.i("MovieLocal", "Function called: changeStatus = ${moviesListViewModel.changeStatus}")
             swipeRefresher.isRefreshing = false
-            if (moviesViewModel.changeStatus) {
+            if (moviesListViewModel.changeStatus) {
                 when (it) {
                     RefreshDataStatus.ERROR -> Toast.makeText(
                         context,
@@ -75,7 +75,7 @@ class MainScreenFragment : Fragment() {
                         Toast.makeText(context, "MovieLocal list updated", Toast.LENGTH_SHORT).show()
                     }
                 }
-                moviesViewModel.changeStatus = false
+                moviesListViewModel.changeStatus = false
             }
         })
 
@@ -98,7 +98,7 @@ class MainScreenFragment : Fragment() {
         genreRecycler.adapter = genreAdapter
 
         movieAdapter = MovieListAdapter(MovieClickListener { movieItem: MovieDto ->
-            val direction = MainScreenFragmentDirections.actionMainToDetail(movieItem)
+            val direction = MoviesListFragmentDirections.actionMoviesToDetail(movieItem)
             findNavController().navigate(direction)
         })
 
@@ -110,7 +110,7 @@ class MainScreenFragment : Fragment() {
         movieRecycler.addItemDecoration(MovieSpaceItemDecoration(resources.getDimensionPixelSize(R.dimen.mainscreen_movie_top_spacing)))
 
         swipeRefresher.setOnRefreshListener {
-            moviesViewModel.fetchData(page = 2, language = "en-EN", region = "US")
+            moviesListViewModel.fetchData(page = 2, language = "en-EN", region = "US")
         }
     }
 }
