@@ -28,7 +28,7 @@ interface MovieNetworkAPI {
     @GET("movie/popular")
     suspend fun getPopMovieList(@QueryMap options: Map<String, String>): Response<PopMoviesResponse>
 
-    @GET("movie/{movie_id}")
+    @GET("movie/{movie_id}/credits")
     suspend fun getMovieCrew(
         @Path("movie_id") id: Int,
         @Query("api_key") apiKey: String
