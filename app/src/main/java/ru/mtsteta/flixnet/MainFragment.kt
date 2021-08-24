@@ -22,14 +22,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val navController = Navigation.findNavController(requireActivity(), R.id.root_nav_host_fragment)
 
-        val mainGraph = navController.navInflater.inflate(R.navigation.app_nav_graph)
-
-        // Way to change first screen at runtime.
-        mainGraph.startDestination = R.id.MainFragment
-
-        navController.graph = mainGraph
 
         if (savedInstanceState == null) {
             setupBottomNavigationBar(view)
@@ -39,7 +32,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     private fun setupBottomNavigationBar(view: View?) {
         val navGraphIds = listOf(
             R.navigation.movies_nav_graph,
-            R.navigation.profile_nav_graph
+            R.navigation.auth_nav_graph
         )
 
         view?.run {

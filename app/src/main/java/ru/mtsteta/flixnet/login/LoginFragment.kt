@@ -39,15 +39,10 @@ class LoginFragment : Fragment() {
 
         navController = findNavController()
 
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
-            loginViewModel.cancelAuth()
-        }
-
         loginViewModel.authStatus.observe(viewLifecycleOwner, { authenticationState ->
-            Log.i("AuthLoginFragment", "auth status: $authenticationState")
             when (authenticationState) {
-                AuthenticationState.AUTHENTICATED, AuthenticationState.CANCELLATION -> {
-                    navController.popBackStack()
+                AuthenticationState.AUTHENTICATED -> {
+                    navController.navigate(R.id.actionLoginToProfile)
                 }
                 AuthenticationState.INVALID_ATTEMPT -> Toast.makeText(
                     context,

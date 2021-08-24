@@ -18,7 +18,6 @@ import com.google.firebase.messaging.ktx.messaging
 import ru.mtsteta.flixnet.movies.*
 
 class MainActivity : AppCompatActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)

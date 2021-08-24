@@ -9,16 +9,7 @@
         android:id="@+id/MainFragment"
         android:name="ru.mtsteta.flixnet.MainFragment"
         tools:layout="@layout/fragment_main">
-        <action
-            android:id="@+id/action_MainFragment_to_moviesListFragment"
-            app:destination="@id/moviesListFragment"
-            app:popUpTo="@id/MainFragment"
-            app:popUpToInclusive="true" />
-    </fragment>
 
-    <fragment
-        android:id="@+id/moviesListFragment"
-        android:name="ru.mtsteta.flixnet.movies.MoviesListFragment"
-        android:label="MoviesListFragment" />
+    </fragment>
 
 </navigation>
