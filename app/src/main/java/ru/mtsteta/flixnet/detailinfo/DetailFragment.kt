@@ -1,17 +1,22 @@
 package ru.mtsteta.flixnet.detailinfo
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipDrawable
+import com.google.android.material.chip.ChipGroup
 import com.google.android.material.imageview.ShapeableImageView
 import ru.mtsteta.flixnet.BuildConfig
 import ru.mtsteta.flixnet.R
@@ -22,7 +27,8 @@ class DetailFragment : Fragment() {
     private lateinit var tvTitle: TextView
     private lateinit var tvInfo: TextView
     private lateinit var tvAgeLimit: TextView
-    private lateinit var tvGenre: TextView
+    private lateinit var chgGenres: ChipGroup
+    private lateinit var tvRelease: TextView
     private lateinit var rbMovie: RatingBar
     private lateinit var imgPoster: ShapeableImageView
     private lateinit var actorRecycler: RecyclerView
@@ -58,7 +64,8 @@ class DetailFragment : Fragment() {
         tvTitle = view.findViewById(R.id.tvMovieTitle)
         tvInfo = view.findViewById(R.id.tvDetailInfoText)
         tvAgeLimit = view.findViewById(R.id.tvAgeLimit)
-        tvGenre = view.findViewById(R.id.tvDetailGenre)
+        chgGenres = view.findViewById(R.id.chgGenres)
+        tvRelease = view.findViewById(R.id.tvReleaseDate)
         rbMovie = view.findViewById(R.id.detailMovieRating)
         imgPoster = view.findViewById(R.id.imgPoster)
         actorRecycler = view.findViewById(R.id.rvActorsList)
@@ -75,14 +82,20 @@ class DetailFragment : Fragment() {
             tvTitle.text = title
             tvInfo.text = overview
             tvAgeLimit.text = ageLimit
-            tvGenre.text = genres.toString()
-            rbMovie.rating = rateScore.toFloat()
+            tvRelease.text = release_date
+            rbMovie.rating = rateScore.toFloat()/2.0f
             imgPoster.apply {
                 load(BuildConfig.BASE_BACK_URL + backdropUrl) {
                     error(R.drawable.broken_image)
                 }
                 scaleType = ImageView.ScaleType.CENTER_CROP
             }
+            val chip = Chip(requireContext())
+            Log.i("DetailFragment", "get: $genres")
+            chip.text = genres.toString()
+            chgGenres.addView(chip as View)
+
+
         }
     }
 }

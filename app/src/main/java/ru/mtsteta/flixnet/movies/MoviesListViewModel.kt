@@ -51,7 +51,6 @@ class MoviesListViewModel : ViewModel() {
         viewModelScope.launch {
 
             changeStatus = true
-            Log.i("MoviesListViewModel", "Function called: changeStatus = $changeStatus")
 
             val (status, content) = repository.refreshMovie(page, language, region)
 

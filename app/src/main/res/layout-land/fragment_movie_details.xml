@@ -43,25 +43,28 @@
                 android:paddingHorizontal="@dimen/detailed_horizontal_margin"
                 android:paddingTop="@dimen/detailed_cardview_top_padding">
 
-                <TextView
-                    android:id="@+id/tvDetailGenre"
-                    style="@style/Genre"
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/chgGenres"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text="@string/action_genre"
+                    android:layout_marginStart="@dimen/detailed_horizontal_margin"
+                    app:layout_constraintEnd_toStartOf="@id/tvReleaseDate"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent">
+
+                </com.google.android.material.chip.ChipGroup>
 
                 <TextView
                     android:id="@+id/tvReleaseDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/detailed_common_top_margin"
+                    android:layout_marginBottom="@dimen/detailed_releasedate_bottom_margin"
                     android:fontFamily="@font/roboto"
                     tools:text="@string/release_date"
                     android:textSize="@dimen/small_text_size"
-                    app:layout_constraintBaseline_toBaselineOf="@id/tvDetailGenre"
-                    app:layout_constraintStart_toEndOf="@id/tvDetailGenre" />
+                    app:layout_constraintBottom_toBottomOf="@id/chgGenres"
+                    app:layout_constraintStart_toEndOf="@id/chgGenres" />
 
                 <TextView
                     android:id="@+id/tvMovieTitle"
@@ -74,7 +77,7 @@
                     android:textSize="@dimen/large_text_size"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvDetailGenre" />
+                    app:layout_constraintTop_toBottomOf="@id/chgGenres" />
 
                 <TextView
                     android:id="@+id/tvAgeLimit"

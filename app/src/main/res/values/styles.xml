@@ -29,6 +29,35 @@
         <item name="cornerFamily">rounded</item>
     </style>
 
+    <style name="Widget.App.Chip" parent="Widget.MaterialComponents.Chip.Entry">
+        <item name="android:textAppearance">@style/TextAppearance.App.Body2</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.App.SmallComponent</item>
+        <item name="chipStrokeWidth">1dp</item>
+        <item name="chipBackgroundColor">@color/bg_color_detailed</item>
+        <item name="chipIconEnabled">false</item>
+        <item name="closeIconVisible">false</item>
+        <item name="chipStrokeColor">@color/black</item>
+        <item name="chipSurfaceColor">@color/transparent</item>
+        <item name="chipEndPadding">12dp</item>
+        <item name="chipStartPadding">12dp</item>
+        <item name="chipSpacingVertical">4dp</item>
+        <item name="chipMinTouchTargetSize">20dp</item>
+        <item name="android:checkable">false</item>
+        <item name="android:textColor">@color/transparent</item>
+        <item name="chipMinHeight">18dp</item>
+    </style>
+
+    <style name="TextAppearance.App.Body2" parent="TextAppearance.MaterialComponents.Body2">
+        <item name="fontFamily">@font/roboto</item>
+        <item name="android:textSize">@dimen/mini_text_size</item>
+        <item name="android:fontFamily">@font/roboto</item>
+    </style>
+
+    <style name="ShapeAppearance.App.SmallComponent" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">10dp</item>
+    </style>
+
     <style name="Genre" parent="android:Widget.TextView">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>

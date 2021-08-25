@@ -40,4 +40,4 @@ data class MovieRemote(
     val rateScore: Double,
 )
 
-fun MovieRemote.toDataBaseModel() = MovieLocal(movieId, title, overview, rateScore, ageLimit = null, imageUrl, backdropUrl, releaseDate, genres = null)
+fun MovieRemote.toDataBaseModel() = MovieLocal(movieId, title, overview, rateScore, ageLimit = null, imageUrl, backdropUrl, releaseDate, genresIds)

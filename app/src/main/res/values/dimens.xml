@@ -11,6 +11,7 @@
     <dimen name="big_text_size">16sp</dimen>
     <dimen name="large_text_size">20sp</dimen>
     <dimen name="detailed_common_top_margin">16dp</dimen>
+    <dimen name="detailed_releasedate_bottom_margin">2dp</dimen>
     <dimen name="detailed_actor_name_top_margin">12dp</dimen>
     <dimen name="detailed_horizontal_margin">20dp</dimen>
     <dimen name="detailed_cardview_top_padding">32dp</dimen>

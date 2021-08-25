@@ -37,7 +37,6 @@ class MovieRepository {
                 responseGenres.body()?.genreResponseList?.map { it.toDataBaseModel() }?.let {
                     dataDao.insertAllGenres(it)
                 }
-                Log.i("Success", "Function called: getStockList()")
             } else {
                 responseGenres.errorBody()?.let {
                     Log.i("fetchGenres", "errorBody: ${responseGenres.code()}")
@@ -70,7 +69,6 @@ class MovieRepository {
                 responseMovies.body()?.responseMoviesList?.map { it.toDataBaseModel() }?.let {
                     dataDao.insertAllMovies(it)
                 }
-                Log.i("fetchMovies", "Success: ${responseMovies.body()?.responseMoviesList.toString()}")
             } else {
                 responseMovies.errorBody()?.let {
                     Log.i("fetchMovies", "errorBody: ${responseMovies.code()}")
