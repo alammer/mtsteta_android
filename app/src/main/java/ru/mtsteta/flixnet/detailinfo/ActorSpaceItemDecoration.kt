@@ -2,7 +2,6 @@ package ru.mtsteta.flixnet.detailinfo
 
 import android.graphics.Rect
 import android.view.View
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 class ActorSpaceItemDecoration(private val horizontalspacing: Int) : RecyclerView.ItemDecoration() {

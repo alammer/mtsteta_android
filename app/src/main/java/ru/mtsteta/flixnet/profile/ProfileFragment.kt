@@ -1,8 +1,6 @@
 package ru.mtsteta.flixnet.profile
 
-import android.content.SharedPreferences
 import android.os.Bundle
-import android.os.Parcelable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -10,15 +8,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import androidx.security.crypto.EncryptedSharedPreferences
-import androidx.security.crypto.MasterKeys
 import com.google.android.material.button.MaterialButton
-import kotlinx.serialization.SerializationException
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
 import ru.mtsteta.flixnet.R
 import ru.mtsteta.flixnet.login.AuthenticationState
 import ru.mtsteta.flixnet.login.LoginViewModel
@@ -56,7 +47,7 @@ class ProfileFragment : Fragment() {
                     context,
                     "Current autentication status is $authenticationState",
                     Toast.LENGTH_SHORT
-                )
+                ).show()
 
             }
         })

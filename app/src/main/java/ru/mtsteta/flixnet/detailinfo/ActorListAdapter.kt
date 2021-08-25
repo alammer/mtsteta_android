@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -12,12 +11,9 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import ru.mtsteta.flixnet.BuildConfig
 import ru.mtsteta.flixnet.R
-import ru.mtsteta.flixnet.genres.GenreListAdapter
-import ru.mtsteta.flixnet.movies.MovieClickListener
 import ru.mtsteta.flixnet.network.MovieCrew
-import ru.mtsteta.flixnet.repo.MovieDto
 
-class ActorListAdapter() :  ListAdapter<MovieCrew, ActorListAdapter.ActorViewHolder>(ActorDiffCallback()) {
+class ActorListAdapter :  ListAdapter<MovieCrew, ActorListAdapter.ActorViewHolder>(ActorDiffCallback()) {
 
     class ActorViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 

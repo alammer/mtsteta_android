@@ -3,7 +3,6 @@ package ru.mtsteta.flixnet.repo
 import android.os.Parcelable
 import androidx.annotation.Keep
 import kotlinx.parcelize.Parcelize
-import ru.mtsteta.flixnet.database.MovieLocal
 
 @Keep
 @Parcelize

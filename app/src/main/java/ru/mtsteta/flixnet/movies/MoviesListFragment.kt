@@ -45,11 +45,7 @@ class MoviesListFragment : Fragment() {
 
         moviesListViewModel.movieList.observe(viewLifecycleOwner, {
             it?.let {
-                Log.i("MainScreenFragment", "get updated list ${it.toString()}")
-                movieAdapter.submitList(it) } ?: Log.i(
-                "MainScreenFragment",
-                "Function called: Observe() but movieList is null"
-            )
+                movieAdapter.submitList(it) }
         })
 
         moviesListViewModel.genreList.observe(viewLifecycleOwner, {

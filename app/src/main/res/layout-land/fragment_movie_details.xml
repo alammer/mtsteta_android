@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -17,7 +18,6 @@
         android:layout_height="match_parent"
         android:background="@color/bg_color_detailed"
         android:scaleType="centerCrop"
-        android:src="@drawable/ic_poster"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:shapeAppearanceOverlay="@style/DetailedMoviePoster" />
@@ -48,7 +48,7 @@
                     style="@style/Genre"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/action_genre"
+                    tools:text="@string/action_genre"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -58,7 +58,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/detailed_common_top_margin"
                     android:fontFamily="@font/roboto"
-                    android:text="@string/release_date"
+                    tools:text="@string/release_date"
                     android:textSize="@dimen/small_text_size"
                     app:layout_constraintBaseline_toBaselineOf="@id/tvDetailGenre"
                     app:layout_constraintStart_toEndOf="@id/tvDetailGenre" />
@@ -70,7 +70,7 @@
                     android:layout_marginTop="@dimen/detailed_common_top_margin"
                     android:layout_marginEnd="@dimen/movieslist_title_end_margin"
                     android:fontFamily="@font/roboto_medium"
-                    android:text="@string/movie_name"
+                    tools:text="@string/movie_name"
                     android:textSize="@dimen/large_text_size"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -83,7 +83,7 @@
                     android:layout_height="@dimen/agelimit_height"
                     android:layout_marginBottom="4dp"
                     android:gravity="center"
-                    android:text="@string/age_limit"
+                    tools:text="@string/age_limit"
                     android:textSize="@dimen/medium_text_size"
                     app:layout_constraintBottom_toBottomOf="@id/tvMovieTitle"
                     app:layout_constraintEnd_toEndOf="parent" />
@@ -95,7 +95,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/detailed_common_top_margin"
                     android:numStars="5"
-                    android:rating="2"
+                    tools:rating="2"
                     android:stepSize="1"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvMovieTitle" />
@@ -106,7 +106,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:fontFamily="@font/roboto"
-                    android:text="@string/test_detail_text"
+                    tools:text="@string/test_detail_text"
                     android:textAlignment="textStart"
                     android:textSize="@dimen/medium_text_size"
                     app:layout_constraintEnd_toEndOf="parent"

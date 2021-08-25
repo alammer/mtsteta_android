@@ -3,7 +3,6 @@ package ru.mtsteta.flixnet.database
 import androidx.room.*
 import org.jetbrains.annotations.NotNull
 import ru.mtsteta.flixnet.repo.ActorDto
-import ru.mtsteta.flixnet.repo.GenreDto
 import ru.mtsteta.flixnet.repo.MovieDto
 
 @Entity(tableName = "movies")

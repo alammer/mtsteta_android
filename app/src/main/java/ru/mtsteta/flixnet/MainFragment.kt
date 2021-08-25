@@ -3,7 +3,6 @@ package ru.mtsteta.flixnet
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.navigation.Navigation
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import ru.mtsteta.flixnet.extensions.setupWithNavController
 
@@ -13,16 +12,12 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
         super.onViewStateRestored(savedInstanceState)
-        // Now that BottomNavigationBar has restored its instance state
-        // and its selectedItemId, we can proceed with setting up the
-        // BottomNavigationBar with Navigation
+
         setupBottomNavigationBar(view)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
 
         if (savedInstanceState == null) {
             setupBottomNavigationBar(view)
@@ -38,7 +33,6 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         view?.run {
             bottomNavView = findViewById(R.id.bottomNavView)
 
-            // Setup the bottom navigation view with a list of navigation graphs
             bottomNavView.setupWithNavController(
                 navGraphIds = navGraphIds,
                 fragmentManager = childFragmentManager,

@@ -1,7 +1,6 @@
 package ru.mtsteta.flixnet.login
 
 import android.os.Parcelable
-import android.util.Log
 import androidx.annotation.Keep
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

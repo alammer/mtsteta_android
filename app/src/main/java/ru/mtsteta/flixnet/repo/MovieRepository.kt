@@ -13,7 +13,7 @@ import ru.mtsteta.flixnet.network.toDataBaseModel
 @Keep
 enum class RefreshDataStatus { FAILURE, ERROR, OK }
 
-class MovieRepository() {
+class MovieRepository {
 
     private val networkData = MovieRemoteService
 
@@ -97,7 +97,7 @@ class MovieRepository() {
 
             val recentMovieList = dataDao.getAllMovies()?.map { it.toDomainModel() }
 
-            if (recentMovieList?.any { it.title.isNullOrEmpty() } == true) {
+            if (recentMovieList?.any { it.title.isEmpty() } == true) {
                 RefreshDataStatus.ERROR to null
             } else {
                 recentMovieList?.let {

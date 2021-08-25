@@ -64,7 +64,7 @@
     <EditText
         android:id="@+id/etConfirmNewPassword"
         style="@style/SignField"
-        android:hint="@string/signup_confirmpass_hint"
+        android:hint="@string/signup_confirm_pass_hint"
         android:inputType="textPassword"
         app:layout_constraintBottom_toTopOf="@id/btnCreateAccount"
         app:layout_constraintEnd_toEndOf="parent"

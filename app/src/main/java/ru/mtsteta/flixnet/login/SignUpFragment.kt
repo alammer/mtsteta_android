@@ -86,7 +86,7 @@ class SignUpFragment : Fragment() {
                     context,
                     "Current autentication status is $authenticationState",
                     Toast.LENGTH_SHORT
-                )
+                ).show()
             }
         })
     }

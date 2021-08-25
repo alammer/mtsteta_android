@@ -7,20 +7,14 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
-import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.google.android.material.imageview.ShapeableImageView
 import ru.mtsteta.flixnet.BuildConfig
 import ru.mtsteta.flixnet.R
-import ru.mtsteta.flixnet.movies.MovieClickListener
-import ru.mtsteta.flixnet.movies.MovieListAdapter
-import ru.mtsteta.flixnet.movies.MoviesListFragmentDirections
-import ru.mtsteta.flixnet.movies.MoviesListViewModel
 import ru.mtsteta.flixnet.repo.MovieDto
 
 class DetailFragment : Fragment() {

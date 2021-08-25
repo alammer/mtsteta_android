@@ -10,8 +10,6 @@ import ru.mtsteta.flixnet.BuildConfig
 import ru.mtsteta.flixnet.database.MovieDataBase
 import ru.mtsteta.flixnet.network.MovieCrew
 import ru.mtsteta.flixnet.network.MovieRemoteService
-import ru.mtsteta.flixnet.network.toDataBaseModel
-import ru.mtsteta.flixnet.repo.ActorDto
 
 class DetailViewModel : ViewModel() {
 
