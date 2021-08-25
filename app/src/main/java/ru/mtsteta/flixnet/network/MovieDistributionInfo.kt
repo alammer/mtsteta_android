@@ -15,11 +15,14 @@ data class CountryInfo(
     val countryCode: String?,
 
     @SerialName("release_dates")
-    val releaseDates: ReleaseDates?
+    val releaseDates: List<ReleaseDates>?
 )
 
 @Serializable
 data class ReleaseDates(
+    @SerialName("type")
+    val type: Int,
+
     @SerialName("certification")
     val ageLimit: String?
 )

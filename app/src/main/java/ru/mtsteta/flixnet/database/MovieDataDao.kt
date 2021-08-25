@@ -33,7 +33,7 @@ interface  MovieDataDao{
     fun insertAllGenres(genreLocals: List<GenreLocal>)
 
     @Query("SELECT * FROM genres")
-    fun getGenres(): List<GenreLocal>?
+    suspend fun getGenres(): List<GenreLocal>?
 
     @Query("DELETE FROM genres")
     fun clearGenres()

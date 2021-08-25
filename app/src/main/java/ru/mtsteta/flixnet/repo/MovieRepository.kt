@@ -6,6 +6,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import ru.mtsteta.flixnet.BuildConfig
 import ru.mtsteta.flixnet.database.MovieDataBase
+import ru.mtsteta.flixnet.database.MovieLocal
 import ru.mtsteta.flixnet.database.toDomainModel
 import ru.mtsteta.flixnet.network.MovieRemoteService
 import ru.mtsteta.flixnet.network.toDataBaseModel
@@ -56,7 +57,34 @@ class MovieRepository {
         localGenres?.map { it.genreId to it.genre }?.toMap()
     }
 
-    private suspend fun fetchMovies(page: Int = 1, language: String = "ru-RU", region: String = "RU") {
+    private suspend fun fetchAgeLimit(movieList: List<MovieLocal>, region: String): List<MovieLocal> {
+        movieList.forEach { movieLocal ->
+            try {
+                val response = networkData.retrofitService.getMovieDistributionInfo(
+                    movieLocal.movieId,
+                    BuildConfig.TMDB_API_KEY
+                )
+
+                if (response.isSuccessful) {
+                    movieLocal.ageLimit =
+                        response.body()?.results?.firstOrNull{ it.countryCode == region}?.releaseDates?.firstOrNull { it.type > 2 }?.ageLimit
+                } else {
+                    response.errorBody()?.let {
+                        Log.i("fetchAgeLimits", "errorBody: ${response.code()}")
+                    }
+                }
+            } catch (e: Exception) {
+                Log.i("fetchAgeLimits", "Exception -  ${e.message}")
+            }
+        }
+        return movieList
+    }
+
+    private suspend fun fetchMovies(
+        page: Int = 1,
+        language: String = "ru-RU",
+        region: String = "RU"
+    ) {
         val params: MutableMap<String, String> = HashMap()
         params["api_key"] = BuildConfig.TMDB_API_KEY
         params["page"] = page.toString()
@@ -66,7 +94,10 @@ class MovieRepository {
             val responseMovies = networkData.retrofitService.getPopMovieList(params)
 
             if (responseMovies.isSuccessful) {
-                responseMovies.body()?.responseMoviesList?.map { it.toDataBaseModel() }?.let {
+                responseMovies.body()?.responseMoviesList
+                    ?.map { it.toDataBaseModel() }
+                    ?.let { fetchAgeLimit(it, region) }
+                    ?.let {
                     dataDao.insertAllMovies(it)
                 }
             } else {
@@ -79,16 +110,24 @@ class MovieRepository {
         }
     }
 
-    suspend fun loadMovieList(page: Int = 1, language: String = "ru-RU", region: String = "RU"): List<MovieDto>? = withContext(Dispatchers.IO){
+    suspend fun loadMovieList(
+        page: Int = 1,
+        language: String = "ru-RU",
+        region: String = "RU"
+    ): List<MovieDto>? = withContext(Dispatchers.IO) {
         var localMovies = dataDao.getAllMovies()?.map { it.toDomainModel() }
         if (localMovies.isNullOrEmpty()) {
             fetchMovies(page, language, region)
             localMovies = dataDao.getAllMovies()?.map { it.toDomainModel() }
-            }
+        }
         localMovies
     }
 
-    suspend fun refreshMovie(page: Int = 1, language: String = "ru-RU", region: String = "RU"): Pair<RefreshDataStatus, List<MovieDto>?> =
+    suspend fun refreshMovie(
+        page: Int = 1,
+        language: String = "ru-RU",
+        region: String = "RU"
+    ): Pair<RefreshDataStatus, List<MovieDto>?> =
         withContext((Dispatchers.IO)) {
 
             fetchMovies(page, language, region)

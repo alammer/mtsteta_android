@@ -20,6 +20,20 @@ class DetailViewModel : ViewModel() {
     val actorList: LiveData<List<MovieCrew>?> get() = _actorList
     private val _actorList = MutableLiveData<List<MovieCrew>?>()
 
+    val genreList: LiveData<List<String>> get() = _genreList
+    private val _genreList = MutableLiveData<List<String>>()
+
+    fun fetchGenres (listIds: List<Int>) {
+        viewModelScope.launch {
+            val genres = dataDao.getGenres()
+            genres?.filter { it.genreId in listIds }
+                ?.map { it.genre }
+                ?.also {
+                    _genreList.value = it
+                }
+        }
+    }
+
     fun fetchActors (movieId: Int) {
         viewModelScope.launch {
             try {
@@ -31,11 +45,11 @@ class DetailViewModel : ViewModel() {
                     Log.i("Success", "Function called: getStockList()")
                 } else {
                     actorsResponce.errorBody()?.let {
-                        Log.i("fetchGenres", "errorBody: ${actorsResponce.code()}")
+                        Log.i("fetchActors", "errorBody: ${actorsResponce.code()}")
                     }
                 }
             } catch (e: Exception) {
-                Log.i("fetchGenres", "Exception -  ${e.message}")
+                Log.i("fetchActors", "Exception -  ${e.message}")
             }
         }
     }

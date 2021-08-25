@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.size
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
@@ -55,8 +56,16 @@ class DetailFragment : Fragment() {
 
         detailViewModel.fetchActors(args.movieItem.movie_id)
 
+        args.movieItem.genres?.let {
+            detailViewModel.fetchGenres(it)
+        }
+
         detailViewModel.actorList.observe(viewLifecycleOwner, {
             actorAdapter.submitList(it)
+        })
+
+        detailViewModel.genreList.observe(viewLifecycleOwner, {
+            loadGenre(it)
         })
     }
 
@@ -83,19 +92,22 @@ class DetailFragment : Fragment() {
             tvInfo.text = overview
             tvAgeLimit.text = ageLimit
             tvRelease.text = release_date
-            rbMovie.rating = rateScore.toFloat()/2.0f
+            rbMovie.rating = rateScore.toFloat() / 2.0f
             imgPoster.apply {
                 load(BuildConfig.BASE_BACK_URL + backdropUrl) {
                     error(R.drawable.broken_image)
                 }
                 scaleType = ImageView.ScaleType.CENTER_CROP
             }
+        }
+    }
+
+    private fun loadGenre (genres: List<String>) {
+        if (chgGenres.size > 0) return
+        genres.forEach {
             val chip = Chip(requireContext())
-            Log.i("DetailFragment", "get: $genres")
-            chip.text = genres.toString()
+            chip.text = it
             chgGenres.addView(chip as View)
-
-
         }
     }
 }

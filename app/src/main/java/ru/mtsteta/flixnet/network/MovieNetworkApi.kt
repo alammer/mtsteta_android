@@ -34,7 +34,7 @@ interface MovieNetworkAPI {
         @Query("api_key") apiKey: String
     ): Response<MovieCastList>
 
-    @GET("movie/{movie_id}")
+    @GET("movie/{movie_id}/release_dates")
     suspend fun getMovieDistributionInfo(
         @Path("movie_id") id: Int,
         @Query("api_key") apiKey: String,
