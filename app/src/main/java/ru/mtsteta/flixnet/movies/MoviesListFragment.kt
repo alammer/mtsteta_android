@@ -107,7 +107,7 @@ class MoviesListFragment : Fragment() {
 
         movieRecycler.adapter = movieAdapter
 
-        movieRecycler.addItemDecoration(MovieSpaceItemDecoration(resources.getDimensionPixelSize(R.dimen.mainscreen_movie_top_spacing)))
+        movieRecycler.addItemDecoration(MovieSpaceItemDecoration(resources.getDimensionPixelSize(R.dimen.movieslist_rv_top_spacing)))
 
         swipeRefresher.setOnRefreshListener {
             moviesListViewModel.fetchData(page = 2, language = "en-EN", region = "US")

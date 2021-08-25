@@ -8,7 +8,7 @@
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/rvItemMoviePoster"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/mainscreen_poster_height"
+        android:layout_height="@dimen/movieslist_poster_height"
         android:scaleType="centerCrop"
         app:layout_constraintTop_toTopOf="parent"
         app:shapeAppearanceOverlay="@style/MainscreenMoviePoster"

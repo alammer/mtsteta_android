@@ -51,9 +51,9 @@ class DetailFragment : Fragment() {
 
         initViews(view)
 
-        detailViewModel.fetchActors(args.movieItem.movie_id)
-
         loadData(args.movieItem)
+
+        detailViewModel.fetchActors(args.movieItem.movie_id)
 
         detailViewModel.actorList.observe(viewLifecycleOwner, {
             actorAdapter.submitList(it)
@@ -67,12 +67,13 @@ class DetailFragment : Fragment() {
         tvGenre = view.findViewById(R.id.tvDetailGenre)
         rbMovie = view.findViewById(R.id.detailMovieRating)
         imgPoster = view.findViewById(R.id.imgPoster)
-
         actorRecycler = view.findViewById(R.id.rvActorsList)
 
         actorAdapter = ActorListAdapter()
 
         actorRecycler.adapter = actorAdapter
+
+        actorRecycler.addItemDecoration(ActorSpaceItemDecoration(resources.getDimensionPixelSize(R.dimen.detailed_actor_rv_item_horozontal_space)))
     }
 
     private fun loadData(movie: MovieDto) {

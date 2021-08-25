@@ -28,7 +28,7 @@ class ActorListAdapter() :  ListAdapter<MovieCrew, ActorListAdapter.ActorViewHol
 
         fun bind(item: MovieCrew, position: Int) {
             nameTextView.text = item.name
-            actorImage.load(BuildConfig.BASE_IMAGE_URL + item.imageUrl) {
+            actorImage.load(BuildConfig.BASE_PROFILE_URL + item.imageUrl) {
                 placeholder(R.drawable.loading_animation)
                 error(R.drawable.broken_image)
             }
