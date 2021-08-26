@@ -2,12 +2,17 @@ package ru.mtsteta.flixnet.repo
 
 import android.util.Log
 import androidx.annotation.Keep
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import ru.mtsteta.flixnet.BuildConfig
 import ru.mtsteta.flixnet.database.MovieDataBase
 import ru.mtsteta.flixnet.database.MovieLocal
 import ru.mtsteta.flixnet.database.toDomainModel
+import ru.mtsteta.flixnet.network.MovieRemote
 import ru.mtsteta.flixnet.network.MovieRemoteService
 import ru.mtsteta.flixnet.network.toDataBaseModel
 
@@ -30,6 +35,15 @@ class MovieRepository {
         localActors
     }*/
 
+    suspend fun loadGenres(): Map<Int, String>? = withContext(Dispatchers.IO) {
+        var localGenres = dataDao.getGenres()
+        if (localGenres.isNullOrEmpty()) {
+            fetchGenres()
+            localGenres = dataDao.getGenres()
+        }
+        localGenres?.map { it.genreId to it.genre }?.toMap()
+    }
+
     private suspend fun fetchGenres() {
         try {
             val responseGenres = networkData.retrofitService.getGenres(BuildConfig.TMDB_API_KEY)
@@ -48,37 +62,27 @@ class MovieRepository {
         }
     }
 
-    suspend fun loadGenres(): Map<Int, String>? = withContext(Dispatchers.IO) {
-        var localGenres = dataDao.getGenres()
-        if (localGenres.isNullOrEmpty()) {
-            fetchGenres()
-            localGenres = dataDao.getGenres()
-        }
-        localGenres?.map { it.genreId to it.genre }?.toMap()
-    }
+    suspend fun updateMoviesList(
+        page: Int = 1,
+        language: String = "ru-RU",
+        region: String = "RU"
+    ): Pair<RefreshDataStatus, List<MovieDto>?> =
+        withContext((Dispatchers.IO)) {
 
-    private suspend fun fetchAgeLimit(movieList: List<MovieLocal>, region: String): List<MovieLocal> {
-        movieList.forEach { movieLocal ->
-            try {
-                val response = networkData.retrofitService.getMovieDistributionInfo(
-                    movieLocal.movieId,
-                    BuildConfig.TMDB_API_KEY
-                )
+            Log.i("Fetch_UpdateMoviesList", "page: $page")
 
-                if (response.isSuccessful) {
-                    movieLocal.ageLimit =
-                        response.body()?.results?.firstOrNull{ it.countryCode == region}?.releaseDates?.firstOrNull { it.type > 2 }?.ageLimit
-                } else {
-                    response.errorBody()?.let {
-                        Log.i("fetchAgeLimits", "errorBody: ${response.code()}")
-                    }
-                }
-            } catch (e: Exception) {
-                Log.i("fetchAgeLimits", "Exception -  ${e.message}")
+            fetchMovies(page, language, region)
+
+            val recentMovieList = dataDao.getAllMovies()?.map { it.toDomainModel() }
+
+            if (recentMovieList?.any { it.title.isEmpty() } == true) {
+                RefreshDataStatus.ERROR to null
+            } else {
+                recentMovieList?.let {
+                    RefreshDataStatus.OK to it
+                } ?: RefreshDataStatus.FAILURE to null
             }
         }
-        return movieList
-    }
 
     private suspend fun fetchMovies(
         page: Int = 1,
@@ -98,8 +102,10 @@ class MovieRepository {
                     ?.map { it.toDataBaseModel() }
                     ?.let { fetchAgeLimit(it, region) }
                     ?.let {
-                    dataDao.insertAllMovies(it)
-                }
+                        Log.i("Fetch_fetchMovies", "page: $page")
+                        if (page == 1) dataDao.clearMovies()
+                        dataDao.insertAllMovies(it)
+                    }
             } else {
                 responseMovies.errorBody()?.let {
                     Log.i("fetchMovies", "errorBody: ${responseMovies.code()}")
@@ -110,12 +116,40 @@ class MovieRepository {
         }
     }
 
+    private suspend fun fetchAgeLimit(
+        movieList: List<MovieLocal>,
+        region: String
+    ): List<MovieLocal> {
+        movieList.forEach { movieLocal ->
+            try {
+                val response = networkData.retrofitService.getMovieDistributionInfo(
+                    movieLocal.movieId,
+                    BuildConfig.TMDB_API_KEY
+                )
+
+                if (response.isSuccessful) {
+                    movieLocal.ageLimit =
+                        response.body()?.results?.firstOrNull { it.countryCode == region }?.releaseDates?.firstOrNull { it.type > 2 }?.ageLimit
+                } else {
+                    response.errorBody()?.let {
+                        Log.i("fetchAgeLimits", "errorBody: ${response.code()}")
+                    }
+                }
+            } catch (e: Exception) {
+                Log.i("fetchAgeLimits", "Exception -  ${e.message}")
+            }
+        }
+        return movieList
+    }
+
     suspend fun loadMovieList(
         page: Int = 1,
         language: String = "ru-RU",
         region: String = "RU"
     ): List<MovieDto>? = withContext(Dispatchers.IO) {
         var localMovies = dataDao.getAllMovies()?.map { it.toDomainModel() }
+        Log.i("Fetch first", "Function called: loadMovieList()")
+        Log.i("Fetch_loadMovieList", "empty DB return: $localMovies")
         if (localMovies.isNullOrEmpty()) {
             fetchMovies(page, language, region)
             localMovies = dataDao.getAllMovies()?.map { it.toDomainModel() }
@@ -123,25 +157,13 @@ class MovieRepository {
         localMovies
     }
 
-    suspend fun refreshMovie(
-        page: Int = 1,
-        language: String = "ru-RU",
-        region: String = "RU"
-    ): Pair<RefreshDataStatus, List<MovieDto>?> =
-        withContext((Dispatchers.IO)) {
-
-            fetchMovies(page, language, region)
-
-            val recentMovieList = dataDao.getAllMovies()?.map { it.toDomainModel() }
-
-            if (recentMovieList?.any { it.title.isEmpty() } == true) {
-                RefreshDataStatus.ERROR to null
-            } else {
-                recentMovieList?.let {
-                    RefreshDataStatus.OK to it
-                } ?: RefreshDataStatus.FAILURE to null
-            }
-        }
+    fun fetchPosts(): Flow<PagingData<MovieLocal>> {
+        return Pager(
+            PagingConfig(pageSize = 20, enablePlaceholders = false),
+            remoteMediator = TmdbRemoteMediator(networkData, dataDao),
+            pagingSourceFactory = { dataDao.getMovies() }
+        ).flow
+    }
 }
 
 

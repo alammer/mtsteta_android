@@ -12,7 +12,10 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import ru.mtsteta.flixnet.R
 import ru.mtsteta.flixnet.genres.GenreClickListener
@@ -30,6 +33,11 @@ class MoviesListFragment : Fragment() {
     private lateinit var genreAdapter: GenreListAdapter
     private lateinit var movieAdapter: MovieListAdapter
 
+    private var isLoading: Boolean = false
+    private var visibleThreshold = 1
+    private var lastVisibleItem = 0
+    private var totalItemCount = 0
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,12 +48,17 @@ class MoviesListFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         initViews(view)
 
         moviesListViewModel.movieList.observe(viewLifecycleOwner, {
             it?.let {
-                movieAdapter.submitList(it) }
+                movieAdapter.apply {
+                    submitList(currentList + it)
+                }
+            }
+            isLoading = false
         })
 
         moviesListViewModel.genreList.observe(viewLifecycleOwner, {
@@ -53,7 +66,10 @@ class MoviesListFragment : Fragment() {
         })
 
         moviesListViewModel.refreshStatus.observe(viewLifecycleOwner, {
-            Log.i("MovieLocal", "Function called: changeStatus = ${moviesListViewModel.changeStatus}")
+            Log.i(
+                "MovieLocal",
+                "Function called: changeStatus = ${moviesListViewModel.changeStatus}"
+            )
             swipeRefresher.isRefreshing = false
             if (moviesListViewModel.changeStatus) {
                 when (it) {
@@ -68,14 +84,13 @@ class MoviesListFragment : Fragment() {
                         Toast.LENGTH_SHORT
                     ).show()
                     else -> {
-                        Toast.makeText(context, "MovieLocal list updated", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "MovieLocal list updated", Toast.LENGTH_SHORT)
+                            .show()
                     }
                 }
                 moviesListViewModel.changeStatus = false
             }
         })
-
-        super.onViewCreated(view, savedInstanceState)
     }
 
     private fun initViews(view: View) {
@@ -98,17 +113,61 @@ class MoviesListFragment : Fragment() {
             findNavController().navigate(direction)
         })
 
-        movieAdapter.stateRestorationPolicy =
-            RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
+        //movieAdapter.stateRestorationPolicy =
+            //RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
 
         movieRecycler.adapter = movieAdapter
 
         movieRecycler.addItemDecoration(MovieSpaceItemDecoration(resources.getDimensionPixelSize(R.dimen.movieslist_rv_top_spacing)))
 
+        addScrollerListener()
+
         swipeRefresher.setOnRefreshListener {
-            moviesListViewModel.fetchData(page = 2, language = "en-EN", region = "US")
+            moviesListViewModel.fetchData(0)
         }
     }
+
+    private fun addScrollerListener() {
+        val moviesLayoutManager = movieRecycler.layoutManager
+
+        movieRecycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                if (!isLoading) {
+
+                    moviesLayoutManager?.run {
+
+                        totalItemCount = itemCount
+
+                        lastVisibleItem = when (this) {
+                            is GridLayoutManager -> findLastVisibleItemPosition()
+                            is LinearLayoutManager -> findLastVisibleItemPosition()
+                            else -> throw IllegalArgumentException("Uknown layoutmanager type")
+                        }
+
+                        Log.i(
+                            "Fetch_AddScroll",
+                            "totalitem: $totalItemCount, lastvisible: $lastVisibleItem"
+                        )
+
+                        if (totalItemCount <= lastVisibleItem + visibleThreshold) {
+                            moviesListViewModel.fetchData()
+                            isLoading = true
+                        }
+                    }
+                }
+            }
+        })
+    }
+}
+
+private fun setupViews() {
+    rvPosts.adapter = redditAdapter
+    rvPosts.adapter = redditAdapter.withLoadStateHeaderAndFooter(
+        header = RedditLoadingAdapter { redditAdapter.retry() },
+        footer = RedditLoadingAdapter { redditAdapter.retry() }
+    )
 }
 
 private fun isInternetAvailable(context: Context): Boolean {

@@ -16,7 +16,7 @@ import ru.mtsteta.flixnet.R
 import ru.mtsteta.flixnet.repo.MovieDto
 
 class MovieListAdapter(private val clickListener: MovieClickListener) :
-    ListAdapter<MovieDto, MovieListAdapter.MovieListViewHolder>(MoviesDiffCallback()) {
+    ListAdapter<MovieDto, RecyclerView.ViewHolder>(MoviesDiffCallback()) {
 
     class MovieListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -35,7 +35,7 @@ class MovieListAdapter(private val clickListener: MovieClickListener) :
         fun bind(clickListener: MovieClickListener, item: MovieDto, position: Int) {
             titleTextView.text = item.title
             infoTextView.text = item.overview
-            ratingBar.rating = item.rateScore.toFloat()/2.0f
+            ratingBar.rating = item.rateScore.toFloat() / 2.0f
             ageLimitTextView.text = item.ageLimit
             posterImage.load(BuildConfig.BASE_IMAGE_URL + item.imageUrl) {
                 placeholder(R.drawable.loading_animation)
@@ -48,27 +48,77 @@ class MovieListAdapter(private val clickListener: MovieClickListener) :
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): MovieListViewHolder {
-        val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.movies_rv_item, parent, false)
-        return MovieListViewHolder(view)
+    ): RecyclerView.ViewHolder {
+        return when (viewType) {
+            VIEW_TYPE_DATA -> {
+                val view = LayoutInflater.from(parent.context)
+                    .inflate(R.layout.movies_rv_item, parent, false)
+                MovieListViewHolder(view)
+            }
+            VIEW_TYPE_PROGRESS -> {
+                val view = LayoutInflater.from(parent.context)
+                    .inflate(R.layout.progress_bar, parent, false)
+                ProgressViewHolder(view)
+            }
+            else -> throw IllegalArgumentException("Different View type")
+        }
     }
 
     override fun onBindViewHolder(
-        holder: MovieListViewHolder,
+        holder: RecyclerView.ViewHolder,
         position: Int
     ) {
-        holder.bind(clickListener, getItem(position), position)
+        (holder as? MovieListViewHolder)?.bind(clickListener, getItem(position), position)
+    }
+
+    override fun onCurrentListChanged(
+        previousList: MutableList<MovieDto>,
+        currentList: MutableList<MovieDto>
+    ) {
+        super.onCurrentListChanged(previousList, currentList)
+    }
+
+    inner class ProgressViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+
+    companion object {
+        const val VIEW_TYPE_DATA = 0;
+        const val VIEW_TYPE_PROGRESS = 1;
+    }
+}
+
+class RedditAdapter :
+    PagingDataAdapter<RedditPost, RedditAdapter.RedditViewHolder>(DiffUtilCallBack()) {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RedditViewHolder {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.adapter_row, parent, false)
+        return RedditViewHolder(view)
+    }
+
+    override fun onBindViewHolder(holder: RedditViewHolder, position: Int) {
+        getItem(position)?.let { holder.bindPost(it) }
+    }
+
+    class RedditViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val scoreText: TextView = itemView.score
+        private val commentsText: TextView = itemView.comments
+        private val titleText: TextView = itemView.title
+
+        fun bindPost(redditPost: RedditPost) {
+            with(redditPost) {
+                scoreText.text = score.toString()
+                commentsText.text = commentCount.toString()
+                titleText.text = title
+            }
+        }
     }
 }
 
 private class MoviesDiffCallback : DiffUtil.ItemCallback<MovieDto>() {
     override fun areItemsTheSame(oldItem: MovieDto, newItem: MovieDto): Boolean {
-        return oldItem == newItem
+        return oldItem.movie_id == newItem.movie_id
     }
 
     override fun areContentsTheSame(oldItem: MovieDto, newItem: MovieDto): Boolean {
-        return oldItem.title == newItem.title
+        return oldItem == newItem
     }
 }
 

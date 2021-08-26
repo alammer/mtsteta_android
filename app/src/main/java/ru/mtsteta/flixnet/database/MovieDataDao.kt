@@ -1,5 +1,6 @@
 package ru.mtsteta.flixnet.database
 
+import androidx.paging.PagingSource
 import androidx.room.*
 
 @Dao
@@ -10,6 +11,9 @@ interface  MovieDataDao{
 
     @Query("SELECT * FROM movies")
     fun getAllMovies(): List<MovieLocal>?
+
+    @Query("SELECT * FROM movies")
+    fun getMovies(): PagingSource<Int, MovieLocal>
 
     @Query("SELECT * FROM movies WHERE title = :title")
     fun getMovie(title: String) : MovieLocal?

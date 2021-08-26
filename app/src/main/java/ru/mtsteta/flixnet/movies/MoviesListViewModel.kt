@@ -15,6 +15,10 @@ class MoviesListViewModel : ViewModel() {
 
     var changeStatus = false
 
+    private var loadpages = 1
+
+    private var recentList: MutableList<MovieDto> = mutableListOf<MovieDto>()
+
     private var genres: MutableMap<Int, String>? = null
 
     private val repository = MovieRepository()
@@ -52,10 +56,16 @@ class MoviesListViewModel : ViewModel() {
 
             changeStatus = true
 
-            val (status, content) = repository.refreshMovie(page, language, region)
+            if (page == 0) loadpages = 1
+
+            Log.i("Fetch_fetchData", "page: $page")
+
+            val (status, content) = repository.updateMoviesList(loadpages, language, region)
 
             when (status) {
                 RefreshDataStatus.OK -> {
+                    loadpages ++
+                    Log.i("Fetch_ViewModel", "recent: ${recentList.toString()}")
                     _movieList.value = content
                     _refreshStatus.value = RefreshDataStatus.OK
                 }

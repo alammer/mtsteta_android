@@ -5,6 +5,7 @@ import org.jetbrains.annotations.NotNull
 import ru.mtsteta.flixnet.repo.ActorDto
 import ru.mtsteta.flixnet.repo.MovieDto
 
+
 @Entity(tableName = "movies")
 data class MovieLocal(
     @PrimaryKey
