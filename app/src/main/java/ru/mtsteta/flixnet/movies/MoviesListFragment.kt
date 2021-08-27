@@ -36,7 +36,7 @@ class MoviesListFragment : Fragment() {
 
     private lateinit var genreRecycler: RecyclerView
     private lateinit var movieRecycler: RecyclerView
-    private lateinit var swipeRefresher: SwipeRefreshLayout
+    //private lateinit var swipeRefresher: SwipeRefreshLayout
     private lateinit var genreAdapter: GenreListAdapter
     private lateinit var movieAdapter: MovieListAdapter
 
@@ -75,7 +75,7 @@ class MoviesListFragment : Fragment() {
                 "MovieLocal",
                 "Function called: changeStatus = ${moviesListViewModel.changeStatus}"
             )
-            swipeRefresher.isRefreshing = false
+            //swipeRefresher.isRefreshing = false
             if (moviesListViewModel.changeStatus) {
                 when (it) {
                     RefreshDataStatus.ERROR -> Toast.makeText(
@@ -104,7 +104,7 @@ class MoviesListFragment : Fragment() {
 
         genreRecycler = view.findViewById(R.id.rvGenreList)
         movieRecycler = view.findViewById(R.id.rvMovieList)
-        swipeRefresher = view.findViewById(R.id.swipeLayout)
+        //swipeRefresher = view.findViewById(R.id.swipeLayout)
 
         genreAdapter = GenreListAdapter(GenreClickListener {
             //TODO("We should implement logic for GenreClickListener later")
