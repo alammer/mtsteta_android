@@ -2,6 +2,7 @@ package ru.mtsteta.flixnet.repo
 
 import android.util.Log
 import androidx.annotation.Keep
+import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
@@ -12,7 +13,6 @@ import ru.mtsteta.flixnet.BuildConfig
 import ru.mtsteta.flixnet.database.MovieDataBase
 import ru.mtsteta.flixnet.database.MovieLocal
 import ru.mtsteta.flixnet.database.toDomainModel
-import ru.mtsteta.flixnet.network.MovieRemote
 import ru.mtsteta.flixnet.network.MovieRemoteService
 import ru.mtsteta.flixnet.network.toDataBaseModel
 
@@ -21,9 +21,9 @@ enum class RefreshDataStatus { FAILURE, ERROR, OK }
 
 class MovieRepository {
 
-    private val networkData = MovieRemoteService
+    val networkAPI = MovieRemoteService.retrofitService
 
-    private val dataDao = MovieDataBase.instance.movieDataDao
+    val dataDao = MovieDataBase.instance.movieDataDao
 
     /*suspend fun loadActorList(): List<ActorDto>? = withContext(Dispatchers.IO) {
         var localActors = dataDao.getAllActors()?.map { it.toDomainModel() }
@@ -46,7 +46,7 @@ class MovieRepository {
 
     private suspend fun fetchGenres() {
         try {
-            val responseGenres = networkData.retrofitService.getGenres(BuildConfig.TMDB_API_KEY)
+            val responseGenres = networkAPI.getGenres(BuildConfig.TMDB_API_KEY)
 
             if (responseGenres.isSuccessful) {
                 responseGenres.body()?.genreResponseList?.map { it.toDataBaseModel() }?.let {
@@ -95,7 +95,7 @@ class MovieRepository {
         params["language"] = language
         params["region"] = region
         try {
-            val responseMovies = networkData.retrofitService.getPopMovieList(params)
+            val responseMovies = networkAPI.getPopMovieList(params)
 
             if (responseMovies.isSuccessful) {
                 responseMovies.body()?.responseMoviesList
@@ -122,7 +122,7 @@ class MovieRepository {
     ): List<MovieLocal> {
         movieList.forEach { movieLocal ->
             try {
-                val response = networkData.retrofitService.getMovieDistributionInfo(
+                val response = networkAPI.getMovieDistributionInfo(
                     movieLocal.movieId,
                     BuildConfig.TMDB_API_KEY
                 )
@@ -157,13 +157,25 @@ class MovieRepository {
         localMovies
     }
 
-    fun fetchPosts(): Flow<PagingData<MovieLocal>> {
+    fun getDefaultPageConfig(): PagingConfig {
+        return PagingConfig(pageSize = DEFAULT_PAGE_SIZE, enablePlaceholders = true)
+    }
+
+    @ExperimentalPagingApi
+    fun MoviePagesFlowDb(pagingConfig: PagingConfig = getDefaultPageConfig()): Flow<PagingData<MovieLocal>> {
+
+        val pagingSourceFactory = { dataDao.getMovies() }
         return Pager(
-            PagingConfig(pageSize = 20, enablePlaceholders = false),
-            remoteMediator = TmdbRemoteMediator(networkData, dataDao),
-            pagingSourceFactory = { dataDao.getMovies() }
+            config = pagingConfig,
+            pagingSourceFactory = pagingSourceFactory,
+            remoteMediator = MoviePagedMediator(networkAPI, MovieDataBase.instance)
         ).flow
     }
+
+    companion object {
+        const val DEFAULT_PAGE_SIZE = 20
+    }
+
 }
 
 

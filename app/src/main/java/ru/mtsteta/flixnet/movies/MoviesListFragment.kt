@@ -11,13 +11,20 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.paging.ExperimentalPagingApi
+import androidx.paging.map
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.launch
 import ru.mtsteta.flixnet.R
+import ru.mtsteta.flixnet.database.toDomainModel
 import ru.mtsteta.flixnet.genres.GenreClickListener
 import ru.mtsteta.flixnet.genres.GenreListAdapter
 import ru.mtsteta.flixnet.repo.MovieDto
@@ -47,19 +54,17 @@ class MoviesListFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_movies_list, container, false)
     }
 
+    @ExperimentalPagingApi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         initViews(view)
 
-        moviesListViewModel.movieList.observe(viewLifecycleOwner, {
-            it?.let {
-                movieAdapter.apply {
-                    submitList(currentList + it)
-                }
-            }
-            isLoading = false
-        })
+        //moviesListViewModel.movieList.observe(viewLifecycleOwner, {
+        //    it?.let {
+        //    }
+        //    isLoading = false
+        //})
 
         moviesListViewModel.genreList.observe(viewLifecycleOwner, {
             genreAdapter.submitList(it.values.toList())
@@ -91,6 +96,8 @@ class MoviesListFragment : Fragment() {
                 moviesListViewModel.changeStatus = false
             }
         })
+
+        fetchMoviePages()
     }
 
     private fun initViews(view: View) {
@@ -113,21 +120,25 @@ class MoviesListFragment : Fragment() {
             findNavController().navigate(direction)
         })
 
-        //movieAdapter.stateRestorationPolicy =
-            //RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
-
         movieRecycler.adapter = movieAdapter
 
         movieRecycler.addItemDecoration(MovieSpaceItemDecoration(resources.getDimensionPixelSize(R.dimen.movieslist_rv_top_spacing)))
 
-        addScrollerListener()
+        //swipeRefresher.setOnRefreshListener {
+        //    moviesListViewModel.fetchData(0)
+        //}
+    }
 
-        swipeRefresher.setOnRefreshListener {
-            moviesListViewModel.fetchData(0)
+    @ExperimentalPagingApi
+    private fun fetchMoviePages() {
+        lifecycleScope.launch {
+            moviesListViewModel.fetchMovieFlow().distinctUntilChanged().collectLatest { page ->
+                movieAdapter.submitData(page.map { it.toDomainModel() })
+            }
         }
     }
 
-    private fun addScrollerListener() {
+    fun addScrollerListener() {
         val moviesLayoutManager = movieRecycler.layoutManager
 
         movieRecycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -160,14 +171,6 @@ class MoviesListFragment : Fragment() {
             }
         })
     }
-}
-
-private fun setupViews() {
-    rvPosts.adapter = redditAdapter
-    rvPosts.adapter = redditAdapter.withLoadStateHeaderAndFooter(
-        header = RedditLoadingAdapter { redditAdapter.retry() },
-        footer = RedditLoadingAdapter { redditAdapter.retry() }
-    )
 }
 
 private fun isInternetAvailable(context: Context): Boolean {

@@ -6,10 +6,11 @@ import androidx.room.RoomDatabase
 import ru.mtsteta.flixnet.App
 
 
-@Database(entities = [MovieLocal::class, Actor::class, GenreLocal::class], version = 1)
+@Database(entities = [MovieLocal::class, PagingKeys::class, Actor::class, GenreLocal::class], version = 1, exportSchema = false)
 abstract class MovieDataBase: RoomDatabase() {
 
     abstract val movieDataDao: MovieDataDao
+    abstract val pagingKeysDao: PagingKeysDao
 
     companion object {
         private const val DB_NAME = "Movies.db"

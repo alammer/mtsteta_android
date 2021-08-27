@@ -5,7 +5,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.ExperimentalPagingApi
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.launch
+import ru.mtsteta.flixnet.database.MovieLocal
 import ru.mtsteta.flixnet.repo.ActorDto
 import ru.mtsteta.flixnet.repo.MovieDto
 import ru.mtsteta.flixnet.repo.MovieRepository
@@ -73,5 +79,11 @@ class MoviesListViewModel : ViewModel() {
                 else -> _refreshStatus.value = RefreshDataStatus.ERROR
             }
         }
+    }
+
+    @ExperimentalPagingApi
+    fun fetchMovieFlow(): Flow<PagingData<MovieLocal>> {
+        return repository.MoviePagesFlowDb()
+            .cachedIn(viewModelScope)
     }
 }

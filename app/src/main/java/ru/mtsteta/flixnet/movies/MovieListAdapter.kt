@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -16,7 +17,7 @@ import ru.mtsteta.flixnet.R
 import ru.mtsteta.flixnet.repo.MovieDto
 
 class MovieListAdapter(private val clickListener: MovieClickListener) :
-    ListAdapter<MovieDto, RecyclerView.ViewHolder>(MoviesDiffCallback()) {
+    PagingDataAdapter<MovieDto, MovieListAdapter.MovieListViewHolder>(MoviesDiffCallback()) {
 
     class MovieListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -48,67 +49,40 @@ class MovieListAdapter(private val clickListener: MovieClickListener) :
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): RecyclerView.ViewHolder {
-        return when (viewType) {
-            VIEW_TYPE_DATA -> {
-                val view = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.movies_rv_item, parent, false)
-                MovieListViewHolder(view)
-            }
-            VIEW_TYPE_PROGRESS -> {
-                val view = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.progress_bar, parent, false)
-                ProgressViewHolder(view)
-            }
-            else -> throw IllegalArgumentException("Different View type")
-        }
+    ): MovieListViewHolder {
+        //return when (viewType) {
+        //    VIEW_TYPE_DATA -> {
+        //        val view = LayoutInflater.from(parent.context)
+        //            .inflate(R.layout.movies_rv_item, parent, false)
+        //        MovieListViewHolder(view)
+        //    }
+        //    VIEW_TYPE_PROGRESS -> {
+        //        val view = LayoutInflater.from(parent.context)
+        //            .inflate(R.layout.progress_bar, parent, false)
+        //        ProgressViewHolder(view)
+        //    }
+        //    else -> throw IllegalArgumentException("Different View type")
+        //}
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.movies_rv_item, parent, false)
+        return MovieListViewHolder(view)
     }
 
     override fun onBindViewHolder(
-        holder: RecyclerView.ViewHolder,
+        holder: MovieListViewHolder,
         position: Int
     ) {
-        (holder as? MovieListViewHolder)?.bind(clickListener, getItem(position), position)
+        getItem(position)?.let {
+            (holder as? MovieListViewHolder)?.bind(clickListener,
+                it, position)
+        }
     }
 
-    override fun onCurrentListChanged(
-        previousList: MutableList<MovieDto>,
-        currentList: MutableList<MovieDto>
-    ) {
-        super.onCurrentListChanged(previousList, currentList)
-    }
-
-    inner class ProgressViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+    //inner class ProgressViewHolder(itemView: View) : MovieListViewHolder(itemView)
 
     companion object {
         const val VIEW_TYPE_DATA = 0;
         const val VIEW_TYPE_PROGRESS = 1;
-    }
-}
-
-class RedditAdapter :
-    PagingDataAdapter<RedditPost, RedditAdapter.RedditViewHolder>(DiffUtilCallBack()) {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RedditViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.adapter_row, parent, false)
-        return RedditViewHolder(view)
-    }
-
-    override fun onBindViewHolder(holder: RedditViewHolder, position: Int) {
-        getItem(position)?.let { holder.bindPost(it) }
-    }
-
-    class RedditViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val scoreText: TextView = itemView.score
-        private val commentsText: TextView = itemView.comments
-        private val titleText: TextView = itemView.title
-
-        fun bindPost(redditPost: RedditPost) {
-            with(redditPost) {
-                scoreText.text = score.toString()
-                commentsText.text = commentCount.toString()
-                titleText.text = title
-            }
-        }
     }
 }
 

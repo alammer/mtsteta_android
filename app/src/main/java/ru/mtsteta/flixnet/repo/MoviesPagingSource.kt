@@ -1,5 +1,6 @@
 package ru.mtsteta.flixnet.repo
 
+import androidx.paging.ExperimentalPagingApi
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import retrofit2.HttpException
@@ -8,8 +9,9 @@ import ru.mtsteta.flixnet.network.MovieRemote
 import ru.mtsteta.flixnet.network.MovieRemoteService
 import java.io.IOException
 
-private const val TMDB_STARTING_PAGE_INDEX = 1
+const val TMDB_STARTING_PAGE_INDEX = 1
 
+@ExperimentalPagingApi
 class MoviesPagingSource(
     private val service: MovieRemoteService
 ) : PagingSource<Int, MovieRemote>() {
@@ -24,16 +26,9 @@ class MoviesPagingSource(
         return try {
             val response = service.retrofitService.getPopMovieList(reqParams)
             val movies = response.body()?.responseMoviesList
-            val nextKey =
-                if (movies.isNullOrEmpty()) {
-                    null
-                } else {
-                    pageIndex + 1
-                }
             LoadResult.Page(
-                data = movies ?: listOf(),
-                prevKey = if (pageIndex == TMDB_STARTING_PAGE_INDEX) null else pageIndex,
-                nextKey = nextKey
+                data = movies ?: listOf(), prevKey = if (pageIndex == TMDB_STARTING_PAGE_INDEX) null else pageIndex - 1,
+                nextKey = if (movies.isNullOrEmpty()) null else pageIndex + 1
             )
         } catch (exception: IOException) {
             return LoadResult.Error(exception)
@@ -42,16 +37,7 @@ class MoviesPagingSource(
         }
     }
 
-    /**
-     * The refresh key is used for subsequent calls to PagingSource.Load after the initial load.
-     */
     override fun getRefreshKey(state: PagingState<Int, MovieRemote>): Int? {
-        // We need to get the previous key (or next key if previous is null) of the page
-        // that was closest to the most recently accessed index.
-        // Anchor position is the most recently accessed index.
-        return state.anchorPosition?.let { anchorPosition ->
-            state.closestPageToPosition(anchorPosition)?.prevKey?.plus(1)
-                ?: state.closestPageToPosition(anchorPosition)?.nextKey?.minus(1)
-        }
+        return state.anchorPosition
     }
 }
