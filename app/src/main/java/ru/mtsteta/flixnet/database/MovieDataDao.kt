@@ -6,13 +6,13 @@ import androidx.room.*
 @Dao
 interface  MovieDataDao{
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAllMovies(movieLocals: List<MovieLocal>)
 
     @Query("SELECT * FROM movies")
     fun getAllMovies(): List<MovieLocal>?
 
-    @Query("SELECT * FROM movies")
+    @Query("SELECT * FROM movies ORDER BY id ASC")
     fun getMovies(): PagingSource<Int, MovieLocal>
 
     @Query("SELECT * FROM movies WHERE title = :title")

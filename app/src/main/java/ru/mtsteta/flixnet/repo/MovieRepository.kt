@@ -157,25 +157,21 @@ class MovieRepository {
         localMovies
     }
 
-    fun getDefaultPageConfig(): PagingConfig {
-        return PagingConfig(pageSize = DEFAULT_PAGE_SIZE, enablePlaceholders = true)
+    private fun getDefaultPageConfig(): PagingConfig {
+        return PagingConfig(pageSize = 20,
+            enablePlaceholders = true,
+            initialLoadSize = 40)
     }
 
-    @ExperimentalPagingApi
-    fun MoviePagesFlowDb(pagingConfig: PagingConfig = getDefaultPageConfig()): Flow<PagingData<MovieLocal>> {
-
+    fun moviePagesFlowDb(pagingConfig: PagingConfig = getDefaultPageConfig()): Flow<PagingData<MovieLocal>> {
         val pagingSourceFactory = { dataDao.getMovies() }
+        @OptIn(ExperimentalPagingApi::class)
         return Pager(
             config = pagingConfig,
             pagingSourceFactory = pagingSourceFactory,
             remoteMediator = MoviePagedMediator(networkAPI, MovieDataBase.instance)
         ).flow
     }
-
-    companion object {
-        const val DEFAULT_PAGE_SIZE = 20
-    }
-
 }
 
 

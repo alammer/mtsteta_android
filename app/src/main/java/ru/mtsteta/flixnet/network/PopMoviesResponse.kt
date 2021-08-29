@@ -11,7 +11,7 @@ data class PopMoviesResponse(
     val popListPage: Int,
 
     @SerialName("results")
-    val responseMoviesList: List<MovieRemote>?,
+    val responseMoviesList: List<MovieRemote> = emptyList(),
 )
 
 @Serializable
@@ -41,4 +41,4 @@ data class MovieRemote(
     val rateScore: Double,
 )
 
-fun MovieRemote.toDataBaseModel() = MovieLocal(movieId, title, overview, rateScore, ageLimit = null, imageUrl, backdropUrl, releaseDate, genresIds)
+fun MovieRemote.toDataBaseModel() = MovieLocal(id = null, movieId, title, overview, rateScore, ageLimit = null, imageUrl, backdropUrl, releaseDate, genresIds)

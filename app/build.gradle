@@ -40,6 +40,7 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
+        freeCompilerArgs += ["-Xopt-in=kotlin.RequiresOptIn"]
     }
 }
 
@@ -95,7 +96,7 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1"
     implementation 'com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0'
 
-    implementation "androidx.paging:paging-runtime:3.0.1"
+    implementation "androidx.paging:paging-runtime-ktx:3.1.0-alpha03"
 }
 
 //apply plugin: 'com.google.gms.google-services'

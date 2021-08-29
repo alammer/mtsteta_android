@@ -1,3 +1,4 @@
+
 package ru.mtsteta.flixnet.movies
 
 
@@ -33,16 +34,18 @@ class MovieListAdapter(private val clickListener: MovieClickListener) :
 
         private val ratingBar: RatingBar = itemView.findViewById(R.id.rvItemMovieRating)
 
-        fun bind(clickListener: MovieClickListener, item: MovieDto, position: Int) {
-            titleTextView.text = item.title
-            infoTextView.text = item.overview
-            ratingBar.rating = item.rateScore.toFloat() / 2.0f
-            ageLimitTextView.text = item.ageLimit
-            posterImage.load(BuildConfig.BASE_IMAGE_URL + item.imageUrl) {
-                placeholder(R.drawable.loading_animation)
-                error(R.drawable.broken_image)
-            }
-            itemView.setOnClickListener { clickListener.onClick(item) }
+        fun bind(clickListener: MovieClickListener, item: MovieDto?, position: Int) {
+            item?.run {
+                titleTextView.text = item.title
+                infoTextView.text = item.overview
+                ratingBar.rating = item.rateScore.toFloat() / 2.0f
+                ageLimitTextView.text = item.ageLimit
+                posterImage.load(BuildConfig.BASE_IMAGE_URL + item.imageUrl) {
+                    placeholder(R.drawable.loading_animation)
+                    error(R.drawable.broken_image)
+                }
+                itemView.setOnClickListener { clickListener.onClick(item) }
+            } ?: posterImage.load(R.drawable.loading_animation)
         }
     }
 
@@ -72,10 +75,14 @@ class MovieListAdapter(private val clickListener: MovieClickListener) :
         holder: MovieListViewHolder,
         position: Int
     ) {
-        getItem(position)?.let {
-            (holder as? MovieListViewHolder)?.bind(clickListener,
-                it, position)
-        }
+        //getItem(position)?.let {
+        //    (holder as? MovieListViewHolder)?.bind(clickListener,
+        //        it, position)
+        //}
+        val repoItem = getItem(position)
+        // Note that item may be null, ViewHolder must support binding null item as placeholder
+        holder.bind(clickListener, repoItem, position)
+
     }
 
     //inner class ProgressViewHolder(itemView: View) : MovieListViewHolder(itemView)

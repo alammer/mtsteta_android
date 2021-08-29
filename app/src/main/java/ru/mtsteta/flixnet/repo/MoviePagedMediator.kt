@@ -17,12 +17,24 @@ import ru.mtsteta.flixnet.network.toDataBaseModel
 import java.io.IOException
 import java.io.InvalidObjectException
 
-@ExperimentalPagingApi
-class MoviePagedMediator(val networkAPI: MovieNetworkAPI, val dataBase: MovieDataBase) :
+private const val TMDB_STARTING_PAGE_INDEX = 1
+
+
+
+@OptIn(ExperimentalPagingApi::class)
+class MoviePagedMediator(private val networkAPI: MovieNetworkAPI, private val dataBase: MovieDataBase) :
     RemoteMediator<Int, MovieLocal>() {
 
     private val dataDao = dataBase.movieDataDao
     private val keysDao = dataBase.pagingKeysDao
+
+    override suspend fun initialize(): InitializeAction {
+        // Launch remote refresh as soon as paging starts and do not trigger remote prepend or
+        // append until refresh has succeeded. In cases where we don't mind showing out-of-date,
+        // cached offline data, we can return SKIP_INITIAL_REFRESH instead to prevent paging
+        // triggering remote refresh.
+        return InitializeAction.LAUNCH_INITIAL_REFRESH
+    }
 
     override suspend fun load(
         loadType: LoadType, state: PagingState<Int, MovieLocal>
@@ -31,26 +43,19 @@ class MoviePagedMediator(val networkAPI: MovieNetworkAPI, val dataBase: MovieDat
         val page = when (loadType) {
             LoadType.REFRESH -> {
                 val remoteKeys = getRemoteKeyClosestToCurrentPosition(state)
+                Log.i("MEDI REFRESH", "key is $remoteKeys")
                 remoteKeys?.nextKey?.minus(1) ?: TMDB_STARTING_PAGE_INDEX
             }
             LoadType.PREPEND -> {
                 val remoteKeys = getRemoteKeyForFirstItem(state)
-                // If remoteKeys is null, that means the refresh result is not in the database yet.
-                // We can return Success with `endOfPaginationReached = false` because Paging
-                // will call this method again if RemoteKeys becomes non-null.
-                // If remoteKeys is NOT NULL but its prevKey is null, that means we've reached
-                // the end of pagination for prepend.
+                Log.i("MEDI PREPEND", "key is $remoteKeys")
                 val prevKey = remoteKeys?.prevKey
                     ?: return MediatorResult.Success(endOfPaginationReached = remoteKeys != null)
                 prevKey
             }
             LoadType.APPEND -> {
                 val remoteKeys = getRemoteKeyForLastItem(state)
-                // If remoteKeys is null, that means the refresh result is not in the database yet.
-                // We can return Success with `endOfPaginationReached = false` because Paging
-                // will call this method again if RemoteKeys becomes non-null.
-                // If remoteKeys is NOT NULL but its prevKey is null, that means we've reached
-                // the end of pagination for append.
+                Log.i("MEDI APPEND", "key is $remoteKeys")
                 val nextKey = remoteKeys?.nextKey
                     ?: return MediatorResult.Success(endOfPaginationReached = remoteKeys != null)
                 nextKey
@@ -58,28 +63,31 @@ class MoviePagedMediator(val networkAPI: MovieNetworkAPI, val dataBase: MovieDat
         }
 
         try {
+            Log.i("MEDI LOAD type", "$loadType")
+            Log.i("MEDI LOAD page", "$page")
             val reqParams: MutableMap<String, String> = HashMap()
             reqParams["api_key"] = BuildConfig.TMDB_API_KEY
             reqParams["page"] = page.toString()
             reqParams["language"] = "ru-RU"
-            reqParams["region"] = "ru"
-            val response = networkAPI.getPopMovieList(reqParams).body()?.responseMoviesList
-            val isEndOfList = response.isNullOrEmpty()
+            reqParams["region"] = "RU"
+
+            val response = networkAPI.getPopList(reqParams)
+            val movies = response.responseMoviesList
+            val isEndOfList = movies.isEmpty()
             dataBase.withTransaction {
-                // clear all tables in the database
                 if (loadType == LoadType.REFRESH) {
                     keysDao.clearPagingKeys()
                     dataDao.clearMovies()
                 }
                 val prevKey = if (page == TMDB_STARTING_PAGE_INDEX) null else page - 1
                 val nextKey = if (isEndOfList) null else page + 1
-                val keys = response?.map {
+                val keys = movies.map {
                     PagingKeys(movieId = it.movieId, prevKey = prevKey, nextKey = nextKey)
                 }
-                keys?.let { keysDao.insertAll(keys) }
-                val localModel = response?.map { it.toDataBaseModel() }
-                    ?.also { fetchAgeLimit(it, "ru") }
-                    ?.let { dataDao.insertAllMovies(it) }
+                keys.let { keysDao.insertAll(keys) }
+
+                fetchAgeLimit(movies.map { it.toDataBaseModel() }, "RU")
+                    .also { dataDao.insertAllMovies(it) }
 
             }
             return MediatorResult.Success(endOfPaginationReached = isEndOfList)
@@ -117,21 +125,15 @@ class MoviePagedMediator(val networkAPI: MovieNetworkAPI, val dataBase: MovieDat
     }
 
     private suspend fun getRemoteKeyForLastItem(state: PagingState<Int, MovieLocal>): PagingKeys? {
-        // Get the last page that was retrieved, that contained items.
-        // From that last page, get the last item
         return state.pages.lastOrNull() { it.data.isNotEmpty() }?.data?.lastOrNull()
             ?.let { movie ->
-                // Get the remote keys of the last item retrieved
                 keysDao.remoteKeysMovieId(movie.movieId)
             }
     }
 
     private suspend fun getRemoteKeyForFirstItem(state: PagingState<Int, MovieLocal>): PagingKeys? {
-        // Get the first page that was retrieved, that contained items.
-        // From that first page, get the first item
         return state.pages.firstOrNull { it.data.isNotEmpty() }?.data?.firstOrNull()
             ?.let { movie ->
-                // Get the remote keys of the first items retrieved
                 keysDao.remoteKeysMovieId(movie.movieId)
             }
     }

@@ -8,9 +8,13 @@ import ru.mtsteta.flixnet.repo.MovieDto
 
 @Entity(tableName = "movies")
 data class MovieLocal(
-    @PrimaryKey
+
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name="id")
+    val id: Int? = 0,
+
     @NotNull
-    @ColumnInfo(name = "id")
+    @ColumnInfo(name = "movie_id")
     val movieId: Int,
 
     @NotNull
