@@ -132,6 +132,7 @@ class MovieRepository {
     private fun getDefaultPageConfig(): PagingConfig {
         return PagingConfig(
             pageSize = 20,
+            prefetchDistance = 8,
             enablePlaceholders = false,
             initialLoadSize = 40
         )

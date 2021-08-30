@@ -13,7 +13,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:shapeAppearanceOverlay="@style/MainscreenMoviePoster"
+        app:shapeAppearanceOverlay="@style/MovieListMoviePoster"
         tools:src="@tools:sample/avatars" />
 
     <TextView
@@ -21,7 +21,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:layout_marginTop="8dp"
         android:ellipsize="end"
         android:fontFamily="@font/roboto_medium"
         android:maxLines="1"
@@ -38,9 +37,9 @@
         android:layout_marginTop="12dp"
         android:ellipsize="end"
         android:fontFamily="@font/roboto"
-        android:lines="10"
-        android:maxLines="10"
-        android:textSize="@dimen/mini_text_size"
+        android:lines="8"
+        android:maxLines="8"
+        android:textSize="@dimen/small_text_size"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/rvItemMoviePoster"
         app:layout_constraintTop_toBottomOf="@+id/rvItemMovieTitle"

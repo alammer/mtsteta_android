@@ -125,7 +125,6 @@ class MoviesListFragment : Fragment() {
             onScrollChanged = viewModel.accept
         )
 
-
         swipeRefresher.setOnRefreshListener {
             movieAdapter.refresh()
         }
@@ -191,8 +190,8 @@ class MoviesListFragment : Fragment() {
                 errorState?.let {
                     Toast.makeText(
                         context,
-                        "\uD83D\uDE28 Wooops ${it.error}",
-                        Toast.LENGTH_LONG
+                        "\uD83D\uDE28 Error ${it.error}",
+                        Toast.LENGTH_SHORT
                     ).show()
                 }
             }

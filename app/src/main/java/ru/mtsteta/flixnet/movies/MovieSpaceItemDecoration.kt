@@ -34,7 +34,7 @@ class MovieSpaceItemDecoration(private val spacingTop: Int) : RecyclerView.ItemD
                     }
                 }
                 else -> {
-                    rect.set(50, 50, 50, 50)
+                    rect.set(25, 25, 25, 25)
                 }
 
             }

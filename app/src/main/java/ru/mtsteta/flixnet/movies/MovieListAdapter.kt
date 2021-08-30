@@ -3,15 +3,14 @@ package ru.mtsteta.flixnet.movies
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
 import android.view.animation.AnimationUtils.loadAnimation
-import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.google.android.material.imageview.ShapeableImageView
 import ru.mtsteta.flixnet.BuildConfig
 import ru.mtsteta.flixnet.R
 import ru.mtsteta.flixnet.repo.MovieDto
@@ -21,7 +20,7 @@ class MovieListAdapter(private val clickListener: MovieClickListener) :
 
     class MovieListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        private val posterImage: ImageView =
+        private val posterImage: ShapeableImageView =
             itemView.findViewById(R.id.rvItemMoviePoster)
 
         private val titleTextView: TextView = itemView.findViewById(R.id.rvItemMovieTitle)
