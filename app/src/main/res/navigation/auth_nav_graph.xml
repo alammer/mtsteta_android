@@ -14,13 +14,21 @@
             android:id="@+id/actionSignUpToProfile"
             app:destination="@id/ProfileFragment"
             app:popUpTo="@id/SignUpFragment"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="true"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"/>
 
         <action
             android:id="@+id/actionSignUpToLogin"
             app:destination="@id/LoginFragment"
             app:popUpTo="@id/SignUpFragment"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="true"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"/>
 
     </fragment>
 
@@ -33,7 +41,11 @@
             android:id="@+id/actionLoginToProfile"
             app:destination="@id/ProfileFragment"
             app:popUpTo="@id/LoginFragment"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="true"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"/>
 
     </fragment>
 
