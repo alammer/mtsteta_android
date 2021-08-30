@@ -1,7 +1,6 @@
 package ru.mtsteta.flixnet.repo
 
 import android.util.Log
-import androidx.annotation.Keep
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
@@ -16,15 +15,20 @@ import ru.mtsteta.flixnet.database.toDomainModel
 import ru.mtsteta.flixnet.network.MovieRemoteService
 import ru.mtsteta.flixnet.network.toDataBaseModel
 
-@Keep
-enum class RefreshDataStatus { FAILURE, ERROR, OK }
-
 class MovieRepository {
 
     val networkAPI = MovieRemoteService.retrofitService
 
     val dataDao = MovieDataBase.instance.movieDataDao
 
+    suspend fun refreshMovieList() {
+
+        (1..REFRESH_MOVIE_LIST_CHUNK).forEach{ page ->
+            fetchMovies(page = page)
+        }
+
+        fetchGenres()
+    }
 
     suspend fun loadGenres(): Map<Int, String>? = withContext(Dispatchers.IO) {
         var localGenres = dataDao.getGenres()
@@ -52,28 +56,6 @@ class MovieRepository {
             Log.i("fetchGenres", "Exception -  ${e.message}")
         }
     }
-
-    suspend fun updateMoviesList(
-        page: Int = 1,
-        language: String = "ru-RU",
-        region: String = "RU"
-    ): Pair<RefreshDataStatus, List<MovieDto>?> =
-        withContext((Dispatchers.IO)) {
-
-            Log.i("Fetch_UpdateMoviesList", "page: $page")
-
-            fetchMovies(page, language, region)
-
-            val recentMovieList = dataDao.getAllMovies()?.map { it.toDomainModel() }
-
-            if (recentMovieList?.any { it.title.isNullOrEmpty() } == true) {
-                RefreshDataStatus.ERROR to null
-            } else {
-                recentMovieList?.let {
-                    RefreshDataStatus.OK to it
-                } ?: RefreshDataStatus.FAILURE to null
-            }
-        }
 
     private suspend fun fetchMovies(
         page: Int = 1,
@@ -165,6 +147,8 @@ class MovieRepository {
         ).flow
     }
 }
+
+private const val REFRESH_MOVIE_LIST_CHUNK = 10
 
 
 

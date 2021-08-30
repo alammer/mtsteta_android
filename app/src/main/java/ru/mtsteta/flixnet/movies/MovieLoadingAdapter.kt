@@ -10,6 +10,7 @@ import androidx.core.view.isVisible
 import androidx.paging.LoadState
 import androidx.paging.LoadStateAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.button.MaterialButton
 import ru.mtsteta.flixnet.R
 
 class MovieLoadingAdapter(private val retry: () -> Unit) :
@@ -20,7 +21,7 @@ class MovieLoadingAdapter(private val retry: () -> Unit) :
 
         private val tvLoadError: TextView = itemView.findViewById(R.id.tvLoadError)
         private val loadBar: ProgressBar = itemView.findViewById(R.id.pbLoad)
-        private val btnRetry: Button = itemView.findViewById(R.id.btnRetry)
+        private val btnRetry: MaterialButton = itemView.findViewById(R.id.btnRetry)
 
         init {
             btnRetry.setOnClickListener {

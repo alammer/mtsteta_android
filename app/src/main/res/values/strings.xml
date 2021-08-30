@@ -43,5 +43,8 @@
     <string name="login_fragment_title">Авторизация</string>
     <string name="login_user_id_hint">Имя или E-mail</string>
     <string name="login_btn_label">Войти</string>
+    <string name="buttom_retry_load_item">ОБНОВИТЬ</string>
+    <string name="button_refresh_movie_list">ОБНОВИТЬ</string>
+    <string name="empty_data_label">Нет данных</string>
 
 </resources>
