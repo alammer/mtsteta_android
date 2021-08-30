@@ -1,4 +1,4 @@
-package ru.mtsteta.flixnet.detailinfo
+package ru.mtsteta.flixnet.movieinfo
 
 import android.graphics.Rect
 import android.view.View

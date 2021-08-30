@@ -20,7 +20,7 @@
 
     <fragment
         android:id="@+id/detailFragment"
-        android:name="ru.mtsteta.flixnet.detailinfo.DetailFragment"
+        android:name="ru.mtsteta.flixnet.movieinfo.DetailFragment"
         android:label="DetailFragment">
 
         <argument

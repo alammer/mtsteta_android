@@ -1,9 +1,10 @@
 package ru.mtsteta.flixnet.movies
 
-
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
+import android.view.animation.AnimationUtils.loadAnimation
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
@@ -63,6 +64,7 @@ class MovieListAdapter(private val clickListener: MovieClickListener) :
         val repoItem = getItem(position)
         // Note that item may be null, ViewHolder must support binding null item as placeholder
         holder.bind(clickListener, repoItem, position)
+        holder.itemView.animation = loadAnimation(holder.itemView.context, R.anim.rv_item_anim)
 
     }
 
