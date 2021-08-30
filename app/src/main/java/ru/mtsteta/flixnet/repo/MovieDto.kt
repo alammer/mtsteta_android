@@ -8,9 +8,9 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class MovieDto(
     val movie_id: Int,
-    val title: String,
+    val title: String?,
     val overview: String? = null,
-    val rateScore: Double,
+    val rateScore: Double?,
     val ageLimit: String? = null,
     val imageUrl: String? = null,
     val backdropUrl: String? = null,

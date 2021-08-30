@@ -20,25 +20,25 @@ data class MovieRemote(
     val movieId: Int,
 
     @SerialName("genre_ids")
-    val genresIds: List<Int>,
+    val genresIds: List<Int>?,
 
     @SerialName("overview")
-    val overview: String,
+    val overview: String?,
 
     @SerialName("poster_path")
-    val imageUrl: String,
+    val imageUrl: String?,
 
     @SerialName("backdrop_path")
-    val backdropUrl: String,
+    val backdropUrl: String?,
 
     @SerialName("release_date")
-    val releaseDate: String,
+    val releaseDate: String?,
 
     @SerialName("title")
-    val title: String,
+    val title: String?,
 
     @SerialName("vote_average")
-    val rateScore: Double,
+    val rateScore: Double?,
 )
 
 fun MovieRemote.toDataBaseModel() = MovieLocal(id = null, movieId, title, overview, rateScore, ageLimit = null, imageUrl, backdropUrl, releaseDate, genresIds)

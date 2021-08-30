@@ -1,6 +1,7 @@
 package ru.mtsteta.flixnet.movies
 
 import android.content.Context
+import android.content.res.Configuration
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Bundle
@@ -18,7 +19,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadState
 import androidx.paging.map
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.button.MaterialButton
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -34,12 +38,12 @@ class MoviesListFragment : Fragment() {
 
     private lateinit var genreRecycler: RecyclerView
     private lateinit var movieRecycler: RecyclerView
-    //private lateinit var swipeRefresher: SwipeRefreshLayout
+    private lateinit var swipeRefresher: SwipeRefreshLayout
     private lateinit var genreAdapter: GenreListAdapter
     private lateinit var movieAdapter: MovieListAdapter
 
     private lateinit var btnUpdate: MaterialButton
-    private lateinit var pbLoadList: ProgressBar
+    //private lateinit var pbLoadList: ProgressBar
     private lateinit var emptyList: TextView
 
 
@@ -54,7 +58,7 @@ class MoviesListFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_movies_list, container, false)
+        return inflater.inflate(R.layout.fragment_movie_list, container, false)
     }
 
     @ExperimentalPagingApi
@@ -62,7 +66,7 @@ class MoviesListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         btnUpdate = view.findViewById(R.id.btnUpdate)
-        pbLoadList = view.findViewById(R.id.pbListLoad)
+        //pbLoadList = view.findViewById(R.id.pbListLoad)
         emptyList = view.findViewById(R.id.tvEmpty)
 
         initViews(view, moviesListViewModel)
@@ -70,15 +74,13 @@ class MoviesListFragment : Fragment() {
         moviesListViewModel.genreList.observe(viewLifecycleOwner, {
             genreAdapter.submitList(it.values.toList())
         })
-
-        //fetchMoviePages()
     }
 
     private fun initViews(view: View, viewModel: MovieListViewModel) {
 
         genreRecycler = view.findViewById(R.id.rvGenreList)
         movieRecycler = view.findViewById(R.id.rvMovieList)
-        //swipeRefresher = view.findViewById(R.id.swipeLayout)
+        swipeRefresher = view.findViewById(R.id.swipeLayout)
 
         genreAdapter = GenreListAdapter(GenreClickListener {
             //TODO("We should implement logic for GenreClickListener later")
@@ -89,22 +91,41 @@ class MoviesListFragment : Fragment() {
 
         genreRecycler.adapter = genreAdapter
 
-        movieRecycler.addItemDecoration(MovieSpaceItemDecoration(resources.getDimensionPixelSize(R.dimen.movieslist_rv_top_spacing)))
-
         movieAdapter = MovieListAdapter(MovieClickListener { movieItem: MovieDto ->
             val direction = MoviesListFragmentDirections.actionMoviesToDetail(movieItem)
             findNavController().navigate(direction)
         })
 
-        movieAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
-
         val header = MovieLoadingAdapter { movieAdapter.retry() }
+        val footer = MovieLoadingAdapter { movieAdapter.retry() }
 
         //this cause initial blink viewholders
         movieRecycler.adapter = movieAdapter.withLoadStateHeaderAndFooter(
             header = header,
-            footer = MovieLoadingAdapter { movieAdapter.retry() }
+            footer = footer
         )
+
+        movieRecycler.layoutManager =
+            when (resources.configuration.orientation) {
+                Configuration.ORIENTATION_PORTRAIT ->
+                    GridLayoutManager(view.context, GREED_SPAN_COUNT).apply {
+                        spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+                            override fun getSpanSize(position: Int): Int {
+                                return if ((position == movieAdapter.itemCount) && footer.itemCount > 0) {
+                                    spanCount
+                                } else if (movieAdapter.itemCount == 0 && header.itemCount > 0) {
+                                    spanCount
+                                } else {
+                                    1
+                                }
+                            }
+                        }
+                    }
+                else ->
+                    LinearLayoutManager(view.context).apply { orientation = LinearLayoutManager.HORIZONTAL }
+            }
+
+        movieRecycler.addItemDecoration(MovieSpaceItemDecoration(resources.getDimensionPixelSize(R.dimen.movieslist_rv_top_spacing)))
 
         initAdapterStateFlow(
             header = header,
@@ -112,6 +133,10 @@ class MoviesListFragment : Fragment() {
             uiState = viewModel.state,
             onScrollChanged = viewModel.accept
         )
+
+
+        swipeRefresher.setOnRefreshListener {
+            movieAdapter.refresh() }
     }
 
     private fun initAdapterStateFlow(
@@ -149,14 +174,9 @@ class MoviesListFragment : Fragment() {
 
         lifecycleScope.launch {
             combine(shouldScrollToTop, pagingData, ::Pair)
-                // Each unique PagingData should be submitted once, take the latest from
-                // shouldScrollToTop
                 .distinctUntilChangedBy { it.second }
                 .collectLatest { (shouldScroll, pagingData) ->
-
                     movieAdapter.submitData(pagingData.map { it.toDomainModel() })
-                    // Scroll only after the data has been submitted to the adapter,
-                    // and is a fresh search
                     if (shouldScroll) movieRecycler.scrollToPosition(0)
                 }
         }
@@ -171,15 +191,15 @@ class MoviesListFragment : Fragment() {
                     ?: loadState.prepend
 
                 val isListEmpty = loadState.refresh is LoadState.NotLoading && movieAdapter.itemCount == 0
-                // show empty list
+
                 emptyList.isVisible = isListEmpty
-                // Only show the list if refresh succeeds, either from the the local db or the remote.
+
                 movieRecycler.isVisible =  loadState.source.refresh is LoadState.NotLoading || loadState.mediator?.refresh is LoadState.NotLoading
-                // Show loading spinner during initial load or refresh.
-                pbLoadList.isVisible = loadState.mediator?.refresh is LoadState.Loading
-                // Show the retry state if initial load or refresh fails.
+
+                swipeRefresher.isRefreshing = loadState.mediator?.refresh is LoadState.Loading
+
                 btnUpdate.isVisible = loadState.mediator?.refresh is LoadState.Error && movieAdapter.itemCount == 0
-                // Toast on any error, regardless of whether it came from RemoteMediator or PagingSource
+
                 val errorState = loadState.source.append as? LoadState.Error
                     ?: loadState.source.prepend as? LoadState.Error
                     ?: loadState.append as? LoadState.Error
@@ -194,18 +214,9 @@ class MoviesListFragment : Fragment() {
             }
         }
     }
-
-    @ExperimentalPagingApi
-    private fun fetchMoviePages() {
-        lifecycleScope.launch {
-            moviesListViewModel.fetchMovieFlow().distinctUntilChanged().collectLatest { page ->
-                movieAdapter.submitData(page.map { it.toDomainModel() })
-            }
-        }
-    }
 }
 
-
+private const val GREED_SPAN_COUNT = 2
 
 private fun isInternetAvailable(context: Context): Boolean {
     val connectivityManager =

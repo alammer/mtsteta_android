@@ -19,13 +19,13 @@ data class MovieLocal(
 
     @NotNull
     @ColumnInfo(name = "title")
-    val title: String,
+    val title: String?,
 
     @ColumnInfo
     var overview: String?,
 
     @ColumnInfo(name = "rating")
-    var rateScore: Double = 0.0,
+    var rateScore: Double? = 0.0,
 
     @ColumnInfo(name = "age_limit")
     var ageLimit: String?,

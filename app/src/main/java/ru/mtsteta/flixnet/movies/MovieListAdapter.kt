@@ -10,7 +10,6 @@ import android.widget.RatingBar
 import android.widget.TextView
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import ru.mtsteta.flixnet.BuildConfig
@@ -38,7 +37,7 @@ class MovieListAdapter(private val clickListener: MovieClickListener) :
             item?.run {
                 titleTextView.text = item.title
                 infoTextView.text = item.overview
-                ratingBar.rating = item.rateScore.toFloat() / 2.0f
+                ratingBar.rating = item.rateScore?.let {  it.toFloat() / 2.0f } ?: 0.0f
                 ageLimitTextView.text = item.ageLimit
                 posterImage.load(BuildConfig.BASE_IMAGE_URL + item.imageUrl) {
                     placeholder(R.drawable.loading_animation)
@@ -67,7 +66,7 @@ class MovieListAdapter(private val clickListener: MovieClickListener) :
         //    else -> throw IllegalArgumentException("Different View type")
         //}
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.movies_rv_item, parent, false)
+            .inflate(R.layout.movie_rv_item, parent, false)
         return MovieListViewHolder(view)
     }
 

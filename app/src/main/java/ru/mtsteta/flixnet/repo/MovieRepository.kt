@@ -75,7 +75,7 @@ class MovieRepository {
 
             val recentMovieList = dataDao.getAllMovies()?.map { it.toDomainModel() }
 
-            if (recentMovieList?.any { it.title.isEmpty() } == true) {
+            if (recentMovieList?.any { it.title.isNullOrEmpty() } == true) {
                 RefreshDataStatus.ERROR to null
             } else {
                 recentMovieList?.let {
@@ -159,7 +159,7 @@ class MovieRepository {
 
     private fun getDefaultPageConfig(): PagingConfig {
         return PagingConfig(pageSize = 20,
-            enablePlaceholders = true,
+            enablePlaceholders = false,
             initialLoadSize = 40)
     }
 

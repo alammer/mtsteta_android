@@ -43,19 +43,16 @@ class MoviePagedMediator(private val networkAPI: MovieNetworkAPI, private val da
         val page = when (loadType) {
             LoadType.REFRESH -> {
                 val remoteKeys = getRemoteKeyClosestToCurrentPosition(state)
-                Log.i("MEDI REFRESH", "key is $remoteKeys")
                 remoteKeys?.nextKey?.minus(1) ?: TMDB_STARTING_PAGE_INDEX
             }
             LoadType.PREPEND -> {
                 val remoteKeys = getRemoteKeyForFirstItem(state)
-                Log.i("MEDI PREPEND", "key is $remoteKeys")
                 val prevKey = remoteKeys?.prevKey
                     ?: return MediatorResult.Success(endOfPaginationReached = remoteKeys != null)
                 prevKey
             }
             LoadType.APPEND -> {
                 val remoteKeys = getRemoteKeyForLastItem(state)
-                Log.i("MEDI APPEND", "key is $remoteKeys")
                 val nextKey = remoteKeys?.nextKey
                     ?: return MediatorResult.Success(endOfPaginationReached = remoteKeys != null)
                 nextKey
@@ -63,8 +60,6 @@ class MoviePagedMediator(private val networkAPI: MovieNetworkAPI, private val da
         }
 
         try {
-            Log.i("MEDI LOAD type", "$loadType")
-            Log.i("MEDI LOAD page", "$page")
             val reqParams: MutableMap<String, String> = HashMap()
             reqParams["api_key"] = BuildConfig.TMDB_API_KEY
             reqParams["page"] = page.toString()

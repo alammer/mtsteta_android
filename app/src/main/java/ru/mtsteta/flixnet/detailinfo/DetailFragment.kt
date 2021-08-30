@@ -92,7 +92,7 @@ class DetailFragment : Fragment() {
             tvInfo.text = overview
             tvAgeLimit.text = ageLimit
             tvRelease.text = release_date
-            rbMovie.rating = rateScore.toFloat() / 2.0f
+            rbMovie.rating = rateScore?.let {  it.toFloat() / 2.0f } ?: 0.0f
             imgPoster.apply {
                 load(BuildConfig.BASE_BACK_URL + backdropUrl) {
                     error(R.drawable.broken_image)

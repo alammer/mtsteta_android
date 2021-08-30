@@ -1,16 +1,12 @@
 package ru.mtsteta.flixnet.movies
 
 import androidx.lifecycle.*
-import androidx.paging.ExperimentalPagingApi
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import ru.mtsteta.flixnet.database.MovieLocal
-import ru.mtsteta.flixnet.repo.ActorDto
-import ru.mtsteta.flixnet.repo.MovieDto
 import ru.mtsteta.flixnet.repo.MovieRepository
-import ru.mtsteta.flixnet.repo.RefreshDataStatus
 
 class MovieListViewModel : ViewModel() {
 
@@ -26,15 +22,15 @@ class MovieListViewModel : ViewModel() {
     private val _genreList = MutableLiveData<Map<Int, String>>()
 
     init {
-        fetchInitialData()
+        fetchGenres()
 
         val initialQuery: String = DEFAULT_QUERY
         val lastQueryScrolled: String = DEFAULT_QUERY
         val actionStateFlow = MutableSharedFlow<UiAction>()
-        val searches = actionStateFlow
-            .filterIsInstance<UiAction.Search>()
+        val fetches = actionStateFlow
+            .filterIsInstance<UiAction.Fetch>()
             .distinctUntilChanged()
-            .onStart { emit(UiAction.Search(query = initialQuery)) }
+            .onStart { emit(UiAction.Fetch(query = initialQuery)) }
         val queriesScrolled = actionStateFlow
             .filterIsInstance<UiAction.Scroll>()
             .distinctUntilChanged()
@@ -47,11 +43,11 @@ class MovieListViewModel : ViewModel() {
             )
             .onStart { emit(UiAction.Scroll(currentQuery = lastQueryScrolled)) }
 
-        state = searches
-            .flatMapLatest { search ->
+        state = fetches
+            .flatMapLatest { fetch ->
                 combine(
                     queriesScrolled,
-                    searchRepo(queryString = search.query),
+                    fetchMovieFlow(queryString = fetch.query),
                     ::Pair
                 )
                     // Each unique PagingData should be submitted once, take the latest from
@@ -59,11 +55,11 @@ class MovieListViewModel : ViewModel() {
                     .distinctUntilChangedBy { it.second }
                     .map { (scroll, pagingData) ->
                         UiState(
-                            query = search.query,
+                            query = fetch.query,
                             pagingData = pagingData,
                             lastQueryScrolled = scroll.currentQuery,
-                            // If the search query matches the scroll query, the user has scrolled
-                            hasNotScrolledForCurrentSearch = search.query != scroll.currentQuery
+                            // If the fetch query matches the scroll query, the user has scrolled
+                            hasNotScrolledForCurrentSearch = fetch.query != scroll.currentQuery
                         )
                     }
             }
@@ -82,33 +78,21 @@ class MovieListViewModel : ViewModel() {
         super.onCleared()
     }
 
-    private fun searchRepo(queryString: String): Flow<PagingData<MovieLocal>> =
+    private fun fetchMovieFlow(queryString: String): Flow<PagingData<MovieLocal>> =
         repository.moviePagesFlowDb()
             .cachedIn(viewModelScope)
 
-    private fun fetchInitialData() {
+    private fun fetchGenres() {
         viewModelScope.launch {
             repository.loadGenres()?.also {
                 genres = HashMap(it)
                 _genreList.postValue(it)}
         }
     }
-
-    //fun fetchData(page: Int = 1, language: String = "ru-RU", region: String = "RU") {
-    //    viewModelScope.launch {
-    //        val (status, content) = repository.updateMoviesList(loadpages, language, region)
-    //    }
-    //}
-
-    @ExperimentalPagingApi
-    fun fetchMovieFlow(): Flow<PagingData<MovieLocal>> {
-        return repository.moviePagesFlowDb()
-            .cachedIn(viewModelScope)
-    }
 }
 
 sealed class UiAction {
-    data class Search(val query: String) : UiAction()
+    data class Fetch(val query: String) : UiAction()
     data class Scroll(val currentQuery: String) : UiAction()
 }
 
@@ -118,6 +102,5 @@ data class UiState(
     val hasNotScrolledForCurrentSearch: Boolean = false,
     val pagingData: PagingData<MovieLocal> = PagingData.empty()
 )
-
 
 private const val DEFAULT_QUERY = "Android"
