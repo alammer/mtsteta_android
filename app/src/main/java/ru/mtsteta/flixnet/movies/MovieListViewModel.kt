@@ -25,7 +25,6 @@ class MovieListViewModel : ViewModel() {
         fetchGenres()
 
         val initialQuery: String = DEFAULT_QUERY
-        val lastQueryScrolled: String = DEFAULT_QUERY
         val actionStateFlow = MutableSharedFlow<UiAction>()
         val fetches = actionStateFlow
             .filterIsInstance<UiAction.Fetch>()
@@ -41,7 +40,7 @@ class MovieListViewModel : ViewModel() {
                 started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5000),
                 replay = 1
             )
-            .onStart { emit(UiAction.Scroll(currentQuery = lastQueryScrolled)) }
+            .onStart { emit(UiAction.Scroll(currentQuery = initialQuery)) }
 
         state = fetches
             .flatMapLatest { fetch ->
@@ -53,13 +52,10 @@ class MovieListViewModel : ViewModel() {
                     // Each unique PagingData should be submitted once, take the latest from
                     // queriesScrolled
                     .distinctUntilChangedBy { it.second }
-                    .map { (scroll, pagingData) ->
+                    .map { (_, pagingData) ->
                         UiState(
                             query = fetch.query,
-                            pagingData = pagingData,
-                            lastQueryScrolled = scroll.currentQuery,
-                            // If the fetch query matches the scroll query, the user has scrolled
-                            hasNotScrolledForCurrentSearch = fetch.query != scroll.currentQuery
+                            pagingData = pagingData
                         )
                     }
             }
@@ -98,8 +94,6 @@ sealed class UiAction {
 
 data class UiState(
     val query: String = DEFAULT_QUERY,
-    val lastQueryScrolled: String = DEFAULT_QUERY,
-    val hasNotScrolledForCurrentSearch: Boolean = false,
     val pagingData: PagingData<MovieLocal> = PagingData.empty()
 )
 

@@ -157,23 +157,23 @@ class MoviesListFragment : Fragment() {
             // Only react to cases where Remote REFRESH completes i.e., NotLoading.
             .map { it.refresh is LoadState.NotLoading }
 
-        val hasNotScrolledForCurrentSearch = uiState
-            .map { it.hasNotScrolledForCurrentSearch }
-            .distinctUntilChanged()
+        //val hasNotScrolledForCurrentSearch = uiState
+        //    .map { it.hasNotScrolledForCurrentSearch }
+        //    .distinctUntilChanged()
 
-        val shouldScrollToTop = combine(
-            notLoading,
-            hasNotScrolledForCurrentSearch,
-            Boolean::and
-        )
-            .distinctUntilChanged()
+        //val shouldScrollToTop = combine(
+        //    notLoading,
+        //    hasNotScrolledForCurrentSearch,
+        //    Boolean::and
+        //)
+        //    .distinctUntilChanged()
 
         val pagingData = uiState
             .map { it.pagingData }
             .distinctUntilChanged()
 
         lifecycleScope.launch {
-            combine(shouldScrollToTop, pagingData, ::Pair)
+            combine(notLoading, pagingData, ::Pair)
                 .distinctUntilChangedBy { it.second }
                 .collectLatest { (shouldScroll, pagingData) ->
                     movieAdapter.submitData(pagingData.map { it.toDomainModel() })
