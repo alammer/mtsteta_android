@@ -9,17 +9,11 @@ import androidx.room.withTransaction
 import retrofit2.HttpException
 import ru.mtsteta.flixnet.BuildConfig
 import ru.mtsteta.flixnet.database.MovieDataBase
-import ru.mtsteta.flixnet.database.MovieDataDao
 import ru.mtsteta.flixnet.database.MovieLocal
 import ru.mtsteta.flixnet.database.PagingKeys
 import ru.mtsteta.flixnet.network.MovieNetworkAPI
 import ru.mtsteta.flixnet.network.toDataBaseModel
 import java.io.IOException
-import java.io.InvalidObjectException
-
-private const val TMDB_STARTING_PAGE_INDEX = 1
-
-
 
 @OptIn(ExperimentalPagingApi::class)
 class MoviePagedMediator(private val networkAPI: MovieNetworkAPI, private val dataBase: MovieDataBase) :
@@ -120,7 +114,7 @@ class MoviePagedMediator(private val networkAPI: MovieNetworkAPI, private val da
     }
 
     private suspend fun getRemoteKeyForLastItem(state: PagingState<Int, MovieLocal>): PagingKeys? {
-        return state.pages.lastOrNull() { it.data.isNotEmpty() }?.data?.lastOrNull()
+        return state.pages.lastOrNull { it.data.isNotEmpty() }?.data?.lastOrNull()
             ?.let { movie ->
                 keysDao.remoteKeysMovieId(movie.movieId)
             }
@@ -145,3 +139,5 @@ class MoviePagedMediator(private val networkAPI: MovieNetworkAPI, private val da
         }
     }
 }
+
+private const val TMDB_STARTING_PAGE_INDEX = 1

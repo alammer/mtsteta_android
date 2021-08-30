@@ -1,4 +1,3 @@
-
 package ru.mtsteta.flixnet.movies
 
 
@@ -37,7 +36,7 @@ class MovieListAdapter(private val clickListener: MovieClickListener) :
             item?.run {
                 titleTextView.text = item.title
                 infoTextView.text = item.overview
-                ratingBar.rating = item.rateScore?.let {  it.toFloat() / 2.0f } ?: 0.0f
+                ratingBar.rating = item.rateScore?.let { it.toFloat() / 2.0f } ?: 0.0f
                 ageLimitTextView.text = item.ageLimit
                 posterImage.load(BuildConfig.BASE_IMAGE_URL + item.imageUrl) {
                     placeholder(R.drawable.loading_animation)
@@ -52,19 +51,6 @@ class MovieListAdapter(private val clickListener: MovieClickListener) :
         parent: ViewGroup,
         viewType: Int
     ): MovieListViewHolder {
-        //return when (viewType) {
-        //    VIEW_TYPE_DATA -> {
-        //        val view = LayoutInflater.from(parent.context)
-        //            .inflate(R.layout.movies_rv_item, parent, false)
-        //        MovieListViewHolder(view)
-        //    }
-        //    VIEW_TYPE_PROGRESS -> {
-        //        val view = LayoutInflater.from(parent.context)
-        //            .inflate(R.layout.progress_bar, parent, false)
-        //        ProgressViewHolder(view)
-        //    }
-        //    else -> throw IllegalArgumentException("Different View type")
-        //}
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.movie_rv_item, parent, false)
         return MovieListViewHolder(view)
@@ -74,21 +60,15 @@ class MovieListAdapter(private val clickListener: MovieClickListener) :
         holder: MovieListViewHolder,
         position: Int
     ) {
-        //getItem(position)?.let {
-        //    (holder as? MovieListViewHolder)?.bind(clickListener,
-        //        it, position)
-        //}
         val repoItem = getItem(position)
         // Note that item may be null, ViewHolder must support binding null item as placeholder
         holder.bind(clickListener, repoItem, position)
 
     }
 
-    //inner class ProgressViewHolder(itemView: View) : MovieListViewHolder(itemView)
-
     companion object {
-        const val VIEW_TYPE_DATA = 0;
-        const val VIEW_TYPE_PROGRESS = 1;
+        const val VIEW_TYPE_DATA = 0
+        const val VIEW_TYPE_PROGRESS = 1
     }
 }
 

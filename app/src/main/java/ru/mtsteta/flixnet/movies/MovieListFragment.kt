@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.isVisible
@@ -41,17 +40,8 @@ class MoviesListFragment : Fragment() {
     private lateinit var swipeRefresher: SwipeRefreshLayout
     private lateinit var genreAdapter: GenreListAdapter
     private lateinit var movieAdapter: MovieListAdapter
-
     private lateinit var btnUpdate: MaterialButton
-    //private lateinit var pbLoadList: ProgressBar
     private lateinit var emptyList: TextView
-
-
-    private var isLoading: Boolean = false
-    private var visibleThreshold = 1
-    private var lastVisibleItem = 0
-    private var totalItemCount = 0
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -66,7 +56,6 @@ class MoviesListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         btnUpdate = view.findViewById(R.id.btnUpdate)
-        //pbLoadList = view.findViewById(R.id.pbListLoad)
         emptyList = view.findViewById(R.id.tvEmpty)
 
         initViews(view, moviesListViewModel)
@@ -122,7 +111,9 @@ class MoviesListFragment : Fragment() {
                         }
                     }
                 else ->
-                    LinearLayoutManager(view.context).apply { orientation = LinearLayoutManager.HORIZONTAL }
+                    LinearLayoutManager(view.context).apply {
+                        orientation = LinearLayoutManager.HORIZONTAL
+                    }
             }
 
         movieRecycler.addItemDecoration(MovieSpaceItemDecoration(resources.getDimensionPixelSize(R.dimen.movieslist_rv_top_spacing)))
@@ -136,7 +127,8 @@ class MoviesListFragment : Fragment() {
 
 
         swipeRefresher.setOnRefreshListener {
-            movieAdapter.refresh() }
+            movieAdapter.refresh()
+        }
     }
 
     private fun initAdapterStateFlow(
@@ -144,7 +136,7 @@ class MoviesListFragment : Fragment() {
         movieAdapter: MovieListAdapter,
         uiState: StateFlow<UiState>,
         onScrollChanged: (UiAction.Scroll) -> Unit
-    ){
+    ) {
         btnUpdate.setOnClickListener { movieAdapter.retry() }
         movieRecycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -156,17 +148,6 @@ class MoviesListFragment : Fragment() {
             .distinctUntilChangedBy { it.refresh }
             // Only react to cases where Remote REFRESH completes i.e., NotLoading.
             .map { it.refresh is LoadState.NotLoading }
-
-        //val hasNotScrolledForCurrentSearch = uiState
-        //    .map { it.hasNotScrolledForCurrentSearch }
-        //    .distinctUntilChanged()
-
-        //val shouldScrollToTop = combine(
-        //    notLoading,
-        //    hasNotScrolledForCurrentSearch,
-        //    Boolean::and
-        //)
-        //    .distinctUntilChanged()
 
         val pagingData = uiState
             .map { it.pagingData }
@@ -190,15 +171,18 @@ class MoviesListFragment : Fragment() {
                     ?.takeIf { it is LoadState.Error && movieAdapter.itemCount > 0 }
                     ?: loadState.prepend
 
-                val isListEmpty = loadState.refresh is LoadState.NotLoading && movieAdapter.itemCount == 0
+                val isListEmpty =
+                    loadState.refresh is LoadState.NotLoading && movieAdapter.itemCount == 0
 
                 emptyList.isVisible = isListEmpty
 
-                movieRecycler.isVisible =  loadState.source.refresh is LoadState.NotLoading || loadState.mediator?.refresh is LoadState.NotLoading
+                movieRecycler.isVisible =
+                    loadState.source.refresh is LoadState.NotLoading || loadState.mediator?.refresh is LoadState.NotLoading
 
                 swipeRefresher.isRefreshing = loadState.mediator?.refresh is LoadState.Loading
 
-                btnUpdate.isVisible = loadState.mediator?.refresh is LoadState.Error && movieAdapter.itemCount == 0
+                btnUpdate.isVisible =
+                    loadState.mediator?.refresh is LoadState.Error && movieAdapter.itemCount == 0
 
                 val errorState = loadState.source.append as? LoadState.Error
                     ?: loadState.source.prepend as? LoadState.Error

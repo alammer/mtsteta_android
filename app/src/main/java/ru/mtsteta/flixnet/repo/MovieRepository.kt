@@ -25,15 +25,6 @@ class MovieRepository {
 
     val dataDao = MovieDataBase.instance.movieDataDao
 
-    /*suspend fun loadActorList(): List<ActorDto>? = withContext(Dispatchers.IO) {
-        var localActors = dataDao.getAllActors()?.map { it.toDomainModel() }
-        if (localActors.isNullOrEmpty()) {
-            localActors = fakeDataSource.getActors()?.also { domainModelList ->
-                    dataDao.insertAllActors(domainModelList.map { it.toDataBaseModel() })
-                }
-        }
-        localActors
-    }*/
 
     suspend fun loadGenres(): Map<Int, String>? = withContext(Dispatchers.IO) {
         var localGenres = dataDao.getGenres()
@@ -148,8 +139,7 @@ class MovieRepository {
         region: String = "RU"
     ): List<MovieDto>? = withContext(Dispatchers.IO) {
         var localMovies = dataDao.getAllMovies()?.map { it.toDomainModel() }
-        Log.i("Fetch first", "Function called: loadMovieList()")
-        Log.i("Fetch_loadMovieList", "empty DB return: $localMovies")
+
         if (localMovies.isNullOrEmpty()) {
             fetchMovies(page, language, region)
             localMovies = dataDao.getAllMovies()?.map { it.toDomainModel() }
@@ -158,9 +148,11 @@ class MovieRepository {
     }
 
     private fun getDefaultPageConfig(): PagingConfig {
-        return PagingConfig(pageSize = 20,
+        return PagingConfig(
+            pageSize = 20,
             enablePlaceholders = false,
-            initialLoadSize = 40)
+            initialLoadSize = 40
+        )
     }
 
     fun moviePagesFlowDb(pagingConfig: PagingConfig = getDefaultPageConfig()): Flow<PagingData<MovieLocal>> {

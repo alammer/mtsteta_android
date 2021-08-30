@@ -28,7 +28,6 @@ class MovieLoadingAdapter(private val retry: () -> Unit) :
             }
         }
 
-
         fun bindState(loadState: LoadState) {
             if (loadState is LoadState.Error) {
                 tvLoadError.text = loadState.error.localizedMessage
@@ -36,7 +35,6 @@ class MovieLoadingAdapter(private val retry: () -> Unit) :
             loadBar.isVisible = loadState is LoadState.Loading
             tvLoadError.isVisible = loadState !is LoadState.Loading
             btnRetry.isVisible = loadState !is LoadState.Loading
-
         }
     }
 

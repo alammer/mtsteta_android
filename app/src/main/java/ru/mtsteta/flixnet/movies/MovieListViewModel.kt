@@ -3,11 +3,13 @@ package ru.mtsteta.flixnet.movies
 import androidx.lifecycle.*
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import ru.mtsteta.flixnet.database.MovieLocal
 import ru.mtsteta.flixnet.repo.MovieRepository
 
+@ExperimentalCoroutinesApi
 class MovieListViewModel : ViewModel() {
 
     val state: StateFlow<UiState>
@@ -70,9 +72,6 @@ class MovieListViewModel : ViewModel() {
         }
 
     }
-    override fun onCleared() {
-        super.onCleared()
-    }
 
     private fun fetchMovieFlow(queryString: String): Flow<PagingData<MovieLocal>> =
         repository.moviePagesFlowDb()
@@ -82,7 +81,8 @@ class MovieListViewModel : ViewModel() {
         viewModelScope.launch {
             repository.loadGenres()?.also {
                 genres = HashMap(it)
-                _genreList.postValue(it)}
+                _genreList.postValue(it)
+            }
         }
     }
 }
