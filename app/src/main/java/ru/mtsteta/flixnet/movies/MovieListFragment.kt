@@ -5,6 +5,7 @@ import android.content.res.Configuration
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -103,6 +104,7 @@ class MoviesListFragment : Fragment() {
                                 return if ((position == movieAdapter.itemCount) && footer.itemCount > 0) {
                                     spanCount
                                 } else if (movieAdapter.itemCount == 0 && header.itemCount > 0) {
+                                    Log.i("LOAD layout", "$position ${movieAdapter.itemCount} ${header.itemCount}")
                                     spanCount
                                 } else {
                                     1
@@ -163,8 +165,8 @@ class MoviesListFragment : Fragment() {
 
         lifecycleScope.launch {
             movieAdapter.loadStateFlow.collect { loadState ->
-                // Show a retry header if there was an error refreshing, and items were previously
-                // cached OR default to the default prepend state
+                 //Show a retry header if there was an error refreshing, and items were previously
+                 //cached OR default to the default prepend state
                 header.loadState = loadState.mediator
                     ?.refresh
                     ?.takeIf { it is LoadState.Error && movieAdapter.itemCount > 0 }
