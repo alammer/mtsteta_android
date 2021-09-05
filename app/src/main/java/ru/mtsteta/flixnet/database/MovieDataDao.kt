@@ -4,7 +4,7 @@ import androidx.paging.PagingSource
 import androidx.room.*
 
 @Dao
-interface  MovieDataDao{
+interface  MovieDataDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAllMovies(movieLocals: List<MovieLocal>)
