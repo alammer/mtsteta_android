@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
+import kotlinx.serialization.ExperimentalSerializationApi
 import ru.mtsteta.flixnet.BuildConfig
 import ru.mtsteta.flixnet.database.MovieDataBase
 import ru.mtsteta.flixnet.network.MovieCrew
@@ -34,6 +35,7 @@ class DetailViewModel : ViewModel() {
         }
     }
 
+    @ExperimentalSerializationApi
     fun fetchActors (movieId: Int) {
         viewModelScope.launch {
             try {

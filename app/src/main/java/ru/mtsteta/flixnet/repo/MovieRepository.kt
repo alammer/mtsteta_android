@@ -8,6 +8,7 @@ import androidx.paging.PagingData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
+import kotlinx.serialization.ExperimentalSerializationApi
 import ru.mtsteta.flixnet.BuildConfig
 import ru.mtsteta.flixnet.database.MovieDataBase
 import ru.mtsteta.flixnet.database.MovieLocal
@@ -17,6 +18,7 @@ import ru.mtsteta.flixnet.network.toDataBaseModel
 
 class MovieRepository {
 
+    @OptIn(ExperimentalSerializationApi::class)
     val networkAPI = MovieRemoteService.retrofitService
 
     val dataDao = MovieDataBase.instance.movieDataDao

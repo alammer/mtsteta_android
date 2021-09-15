@@ -15,22 +15,6 @@ import ru.mtsteta.flixnet.network.MovieCrew
 
 class ActorListAdapter :  ListAdapter<MovieCrew, ActorListAdapter.ActorViewHolder>(ActorDiffCallback()) {
 
-    class ActorViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-        private val actorImage: ImageView =
-            itemView.findViewById(R.id.imgActor)
-
-        private val nameTextView: TextView = itemView.findViewById(R.id.tvActorName)
-
-        fun bind(item: MovieCrew, position: Int) {
-            nameTextView.text = item.name
-            actorImage.load(BuildConfig.BASE_PROFILE_URL + item.imageUrl) {
-                placeholder(R.drawable.loading_animation)
-                error(R.drawable.broken_image)
-            }
-        }
-    }
-
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -45,6 +29,22 @@ class ActorListAdapter :  ListAdapter<MovieCrew, ActorListAdapter.ActorViewHolde
         position: Int
     ) {
         holder.bind(getItem(position), position)
+    }
+
+    class ActorViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+        private val actorImage: ImageView =
+            itemView.findViewById(R.id.imgActor)
+
+        private val nameTextView: TextView = itemView.findViewById(R.id.tvActorName)
+
+        fun bind(item: MovieCrew, position: Int) {
+            nameTextView.text = item.name
+            actorImage.load(BuildConfig.BASE_PROFILE_URL + item.imageUrl) {
+                placeholder(R.drawable.loading_animation)
+                error(R.drawable.broken_image)
+            }
+        }
     }
 }
 

@@ -3,7 +3,6 @@ package ru.mtsteta.flixnet.network
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import ru.mtsteta.flixnet.database.MovieLocal
-import kotlin.reflect.KSuspendFunction1
 
 @Serializable
 data class PopMoviesResponse(

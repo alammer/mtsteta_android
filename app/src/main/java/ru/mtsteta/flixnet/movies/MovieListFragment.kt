@@ -5,6 +5,7 @@ import android.content.res.Configuration
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +16,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadState
 import androidx.paging.map
 import androidx.recyclerview.widget.GridLayoutManager
@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.button.MaterialButton
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import ru.mtsteta.flixnet.R
@@ -31,6 +32,7 @@ import ru.mtsteta.flixnet.genres.GenreClickListener
 import ru.mtsteta.flixnet.genres.GenreListAdapter
 import ru.mtsteta.flixnet.repo.MovieDto
 
+@ExperimentalCoroutinesApi
 class MoviesListFragment : Fragment() {
 
     private val moviesListViewModel: MovieListViewModel by viewModels()
@@ -51,7 +53,6 @@ class MoviesListFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_movie_list, container, false)
     }
 
-    @ExperimentalPagingApi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -103,6 +104,10 @@ class MoviesListFragment : Fragment() {
                                 return if ((position == movieAdapter.itemCount) && footer.itemCount > 0) {
                                     spanCount
                                 } else if (movieAdapter.itemCount == 0 && header.itemCount > 0) {
+                                    Log.i(
+                                        "LOAD layout",
+                                        "$position ${movieAdapter.itemCount} ${header.itemCount}"
+                                    )
                                     spanCount
                                 } else {
                                     1
@@ -163,8 +168,8 @@ class MoviesListFragment : Fragment() {
 
         lifecycleScope.launch {
             movieAdapter.loadStateFlow.collect { loadState ->
-                // Show a retry header if there was an error refreshing, and items were previously
-                // cached OR default to the default prepend state
+                //Show a retry header if there was an error refreshing, and items were previously
+                //cached OR default to the default prepend state
                 header.loadState = loadState.mediator
                     ?.refresh
                     ?.takeIf { it is LoadState.Error && movieAdapter.itemCount > 0 }

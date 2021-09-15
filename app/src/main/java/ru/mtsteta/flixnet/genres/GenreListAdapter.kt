@@ -14,15 +14,6 @@ class GenreListAdapter(
 ) :
     ListAdapter<String, GenreListAdapter.GenreViewHolder>(GenreDiffCallback()) {
 
-    class GenreViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val genreTextView = itemView.findViewById<TextView>(R.id.tvGenreItem)
-
-        fun bind(clickListener: GenreClickListener, item: String, position: Int) {
-            genreTextView.text = item
-            itemView.setOnClickListener { clickListener.onClick(item) }
-        }
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GenreViewHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.genre_rv_item, parent, false)
@@ -33,6 +24,14 @@ class GenreListAdapter(
         holder.bind(clickListener, getItem(position), position)
     }
 
+    class GenreViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val genreTextView = itemView.findViewById<TextView>(R.id.tvGenreItem)
+
+        fun bind(clickListener: GenreClickListener, item: String, position: Int) {
+            genreTextView.text = item
+            itemView.setOnClickListener { clickListener.onClick(item) }
+        }
+    }
 }
 
 private class GenreDiffCallback : DiffUtil.ItemCallback<String>() {

@@ -31,7 +31,8 @@ class MoviePagedMediator(private val networkAPI: MovieNetworkAPI, private val da
     }
 
     override suspend fun load(
-        loadType: LoadType, state: PagingState<Int, MovieLocal>
+        loadType: LoadType,
+        state: PagingState<Int, MovieLocal>
     ): MediatorResult {
 
         val page = when (loadType) {

@@ -1,6 +1,9 @@
 package ru.mtsteta.flixnet.movies
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -25,6 +28,7 @@ class MovieListViewModel : ViewModel() {
 
     init {
         fetchGenres()
+
 
         val initialQuery: String = DEFAULT_QUERY
         val actionStateFlow = MutableSharedFlow<UiAction>()

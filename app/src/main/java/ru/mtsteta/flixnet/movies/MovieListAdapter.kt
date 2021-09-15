@@ -18,35 +18,6 @@ import ru.mtsteta.flixnet.repo.MovieDto
 class MovieListAdapter(private val clickListener: MovieClickListener) :
     PagingDataAdapter<MovieDto, MovieListAdapter.MovieListViewHolder>(MoviesDiffCallback()) {
 
-    class MovieListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-        private val posterImage: ShapeableImageView =
-            itemView.findViewById(R.id.rvItemMoviePoster)
-
-        private val titleTextView: TextView = itemView.findViewById(R.id.rvItemMovieTitle)
-
-        private val infoTextView: TextView = itemView.findViewById(R.id.rvItemMovieInfo)
-
-        private val ageLimitTextView: TextView =
-            itemView.findViewById(R.id.rvItemAgeLimit)
-
-        private val ratingBar: RatingBar = itemView.findViewById(R.id.rvItemMovieRating)
-
-        fun bind(clickListener: MovieClickListener, item: MovieDto?, position: Int) {
-            item?.run {
-                titleTextView.text = item.title
-                infoTextView.text = item.overview
-                ratingBar.rating = item.rateScore?.let { it.toFloat() / 2.0f } ?: 0.0f
-                ageLimitTextView.text = item.ageLimit
-                posterImage.load(BuildConfig.BASE_IMAGE_URL + item.imageUrl) {
-                    placeholder(R.drawable.loading_animation)
-                    error(R.drawable.broken_image)
-                }
-                itemView.setOnClickListener { clickListener.onClick(item) }
-            } ?: posterImage.load(R.drawable.loading_animation)
-        }
-    }
-
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -65,6 +36,35 @@ class MovieListAdapter(private val clickListener: MovieClickListener) :
         holder.bind(clickListener, repoItem, position)
         holder.itemView.animation = loadAnimation(holder.itemView.context, R.anim.rv_item_anim)
 
+    }
+
+    class MovieListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+        private val posterImage: ShapeableImageView =
+            itemView.findViewById(R.id.rvItemMoviePoster)
+
+        private val titleTextView: TextView = itemView.findViewById(R.id.rvItemMovieTitle)
+
+        private val infoTextView: TextView = itemView.findViewById(R.id.rvItemMovieInfo)
+
+        private val ageLimitTextView: TextView =
+            itemView.findViewById(R.id.rvItemAgeLimit)
+
+        private val ratingBar: RatingBar = itemView.findViewById(R.id.rvItemMovieRating)
+
+        fun bind(clickListener: MovieClickListener, item: MovieDto?, position: Int) {
+            item?.let {
+                titleTextView.text = item.title
+                infoTextView.text = item.overview
+                ratingBar.rating = item.rateScore?.let { it.toFloat() / 2.0f } ?: 0.0f
+                ageLimitTextView.text = item.ageLimit
+                posterImage.load(BuildConfig.BASE_IMAGE_URL + item.imageUrl) {
+                    placeholder(R.drawable.loading_animation)
+                    error(R.drawable.broken_image)
+                }
+                itemView.setOnClickListener { clickListener.onClick(item) }
+            } ?: posterImage.load(R.drawable.loading_animation)
+        }
     }
 
     companion object {

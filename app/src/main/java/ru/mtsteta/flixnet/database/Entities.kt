@@ -22,26 +22,26 @@ data class MovieLocal(
     val title: String?,
 
     @ColumnInfo
-    var overview: String?,
+    val overview: String?,
 
     @ColumnInfo(name = "rating")
-    var rateScore: Double? = 0.0,
+    val rateScore: Double? = 0.0,
 
     @ColumnInfo(name = "age_limit")
     var ageLimit: String?,
 
-    @ColumnInfo(name = "poster")
-    var imageUrl: String?,
+    @ColumnInfo(name = "image_url")
+    val imageUrl: String?,
 
-    @ColumnInfo(name = "backdrop")
-    var backdropUrl: String?,
+    @ColumnInfo(name = "backdrop_url")
+    val backdropUrl: String?,
 
     @ColumnInfo(name = "release_date")
-    var releaseDate: String?,
+    val releaseDate: String?,
 
     @field:TypeConverters(Converters::class)
     @ColumnInfo(name = "genres")
-    var genres: List<Int>?,
+    val genres: List<Int>?,
 )
 
 @Entity(tableName = "actors")
@@ -51,8 +51,8 @@ data class Actor(
     @ColumnInfo(name = "name")
     val name: String,
 
-    @ColumnInfo(name = "photo")
-    var imageUrl: String?,
+    @ColumnInfo(name = "image_url")
+    val imageUrl: String?,
 )
 
 @Entity(tableName = "genres")

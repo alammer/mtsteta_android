@@ -16,6 +16,7 @@ import coil.load
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.imageview.ShapeableImageView
+import kotlinx.serialization.ExperimentalSerializationApi
 import ru.mtsteta.flixnet.BuildConfig
 import ru.mtsteta.flixnet.R
 import ru.mtsteta.flixnet.repo.MovieDto
@@ -44,6 +45,7 @@ class DetailFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_movie_details, container, false)
     }
 
+    @OptIn(ExperimentalSerializationApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -84,19 +86,17 @@ class DetailFragment : Fragment() {
     }
 
     private fun loadData(movie: MovieDto) {
-        movie.run {
-            tvTitle.text = title
-            tvInfo.text = overview
-            tvAgeLimit.text = ageLimit
-            tvRelease.text = release_date
-            rbMovie.rating = rateScore?.let {  it.toFloat() / 2.0f } ?: 0.0f
+            tvTitle.text = movie.title
+            tvInfo.text = movie.overview
+            tvAgeLimit.text = movie.ageLimit
+            tvRelease.text = movie.release_date
+            rbMovie.rating = movie.rateScore?.let {  it.toFloat() / 2.0f } ?: 0.0f
             imgPoster.apply {
-                load(BuildConfig.BASE_BACK_URL + backdropUrl) {
+                load(BuildConfig.BASE_BACK_URL + movie.backdropUrl) {
                     error(R.drawable.broken_image)
                 }
                 scaleType = ImageView.ScaleType.CENTER_CROP
             }
-        }
     }
 
     private fun loadGenre (genres: List<String>) {

@@ -10,7 +10,7 @@ interface PagingKeysDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(remoteKey: List<PagingKeys>)
 
-    @Query("SELECT * FROM pagingkeys WHERE movieId = :id")
+    @Query("SELECT * FROM pagingkeys WHERE movie_id = :id")
     suspend fun remoteKeysMovieId(id: Int): PagingKeys?
 
     @Query("DELETE FROM pagingkeys")
