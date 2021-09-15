@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/tab_movies"
+    app:startDestination="@id/MoviesListFragment">
+
+    <fragment
+        android:id="@+id/MoviesListFragment"
+        android:name="ru.mtsteta.flixnet.movies.MoviesListFragment">
+
+        <action
+            android:id="@+id/actionMoviesToDetail"
+            app:destination="@id/detailFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="ru.mtsteta.flixnet.movieinfo.DetailFragment"
+        android:label="DetailFragment">
+
+        <argument
+            android:name="movieItem"
+            app:argType="ru.mtsteta.flixnet.repo.MovieDto" />
+
+    </fragment>
+
+</navigation>

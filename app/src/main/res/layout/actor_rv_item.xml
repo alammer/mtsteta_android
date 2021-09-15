@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/imgActor"
+        android:layout_width="@dimen/detailed_actor_img_width"
+        android:layout_height="@dimen/detailed_actor_img_height"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/DetailedActorPoster" />
+
+    <TextView
+        android:id="@+id/tvActorName"
+        android:layout_width="@dimen/detailed_actor_img_width"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/detailed_actor_name_top_margin"
+        android:fontFamily="@font/roboto_bold"
+        android:textSize="@dimen/small_text_size" />
+
+</LinearLayout>

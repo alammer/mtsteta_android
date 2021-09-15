@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color_mainscreen"
+    android:paddingHorizontal="@dimen/signup_horizontal_padding"
+    app:layoutDescription="@xml/fragment_signup_screen_scene">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_bold"
+        android:text="@string/signup_fragment_title"
+        android:textAlignment="center"
+        android:textSize="@dimen/large_text_size"
+        app:layout_constraintBottom_toTopOf="@+id/etUserName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/etUserName"
+        style="@style/SignField"
+        android:hint="@string/signup_name_hint"
+        android:inputType="text"
+        app:layout_constraintBottom_toTopOf="@id/etNewEmail"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/textView" />
+
+    <EditText
+        android:id="@+id/etNewEmail"
+        style="@style/SignField"
+        android:hint="@string/signup_mail_hint"
+        android:inputType="textEmailAddress"
+        app:layout_constraintBottom_toTopOf="@id/etNewPhone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etUserName" />
+
+    <EditText
+        android:id="@+id/etNewPhone"
+        style="@style/SignField"
+        android:hint="@string/signup_phone_hint"
+        android:inputType="phone"
+        app:layout_constraintBottom_toTopOf="@id/etNewPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etNewEmail" />
+
+    <EditText
+        android:id="@+id/etNewPassword"
+        style="@style/SignField"
+        android:hint="@string/signup_password_hint"
+        android:inputType="textPassword"
+        app:layout_constraintBottom_toTopOf="@id/etConfirmNewPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etNewPhone" />
+
+    <EditText
+        android:id="@+id/etConfirmNewPassword"
+        style="@style/SignField"
+        android:hint="@string/signup_confirm_pass_hint"
+        android:inputType="textPassword"
+        app:layout_constraintBottom_toTopOf="@id/btnCreateAccount"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etNewPassword" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnCreateAccount"
+        style="@style/SignButton"
+        android:layout_height="32dp"
+        android:layout_marginVertical="40dp"
+        android:text="@string/signup_btn_label"
+        app:backgroundTint="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etConfirmNewPassword" />
+
+</androidx.constraintlayout.motion.widget.MotionLayout>

@@ -9,11 +9,7 @@
     <string name="movie_name">Гнев человеческий</string>
     <string name="age_limit">18+</string>
     <string name="actors_list_title">Актёры</string>
-    <string name="actor1_name">Джейсон Стэйтем</string>
-    <string name="actor2_name">Холт Маккэллани</string>
-    <string name="actor3_name">Джош Харнетт</string>
     <string name="main_screen_title">Популярное сейчас</string>
-    <string name="movie_item_empty_message">\"Data <for>        </for> current item not found\"</string>
     <string name="mock_user_nickname">Nickname</string>
     <string name="mock_user_email">user_account@testmail.com</string>
     <string name="mock_password">vjq_gfhjkm</string>
@@ -25,7 +21,7 @@
     <string name="profile_user_info_title">Личные данные</string>
     <string name="profile_user_name_hint">Имя</string>
     <string name="profile_password_input_hint">Введите пароль</string>
-    <string name="profile_email_input_hint">your_email@mail.com</string>
+    <string name="profile_email_input_hint">E-mail</string>
     <string name="profile_phone_input_hint">Телефон</string>
     <string name="profile_settings_title">Настройки</string>
     <string name="setting_notify_and_sound_item">Уведомления и звуки</string>
@@ -37,12 +33,18 @@
     <string name="app_support_question_item">Задать вопрос</string>
     <string name="app_support_report_item">Сообщить о проблеме</string>
     <string name="profile_exit_button">Выйти</string>
-    <string name="default_notification_channel_id">test_channel_id</string>
-    <string name="default_notification_channel_name">TestChannel</string>
-    <string name="default_notification_topic">teta</string>
-    <string name="default_fg_notification_channel_id">fcm_default_channel</string>
-    <string name="default_fg_notification_channel_title">FCM message</string>
-    <string name="default_fg_notofication_channel_name">Channel human readable title</string>
-    <string name="age_limit_template">%d+</string>
+    <string name="signup_fragment_title">Создать профиль</string>
+    <string name="signup_name_hint">Имя</string>
+    <string name="signup_mail_hint">E-mail</string>
+    <string name="signup_phone_hint">Телефон</string>
+    <string name="signup_password_hint">Пароль</string>
+    <string name="signup_confirm_pass_hint">Подтверждение пароля</string>
+    <string name="signup_btn_label">Сохранить</string>
+    <string name="login_fragment_title">Авторизация</string>
+    <string name="login_user_id_hint">Имя или E-mail</string>
+    <string name="login_btn_label">Войти</string>
+    <string name="buttom_retry_load_item">ОБНОВИТЬ</string>
+    <string name="button_refresh_movie_list">ОБНОВИТЬ</string>
+    <string name="empty_data_label">Нет данных</string>
 
 </resources>

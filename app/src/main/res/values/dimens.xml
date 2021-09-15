@@ -11,18 +11,20 @@
     <dimen name="big_text_size">16sp</dimen>
     <dimen name="large_text_size">20sp</dimen>
     <dimen name="detailed_common_top_margin">16dp</dimen>
+    <dimen name="detailed_releasedate_bottom_margin">2dp</dimen>
     <dimen name="detailed_actor_name_top_margin">12dp</dimen>
-    <dimen name="detailed_actor_img_start_margin">10dp</dimen>
     <dimen name="detailed_horizontal_margin">20dp</dimen>
     <dimen name="detailed_cardview_top_padding">32dp</dimen>
     <dimen name="detailed_actor_img_width">150dp</dimen>
     <dimen name="detailed_actor_img_height">196dp</dimen>
-    <dimen name="mainscreen_movie_top_spacing">48dp</dimen>
-    <dimen name="mainscreen_title_end_margin">72dp</dimen>
-    <dimen name="mainscreen_poster_height">216dp</dimen>
-    <dimen name="mainscreen_land_poster_width">144dp</dimen>
-    <dimen name="mainscreen_horizontal_margin">20dp</dimen>
-    <dimen name="mainscreen_land_rv_horizontal_padding">20dp</dimen>
+    <dimen name="detailed_actor_rv_item_horozontal_space">10dp</dimen>
+    <dimen name="movieslist_rv_top_spacing">48dp</dimen>
+    <dimen name="movieslist_title_end_margin">72dp</dimen>
+    <dimen name="movieslist_poster_height">216dp</dimen>
+    <dimen name="movieslist_land_poster_width">144dp</dimen>
+    <dimen name="movieslist_horizontal_margin">20dp</dimen>
+    <dimen name="movieslist_land_rv_horizontal_padding">20dp</dimen>
     <dimen name="design_bottom_navigation_item_max_width">600dp</dimen>
     <dimen name="design_bottom_navigation_active_item_max_width">600dp</dimen>
+    <dimen name="signup_horizontal_padding">20dp</dimen>
 </resources>
