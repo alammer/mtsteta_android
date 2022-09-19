@@ -41,7 +41,7 @@ class MyFCMService : FirebaseMessagingService() {
     }
 
     override fun onNewToken(token: String) {
-        Log.i("MyFCMservice", "Function called: onNewToken() refreshed token: $token ")
+        Log.i("MyFCMservice", "Function called: onNewToken() refreshed token for test token: $token ")
     }
 
     private fun sendNotification(messageBody: String) {
